@@ -1,2 +1,0 @@
-# jerrylott
-My personal website.
