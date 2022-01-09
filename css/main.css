@@ -59,7 +59,10 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
 /* Button */
 .btn{
-    font-size: 30px;
-    cursor: pointer;
+  font-size: 30px;
+  cursor: pointer;
+}
 
+#open #close{
+  display: none;  
 }
