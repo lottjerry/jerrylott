@@ -8,29 +8,27 @@
     <meta name ="keywords" content="jerry, lee, lott, jr, we, design, freelancer, resume, developer, sofrware, engineer">
     <meta name ="description" content="Jerry Lott - Developer and Freelancer">
     <meta name ="author" content="Jerry Lott">
-
+    <title>Jerry Lott</title>
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <!-- Custom JS -->
-    <script type="text/javascript" src="js/main.js"></script> 
-
-    <title>Jerry Lott</title>
+    <script type="text/javascript" src="js/main.js"></script>   
 </head>
 <body onload="autoNav()">
 
     <!-- Side Nav Toggle button -->
     <div class="container float-end">
-        <div class="btn-group float-end">
-            <button type="button" class="btn btn-default btn-outline-dark d-xl-none float-end" id="openbtn" onclick="openNav()">&#9776;</button>
-            <button type="button" class="btn btn-default btn-outline-dark d-xl-none float-end" id="closebtn" onclick="closeNav()">&times;</button>
-        </div>
+        <button class="btn d-xl-none float-end " id="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button>
+        <button class="btn d-xl-none float-end" id="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></button>
     </div>
 
     <div id="mySidenav" class="sidenav">
