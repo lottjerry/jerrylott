@@ -14,8 +14,8 @@ function closeNav() {
 
 /* Auto open SideNav on bigger screes and close on smaller */
 function autoNav(){
-  document.getElementById("openbtn").style.display="inline";
   document.getElementById("closebtn").style.display="none";
+  document.getElementById("openbtn").style.display="inline";
   window.addEventListener("resize", function() {
     if (window.matchMedia("(min-width: 1200px)").matches) {
         openNav();
