@@ -46,7 +46,6 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 @media screen and (max-height: 450px) {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
-  .btn {font-size: small;}
 }
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
@@ -59,10 +58,9 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
 /* Button */
 .btn{
-  font-size: 30px;
   cursor: pointer;
+  font-size: 20;
+  z-index: 2;
+  position: relative;
 }
 
-#open #close{
-  display: none;  
-}
