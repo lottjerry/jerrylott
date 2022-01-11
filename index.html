@@ -24,19 +24,26 @@
 </head>
 <body onload="autoNav()">
 
-    <!-- Side Nav Toggle buttons -->
+    <!-- ***** Side Nav Toggle ***** buttons -->
     <button class="btn d-xl-none" id="openbtn" onclick="openNav()"><i class="fas fa-bars"></i></button>
     <button class="btn d-xl-none" id="closebtn" onclick="closeNav()"><i class="fas fa-times"></i></button>
-  
-    <!-- Side Nav -->
-    <div id="mySidenav" class="sidenav">
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-        <a href="#">Contact</a>
-    </div>
-    
-   
+    <!-- ***** Header ****** -->
+    <header id="header">
+        <!-- Side Nav -->
+        <div id="mySidenav" class="sidenav">
+            <!-- My Profile -->
+            <div class ="myProfile">
+                <img src="images/profile.jpg" class="img-fluid rounded-circle" alt="Jerry's Profile Picture">
+                <h1 class="name">
+                    <a href="#">Jerry Lott</a> 
+                </h1>
+            </div>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a>
+        </div>
+   </header>
 
     <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
     <div id="main">
