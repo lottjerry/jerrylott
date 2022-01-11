@@ -65,6 +65,9 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 
 /* Style buttons */
 .btn {
+  position: fixed;
+  right: 15px;
+  top: 15px;
   background-color: rgb(0, 0, 0); /* Blue background */
   border: none; /* Remove borders */
   color: white; /* White text */
