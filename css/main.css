@@ -74,3 +74,24 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
     width: 140px;
     border: 8px solid #2c2f3f;
 }
+
+/* Profile Name */
+#header .myProfile a {
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  text-align-last: center;
+  font-family: "Trebuchet MS", sans-serif;
+}
+
+/* Profile Icons */
+#header .myProfile .profile-icons a {
+  display: inline-block;
+  width: 30px;
+}
+
+.profile-icons {
+  text-align: center;
+  width: 100%;
+}
