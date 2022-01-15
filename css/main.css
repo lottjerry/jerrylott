@@ -76,7 +76,20 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 /* Profile Name */
-#header .myProfile a {
+#header .myProfile h1 a {
+  font-size: 24px;
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  text-align-last: center;
+  font-family: "Trebuchet MS", sans-serif;
+  color: white;
+}
+
+/* Profile Icons */
+#header .myProfile .profile-icons a {
+  display: inline-block;
+  width: 30px;
   font-size: 24px;
   margin: 0;
   padding: 0;
@@ -85,13 +98,32 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
   font-family: "Trebuchet MS", sans-serif;
 }
 
-/* Profile Icons */
-#header .myProfile .profile-icons a {
-  display: inline-block;
-  width: 30px;
-}
-
 .profile-icons {
   text-align: center;
   width: 100%;
 }
+
+/* Profile Links */
+.profile-links a {
+  font-size: 18px;
+  margin: 15px;
+
+}
+
+.profile-links{
+  margin-top: 20px;
+
+}
+
+
+.footer {
+  font-size: 18px;
+  color: white;
+  background-color: black;
+  text-align: center!important;
+  z-index: 3;
+  bottom: 0%;
+  position: fixed;
+  width: auto;
+}
+
