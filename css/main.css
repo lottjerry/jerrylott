@@ -1,50 +1,4 @@
-/* The side navigation menu */
-.sidenav {
-height: 100%; /* 100% Full-height */
-width: 0; /* 0 width - change this with JavaScript */
-position: fixed; /* Stay in place */
-z-index: 1; /* Stay on top */
-top: 0; /* Stay at the top */
-left: 0;
-background-color: #111; /* Black*/
-overflow-x: hidden; /* Disable horizontal scroll */
-padding-top: 60px; /* Place content 60px from the top */
-transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
-}
-
-/* The navigation menu links */
-.sidenav a {
-  padding: 8px 8px 8px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: #818181;
-  display: block;
-  transition: 0.3s;
-}
-
-/* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-  color: #f1f1f1;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-  transition: margin-left .5s;
-  padding: 20px;
-}
-
-/* Smaller Screens Side Nav Settings */
-@media screen and (max-width: 1199px){
-  .sidenav{width: 0px;}
-}
-/* Bigger Screens Side Nav Settings */
-@media screen and (min-width: 1200px){
-  .sidenav{width: 250px;}
-}
-
-
-/* Style buttons */
-.btn {
+.side-nav-toggle {
   cursor: pointer;
   z-index: 2;
   position: fixed;
@@ -62,13 +16,30 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
   align-items: center;  /* aligns both fontawesome icons */
 }
 
-/* Darker background on mouse-over */
-.btn:hover {
+.side-nav-toggle:hover {
   background-color: rgb(56, 187, 52);
 }
 
+.side-nav {
+height: 100%; /* 100% Full-height */
+width: 0; /* 0 width - change this with JavaScript */
+position: fixed; /* Stay in place */
+z-index: 1; /* Stay on top */
+top: 0; /* Stay at the top */
+left: 0;
+background-color: #111; /* Black*/
+overflow-x: hidden; /* Disable horizontal scroll */
+padding-top: 60px; /* Place content 60px from the top */
+transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
+}
+
+/* When you mouse over the navigation links, change their color */
+.side-nav a:hover {
+  color: #f1f1f1;
+}
+
 /* Profile Picture */
-#header .myProfile img {
+header .myProfile img {
     margin: 15px auto;
     display: block;
     width: 140px;
@@ -76,7 +47,7 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 /* Profile Name */
-#header .myProfile h1 a {
+header .myProfile h1 a {
   font-size: 24px;
   margin: 0;
   padding: 0;
@@ -87,7 +58,7 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 }
 
 /* Profile Icons */
-#header .myProfile .profile-icons a {
+header .myProfile .profile-icons a {
   display: inline-block;
   width: 30px;
   font-size: 24px;
@@ -113,6 +84,24 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
 .profile-links{
   margin-top: 20px;
 
+}
+/* The navigation menu links */
+.side-nav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* Smaller Screens Side Nav Settings */
+@media screen and (max-width: 1199px){
+  .side-nav{width: 0px;}
+}
+/* Bigger Screens Side Nav Settings */
+@media screen and (min-width: 1200px){
+  .side-nav{width: 300px;}
 }
 
 /* Hero */
