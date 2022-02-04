@@ -102,6 +102,7 @@ header .myProfile .profile-icons a {
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
   .side-nav{width: 300px;}
+  #about{margin-left: 300px;}
 }
 
 /* Hero */
@@ -110,7 +111,19 @@ header .myProfile .profile-icons a {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
   height: 100vh;
   width: 100%; 
+  color: white;
+  display: flex!important;
+  justify-content: center!important;
+  align-items: center!important;
+  font-size: 30px;
+  font-weight: 500px;
 }
 
+#hero .hero-titles-container h1 {
+  font-size: 60px;
+}
+
+/* About */
