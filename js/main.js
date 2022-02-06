@@ -32,3 +32,31 @@ function autoNav(){
      }
     })
 }
+
+/* When the user scrolls down from the top of the document, show the button */
+window.onscroll = function() {scrollTo()};
+
+function scrollTo() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    document.getElementById("back-to-top").style.display = "block";
+  } else {
+    document.getElementById("back-to-top").style.display = "none";
+  }
+}
+
+
+function toTop() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+/* Hides the overflow then the side nav is open in mobile */
+function noOverflow() {
+  document.body.style.overflow="hidden";
+  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+}
+
+function overFlow() {
+  document.body.style.overflow="visible";
+  document.body.style.backgroundColor = "transparent";
+}

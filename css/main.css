@@ -1,4 +1,3 @@
-
 /* Side Nav Buttons */
 .side-nav-toggle {
   cursor: pointer;
@@ -6,10 +5,9 @@
   position: fixed;
   right: 15px;
   top: 15px;
-  background-color: rgb(0, 0, 0); /* Blue background */
+  background-color: black;
   border: none; /* Remove borders */
   color: white; /* White text */
-  /* padding: 12px 16px; Some padding */
   font-size: 16px; /* Set a font size */
   cursor: pointer; /* Mouse pointer on hover */
   width: 40px !important; /* Makes both buttons the same width */
@@ -21,6 +19,30 @@
 .side-nav-toggle:hover {
   background-color: rgb(56, 187, 52);
 }
+
+/* Back To Top Button */
+.back-to-top {
+  display: none;
+  cursor: point;
+  z-index: 2;
+  position: fixed;
+  bottom: 20px;
+  right: 15px;
+  background-color: black; /* Blue background */
+  border: none; /* Remove borders */
+  color: white; /* White text */
+  font-size: 16px; /* Set a font size */
+  cursor: pointer; /* Mouse pointer on hover */
+  width: 40px !important; /* Makes both buttons the same width */
+  height: 40px !important; /* Circle = same (Height & Width) + 50% border-radius */
+  border-radius: 50%;
+  align-items: center;  /* aligns both fontawesome icons */
+}
+
+.back-to-top:hover {
+  background-color: rgb(56, 187, 52);
+}
+
 
 /* Side Nav */
 .side-nav {
@@ -105,7 +127,7 @@ header .myProfile .profile-icons a {
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
   .side-nav{width: 300px;}
-  #hero{margin-left: 300px;}
+  .hero-container{margin-left: 300px;}
   #about{margin-left: 300px;}
   .about-container{margin-left: 200px; margin-right: 200px;}
 }
