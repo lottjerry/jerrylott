@@ -1,3 +1,5 @@
+
+/* Side Nav Buttons */
 .side-nav-toggle {
   cursor: pointer;
   z-index: 2;
@@ -20,6 +22,7 @@
   background-color: rgb(56, 187, 52);
 }
 
+/* Side Nav */
 .side-nav {
 height: 100%; /* 100% Full-height */
 width: 0; /* 0 width - change this with JavaScript */
@@ -33,7 +36,6 @@ padding-top: 60px; /* Place content 60px from the top */
 transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
 }
 
-/* When you mouse over the navigation links, change their color */
 .side-nav a:hover {
   color: #f1f1f1;
 }
@@ -98,11 +100,14 @@ header .myProfile .profile-icons a {
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
   .side-nav{width: 0px;}
+  .about-container{margin-left: 20px; margin-right: 20px;}
 }
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
   .side-nav{width: 300px;}
+  #hero{margin-left: 300px;}
   #about{margin-left: 300px;}
+  .about-container{margin-left: 200px; margin-right: 200px;}
 }
 
 /* Hero */
@@ -113,7 +118,6 @@ header .myProfile .profile-icons a {
   background-repeat: no-repeat;
   background-attachment: fixed;
   height: 100vh;
-  width: 100%; 
   color: white;
   display: flex!important;
   justify-content: center!important;
@@ -122,7 +126,7 @@ header .myProfile .profile-icons a {
   font-weight: 500px;
 }
 
-#hero .hero-titles-container h1 {
+#hero .hero-container h1 {
   font-size: 60px;
 }
 
