@@ -12,6 +12,14 @@ function closeNav() {
   document.getElementById("open-btn").style.display="inline";
 }
 
+/* Auto close side navigation on mobile devices */
+function closeNavMobile(){
+  if (window.matchMedia("(min-width: 1200px)").matches) {
+    openNav();
+  } else {
+    closeNav();
+  }
+} 
 /* Auto open SideNav on bigger screes and close on smaller */
 function autoNav(){
   document.getElementById("close-btn").style.display="none";
