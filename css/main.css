@@ -148,10 +148,14 @@ header .myProfile .profile-icons a {
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
   .side-nav{width: 0px;}
+  #about{margin-left: 50px; margin-right: 50px;}
+  .hero-container{margin-left: 50px;}
 }
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
   .side-nav{width: 300px;}
+  #about{margin-left: 350px; margin-right: 50px;}
+  .hero-container{margin-left: 350px;}
 }
 
 /* Hero */
@@ -176,13 +180,14 @@ header .myProfile .profile-icons a {
 
 /* About */
 #about ul {
-  list-style-image: url(../images/circle-regular.svg);
-  text-align: left;
-  font-size: 18px;
+  list-style:none;
+  text-align: center;
+  font-size: 23px;
 }
 
 #about li {
   padding: 10px;
   align-items: center!important;
   justify-content: center!important;
+  white-space: nowrap;
 }
