@@ -53,7 +53,6 @@ function toTop() {
 /* Hides the overflow then the side nav is open in mobile */
 function noOverflow() {
   document.body.style.overflow="hidden";
-  document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
 }
 
 function overFlow() {

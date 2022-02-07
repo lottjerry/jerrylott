@@ -181,7 +181,7 @@ header .myProfile .profile-icons a {
 /* About */
 #about ul {
   list-style:none;
-  text-align: center;
+  text-align: left;
   font-size: 23px;
 }
 
