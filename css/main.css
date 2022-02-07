@@ -24,7 +24,6 @@
   scrollbar-color: #888 rgb(185, 185, 185);
   scrollbar-width: thin;
 }
-
 /* Side Nav Buttons */
 .side-nav-toggle {
   cursor: pointer;
@@ -149,14 +148,10 @@ header .myProfile .profile-icons a {
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
   .side-nav{width: 0px;}
-  .about-container{margin-left: 20px; margin-right: 20px;}
 }
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
   .side-nav{width: 300px;}
-  .hero-container{margin-left: 300px;}
-  #about{margin-left: 300px;}
-  .about-container{margin-left: 200px; margin-right: 200px;}
 }
 
 /* Hero */
@@ -175,8 +170,19 @@ header .myProfile .profile-icons a {
   font-weight: 500px;
 }
 
-#hero .hero-container h1 {
+.hero-container h1 {
   font-size: 60px;
 }
 
 /* About */
+#about ul {
+  list-style-image: url(../images/circle-regular.svg);
+  text-align: left;
+  font-size: 18px;
+}
+
+#about li {
+  padding: 10px;
+  align-items: center!important;
+  justify-content: center!important;
+}
