@@ -23,6 +23,7 @@
 :root {
   scrollbar-color: #888 rgb(185, 185, 185);
   scrollbar-width: thin;
+  overflow-x: hidden;
 }
 /* Side Nav Buttons */
 .side-nav-toggle {
@@ -158,6 +159,9 @@ header .myProfile .profile-icons a {
   .hero-container{margin-left: 350px;}
 }
 
+@media screen and (max-width: 766px){
+  .custom-margin {margin: auto; width: 300px;}
+}
 /* Hero */
 #hero {
   background:linear-gradient(rgba(37, 34, 34, 0), rgba(37, 34, 34, 0.7)), url(../images/background.jpg);
@@ -182,7 +186,8 @@ header .myProfile .profile-icons a {
 #about ul {
   list-style:none;
   text-align: left;
-  font-size: 23px;
+  font-size: 20px;
+
 }
 
 #about li {
