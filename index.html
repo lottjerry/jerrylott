@@ -19,10 +19,13 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
     <!-- Custom JS -->
     <script type="text/javascript" src="js/main.js"></script>   
 </head>
-<body onload="autoNav()">
+<body onload="autoNav();">
 
     <!-- ***** Side Nav Toggle ***** -->
     <button class="btn d-xl-none side-nav-toggle" id="open-btn" onclick="openNav();noOverflow()"><i class="fas fa-bars"></i></button>
@@ -69,8 +72,8 @@
     <!-- ***** About ***** -->
     <section id="about">
     
-        <div class ="row text-center">
-            <h1> About </h1>  
+        <div class ="row text-center pt-5">
+            <h1>About</h1>  
         </div>
         <div class ="row text-center">
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut laboreet 
@@ -89,7 +92,7 @@
                             <ul>
                             <li> <strong>Birthday:</strong> <span>August 9, 1991</span></li>
                             <li> <strong>Website:</strong> <span>www.jerrylott.com</span></li>
-                            <li> <strong>Phone:</strong> <span>+123 456 7890</span></li>
+                            <li> <strong>Phone:</strong> <span>+601.778.5060</span></li>
                             <li> <strong>City/State:</strong> <span>Laurel, MS</span></li>
                             </ul>
                         </div>
@@ -98,20 +101,74 @@
                             <li> <strong>Age:</strong> <span>30</span></li>
                             <li> <strong>Degree:</strong> <span>Bachelor</span></li>
                             <li> <strong>Email:</strong> <span>contact@jerrylott.com</span></li>
-                            <li> <strong>Country</strong> <span>USA</span></li>
+                            <li> <strong>Country:</strong> <span>USA</span></li>
                             </ul>
                         </div>
                     </div> 
                 </div>
             </div>
       </div>
-      <div class="row">
-          
+      <div class="row pt-5">
+          <h1>Skills</h1>
       </div>
+      <div class="row m-4">
+          <div class="col-sm-12 col-md-6 col-lg-6 d-grid gap-3 text-start">
+             <div><strong>HTML 5</strong></div>
+             <div class="progress">
+                <div class="progress-bar" style="width: 100%; text-align: end;">
+                    100%
+                </div>
+             </div>
+             <div><strong>CSS</strong></div>
+             <div class="progress">
+                <div class="progress-bar" style="width: 90%; text-align: end;">
+                    90%
+                </div>
+             </div>
+             <div><strong>JAVASCRIPT</strong></div>
+             <div class="progress">
+                <div class="progress-bar" style="width: 70%; text-align: end;">
+                    70%
+                </div>
+             </div>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6 d-grid gap-3 text-start">
+                <div><strong>UI/UX DESIGN</strong></div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 40%; text-align: end;">
+                        40%
+                    </div>
+                </div>
+                <div><strong>PYTHON</strong></div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 60%; text-align: end;">
+                        60%
+                    </div>
+                </div>
+                <div><strong>PYTHON</strong></div>
+                <div class="progress">
+                    <div class="progress-bar" style="width: 60%; text-align: end;">
+                        60%
+                    </div>
+                </div>
+          </div>
+      </div>  
     </section>
     <!-- ***** End About ***** -->
-
-   
+    <!-- jQuery Script -->
+    <script>
+        var i = 0;
+        function makeProgress(){
+            if(i < 100){
+                i = i + 1;
+                $(".progress-bar").css("width", i + "%").text(i + "%");
+            }
+        
+            // Wait for sometime before running this script again
+            setTimeout("makeProgress()", 100);
+    }
+    makeProgress();
+    </script>
     <!-- Bootstrap JS and Pooper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

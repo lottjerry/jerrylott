@@ -162,6 +162,7 @@ header .myProfile .profile-icons a {
 @media screen and (max-width: 766px){
   .custom-margin {margin: auto; width: 300px;}
 }
+
 /* Hero */
 #hero {
   background:linear-gradient(rgba(37, 34, 34, 0), rgba(37, 34, 34, 0.7)), url(../images/background.jpg);
@@ -195,4 +196,14 @@ header .myProfile .profile-icons a {
   align-items: center!important;
   justify-content: center!important;
   white-space: nowrap;
+}
+
+.progress {
+  height: 10px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.progress-bar {
+  color: rgb(255, 255, 255);
 }
