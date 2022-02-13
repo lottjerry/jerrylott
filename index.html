@@ -15,6 +15,8 @@
 
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous">
+    <!-- Fontawesome KIT -->
+    <script src="https://kit.fontawesome.com/e1d41a4b10.js" crossorigin="anonymous"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -89,19 +91,19 @@
                 <div class="custom-margin">
                     <div class="row">
                         <div class="col-md-6">
-                            <ul>
-                            <li> <strong>Birthday:</strong> <span>August 9, 1991</span></li>
-                            <li> <strong>Website:</strong> <span>www.jerrylott.com</span></li>
-                            <li> <strong>Phone:</strong> <span>+601.778.5060</span></li>
-                            <li> <strong>City/State:</strong> <span>Laurel, MS</span></li>
+                            <ul class="fa-ul">
+                            <li> <span class="fa-li"><i class="fa-solid fa-calendar-day"></i></span> <strong>Birthday:</strong> <span>August 9, 1991</span></li>
+                            <li> <span class="fa-li"><i class="fa-solid fa-window-restore"></i></span> <strong>Website:</strong> <span>www.jerrylott.com</span></li>
+                            <li> <span class="fa-li"><i class="fa-solid fa-phone"></i></span> <strong>Phone:</strong> <span>+601.778.5060</span></li>
+                            <li> <span class="fa-li"><i class="fa-solid fa-location-arrow"></i></span> <strong>City/State:</strong> <span>Laurel, MS</span></li>
                             </ul>
                         </div>
                         <div class="col-md-6">
-                            <ul>
-                            <li> <strong>Age:</strong> <span>30</span></li>
-                            <li> <strong>Degree:</strong> <span>Bachelor</span></li>
-                            <li> <strong>Email:</strong> <span>contact@jerrylott.com</span></li>
-                            <li> <strong>Country:</strong> <span>USA</span></li>
+                            <ul class="fa-ul">
+                            <li> <span class="fa-li"><i class="fa-solid fa-id-card"></i></span> <strong>Age:</strong> <span>30</span></li>
+                            <li> <span class="fa-li"><i class="fa-solid fa-graduation-cap"></i></span> <strong>Degree:</strong> <span>Bachelor</span></li>
+                            <li> <span class="fa-li"><i class="fa-solid fa-at"></i></span> <strong>Email:</strong> <span>contact@jerrylott.com</span></li>
+                            <li> <span class="fa-li"><i class="fa-solid fa-flag-usa"></i></span> <strong>Country:</strong> <span>USA</span></li>
                             </ul>
                         </div>
                     </div> 
@@ -111,64 +113,82 @@
       <div class="row pt-5">
           <h1>Skills</h1>
       </div>
-      <div class="row m-4">
-          <div class="col-sm-12 col-md-6 col-lg-6 d-grid gap-3 text-start">
-             <div><strong>HTML 5</strong></div>
-             <div class="progress">
-                <div class="progress-bar" style="width: 100%; text-align: end;">
-                    100%
-                </div>
-             </div>
-             <div><strong>CSS</strong></div>
-             <div class="progress">
-                <div class="progress-bar" style="width: 90%; text-align: end;">
-                    90%
-                </div>
-             </div>
-             <div><strong>JAVASCRIPT</strong></div>
-             <div class="progress">
-                <div class="progress-bar" style="width: 70%; text-align: end;">
-                    70%
-                </div>
-             </div>
+      <div class="row pt-5">
+          <div class="col-sm-0 col-lg-2"></div>
+          <div class="col">
+            <i class="fa-brands fa-html5 fa-5x"></i>
+            <div>
+                <p><strong>HTML 5</strong></p>
+            </div>
           </div>
-          <div class="col-sm-12 col-md-6 col-lg-6 d-grid gap-3 text-start">
-                <div><strong>UI/UX DESIGN</strong></div>
-                <div class="progress">
-                    <div class="progress-bar" style="width: 40%; text-align: end;">
-                        40%
-                    </div>
-                </div>
-                <div><strong>PYTHON</strong></div>
-                <div class="progress">
-                    <div class="progress-bar" style="width: 60%; text-align: end;">
-                        60%
-                    </div>
-                </div>
-                <div><strong>PYTHON</strong></div>
-                <div class="progress">
-                    <div class="progress-bar" style="width: 60%; text-align: end;">
-                        60%
-                    </div>
-                </div>
+          <div class="col">
+            <i class="fa-brands fa-css3-alt fa-5x"></i>
+            <div>
+                <p><strong>CSS 3</strong></p>
+            </div>
           </div>
-      </div>  
-    </section>
-    <!-- ***** End About ***** -->
-    <!-- jQuery Script -->
-    <script>
-        var i = 0;
-        function makeProgress(){
-            if(i < 100){
-                i = i + 1;
-                $(".progress-bar").css("width", i + "%").text(i + "%");
-            }
-        
-            // Wait for sometime before running this script again
-            setTimeout("makeProgress()", 100);
-    }
-    makeProgress();
-    </script>
+          <div class="col">
+            <i class="fa-brands fa-js fa-5x"></i>
+            <div>
+                <p><strong>JAVASCRIPT</strong></p>
+            </div>
+          </div>
+          <div class="col-sm-0 col-lg-2"></div>
+      </div>
+      <div class="row pt-5">
+          <div class="col-sm-0 col-lg-2"></div>
+          <div class="col">
+            <i class="fa-brands fa-bootstrap fa-5x"></i>
+            <div>
+                <p><strong>BOOTSTRAP</strong></p>
+            </div>
+          </div>
+          <div class="col">
+            <i class="fa-solid fa-font-awesome fa-5x"></i>
+            <div>
+                <p><strong>FONTAWESOME</strong></p>
+            </div>
+          </div>
+          <div class="col-sm-0 col-lg-2"></div>
+      </div>
+      <div class="row pt-5">
+          <div class="col-sm-0 col-lg-2"></div>
+        <div class="col">
+          <i class="fa-brands fa-python fa-5x"></i>
+          <div>
+              <p><strong>PYTHON</strong></p>
+          </div>
+        </div>
+        <div class="col">
+            <i class="fa-brands fa-git fa-5x"></i>
+          <div>
+              <p><strong>GIT</strong></p>
+          </div>
+        </div>
+        <div class="col">
+          <i class="fa-brands fa-github fa-5x"></i>
+          <div>
+              <p><strong>GITHUB</strong></p>
+          </div>
+        </div>
+        <div class="col-sm-0 col-lg-2"></div>
+        <div class="row pt-5">
+            <div class="col-sm-0 col-lg-2"></div>
+        <div class="col">
+          <i class="fa-solid fa-terminal fa-5x"></i>
+          <div>
+              <p><strong>BASH</strong></p>
+          </div>
+        </div>
+        <div class="col">
+          <i class="fa-brands fa-figma fa-5x"></i>
+          <div>
+              <p><strong>UI/UX DESIGN (FIGMA)</strong></p>
+          </div>
+        </div>
+        <div class="col-sm-0 col-lg-2"></div>
+    </div>
+    
     <!-- Bootstrap JS and Pooper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

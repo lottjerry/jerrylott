@@ -197,13 +197,3 @@ header .myProfile .profile-icons a {
   justify-content: center!important;
   white-space: nowrap;
 }
-
-.progress {
-  height: 10px;
-  font-size: 10px;
-  font-weight: bold;
-}
-
-.progress-bar {
-  color: rgb(255, 255, 255);
-}
