@@ -157,6 +157,9 @@ header .myProfile .profile-icons a {
   .side-nav{width: 300px;}
   #about{margin-left: 350px; margin-right: 50px;}
   .hero-container{margin-left: 350px;}
+  #portfolio{margin-left: 350px; margin-right: 50px;}
+  #services{margin-left: 350px; margin-right: 50px;}
+  #contact{margin-left: 350px; margin-right: 50px;}
 }
 
 @media screen and (max-width: 766px){
@@ -196,4 +199,19 @@ header .myProfile .profile-icons a {
   align-items: center!important;
   justify-content: center!important;
   white-space: nowrap;
+}
+
+/* Portfolio */
+#portfolio {
+  height: 1000px;
+}
+
+/* Services */
+#services {
+  height: 1000px;
+}
+
+/* Contact */
+#contact {
+  height: 1000px;
 }
