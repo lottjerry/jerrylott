@@ -209,6 +209,6 @@ header .myProfile .profile-icons a {
 /* Services */
 
 /* Contact */
-#contact {
-  height: 1000px;
+@media screen and (max-width: 600px){
+  #contact h5 {font-size: 18px;}
 }
