@@ -212,3 +212,7 @@ header .myProfile .profile-icons a {
 @media screen and (max-width: 600px){
   #contact h5 {font-size: 18px;}
 }
+
+#contact .btn {
+  width: 150px;
+}
