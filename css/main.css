@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 /* Custom Scrollbar */
 /* Entire Scrollbar */
 ::-webkit-scrollbar {
@@ -215,4 +219,19 @@ header .myProfile .profile-icons a {
 
 #contact .btn {
   width: 150px;
+}
+
+.nav-link {
+  color: rgb(161, 14, 14) !important;
+}
+.nav-link.active {
+color: #0f8000 !important;
+}
+
+.nav-link i {
+  color: rgb(94, 77, 77) !important;
+}
+
+.nav-link.active i {
+  color: darkblue !important;
 }
