@@ -228,10 +228,10 @@ header .myProfile .profile-icons a {
 color: #0f8000 !important;
 }
 
-.nav-link i {
-  color: rgb(94, 77, 77) !important;
+.nav-link .link-icon {
+  color: white !important;
 }
 
-.nav-link.active i {
-  color: darkblue !important;
+.nav-link.active .link-icon {
+  color: aqua !important;
 }
