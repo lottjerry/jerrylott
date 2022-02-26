@@ -14,7 +14,7 @@ function closeNav() {
 
 /* Auto close side navigation on mobile devices */
 function closeNavMobile(){
-  if (window.matchMedia("(min-width: 1250px)").matches) {
+  if (window.matchMedia("(min-width: 1200px)").matches) {
     openNav();
   } else {
     closeNav();
@@ -25,7 +25,7 @@ function autoNav(){
   document.getElementById("close-btn").style.display="none";
   document.getElementById("open-btn").style.display="inline";
   window.addEventListener("resize", function() {
-    if (window.matchMedia("(min-width: 1250px)").matches) {
+    if (window.matchMedia("(min-width: 1200px)").matches) {
         openNav();
     } else {
         closeNav();

@@ -169,11 +169,11 @@ color: #0f8000 !important;
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
   .side-nav{width: 0px;}
-  #about{margin-left: 50px; margin-right: 50px;}
   .hero-container{margin-left: 50px;}
+  form{margin: 0px 20px;}
 }
 /* Bigger Screens Side Nav Settings */
-@media screen and (min-width: 1250px){
+@media screen and (min-width: 1200px){
   .side-nav{width: 250px;}
   #about{margin-left: 300px; margin-right: 50px;}
   .hero-container{margin-left: 300px;}
@@ -183,7 +183,7 @@ color: #0f8000 !important;
 }
 
 @media screen and (max-width: 766px){
-  .custom-margin {margin: auto; width: 250px;}
+  .custom-margin {margin: auto; width: 300px;}
 }
 
 /* Hero */
