@@ -140,6 +140,22 @@ header .myProfile .profile-icons a {
   margin-top: 20px;
 
 }
+
+.nav-link {
+  color: rgb(161, 14, 14) !important;
+}
+.nav-link.active {
+color: #0f8000 !important;
+}
+
+.nav-link .link-icon {
+  color: white !important;
+}
+
+.nav-link.active .link-icon {
+  color: aqua !important;
+}
+
 /* The navigation menu links */
 .side-nav a {
   padding: 8px 8px 8px 32px;
@@ -219,19 +235,4 @@ header .myProfile .profile-icons a {
 
 #contact .btn {
   width: 150px;
-}
-
-.nav-link {
-  color: rgb(161, 14, 14) !important;
-}
-.nav-link.active {
-color: #0f8000 !important;
-}
-
-.nav-link .link-icon {
-  color: white !important;
-}
-
-.nav-link.active .link-icon {
-  color: aqua !important;
 }
