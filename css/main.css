@@ -131,8 +131,8 @@ header .myProfile .profile-icons a {
 
 /* Profile Links */
 .profile-links a {
-  font-size: 18px;
-  margin: 15px;
+  font-size: 20px !important;
+  padding-top: 15px !important;
 
 }
 
@@ -157,17 +157,17 @@ header .myProfile .profile-icons a {
   .hero-container{margin-left: 50px;}
 }
 /* Bigger Screens Side Nav Settings */
-@media screen and (min-width: 1200px){
-  .side-nav{width: 300px;}
-  #about{margin-left: 350px; margin-right: 50px;}
-  .hero-container{margin-left: 350px;}
-  #portfolio{margin-left: 350px; margin-right: 50px;}
-  #services{margin-left: 350px; margin-right: 50px;}
-  #contact{margin-left: 350px; margin-right: 50px;}
+@media screen and (min-width: 1250px){
+  .side-nav{width: 250px;}
+  #about{margin-left: 300px; margin-right: 50px;}
+  .hero-container{margin-left: 300px;}
+  #portfolio{margin-left: 300px; margin-right: 50px;}
+  #services{margin-left: 300px; margin-right: 50px;}
+  #contact{margin-left: 300px; margin-right: 50px;}
 }
 
 @media screen and (max-width: 766px){
-  .custom-margin {margin: auto; width: 300px;}
+  .custom-margin {margin: auto; width: 250px;}
 }
 
 /* Hero */
