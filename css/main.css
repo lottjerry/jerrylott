@@ -1,3 +1,7 @@
+body {
+  position: relative;
+}
+
 /* Custom Scrollbar */
 /* Entire Scrollbar */
 ::-webkit-scrollbar {
@@ -127,8 +131,8 @@ header .myProfile .profile-icons a {
 
 /* Profile Links */
 .profile-links a {
-  font-size: 18px;
-  margin: 15px;
+  font-size: 20px !important;
+  padding-top: 15px !important;
 
 }
 
@@ -136,6 +140,22 @@ header .myProfile .profile-icons a {
   margin-top: 20px;
 
 }
+
+.nav-link {
+  color: rgb(161, 14, 14) !important;
+}
+.nav-link.active {
+color: #0f8000 !important;
+}
+
+.nav-link .link-icon {
+  color: white !important;
+}
+
+.nav-link.active .link-icon {
+  color: aqua !important;
+}
+
 /* The navigation menu links */
 .side-nav a {
   padding: 8px 8px 8px 32px;
@@ -153,17 +173,17 @@ header .myProfile .profile-icons a {
   .hero-container{margin-left: 50px;}
 }
 /* Bigger Screens Side Nav Settings */
-@media screen and (min-width: 1200px){
-  .side-nav{width: 300px;}
-  #about{margin-left: 350px; margin-right: 50px;}
-  .hero-container{margin-left: 350px;}
-  #portfolio{margin-left: 350px; margin-right: 50px;}
-  #services{margin-left: 350px; margin-right: 50px;}
-  #contact{margin-left: 350px; margin-right: 50px;}
+@media screen and (min-width: 1250px){
+  .side-nav{width: 250px;}
+  #about{margin-left: 300px; margin-right: 50px;}
+  .hero-container{margin-left: 300px;}
+  #portfolio{margin-left: 300px; margin-right: 50px;}
+  #services{margin-left: 300px; margin-right: 50px;}
+  #contact{margin-left: 300px; margin-right: 50px;}
 }
 
 @media screen and (max-width: 766px){
-  .custom-margin {margin: auto; width: 300px;}
+  .custom-margin {margin: auto; width: 250px;}
 }
 
 /* Hero */
