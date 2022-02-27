@@ -31,7 +31,7 @@
     <!-- Custom JS -->
     <script type="text/javascript" src="js/main.js"></script>   
 </head>
-<body onload="autoNav();" data-bs-spy="scroll" data-bs-target=".side-nav" data-bs-offset="50">
+<body onload="autoNav();" data-bs-spy="scroll" data-bs-target="#side-nav" data-bs-offset="50">
 
     <!-- ***** Side Nav Toggle ***** -->
     <button class="btn d-xl-none side-nav-toggle" id="open-btn" onclick="openNav();"><i class="fas fa-bars"></i></button>
@@ -56,13 +56,14 @@
                     <a href="Lott_Resume_Current.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf fa-xs"></i><span class="sr-only">Download Resume</span></a>
                 </div>
                 <div class="profile-links">
-                <a class="nav-link" href="#hero" onclick="closeNavMobile();overFlow()"><i class="fa-thin fa-home link-icon"></i> Home</a>
-                <a class ="nav-link" href="#about" onclick="closeNavMobile();overFlow()"><i class="fa-thin fa-address-card link-icon"></i> About</a>
-                <a class ="nav-link" href="#portfolio" onclick="closeNavMobile();overFlow()"><i class="fa-thin fa-briefcase link-icon"></i> Portfolio</a>
-                <a class ="nav-link" href="#services" onclick="closeNavMobile();overFlow()"><i class="fa-thin fa-hand-holding link-icon"></i> Services</a>
-                <a class ="nav-link" href="#contact" onclick="closeNavMobile();overFlow()"><i class="fa-thin fa-paper-plane link-icon"></i> Contact</a>
-                </div>
-            </div>   
+                    <a href="#hero" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline active"><i class="fa-thin fa-home"></i></div><div class="nav-link custom-inline active">Home</div></a>
+                    <a href="#about" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-address-card"></i></div><div class="nav-link custom-inline">About</div></a>
+                    <a href="#portfolio" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-briefcase"></i></div><div class="nav-link custom-inline">Portfolio</div></a>
+                    <a href="#services" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-hand-holding"></i></div><div class="nav-link custom-inline">Services</div></a>
+                    <a href="#contact" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-paper-plane"></i></div><div class="nav-link custom-inline">Contact</div></a>
+                </div> 
+            </div>
+        </div>
    </header>
    <!-- ***** End Header ***** -->
 
@@ -352,7 +353,7 @@
         </div>
     </section>
     <!-- ***** End Footer ***** -->
-
+    
     <!-- Bootstrap JS and Pooper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
