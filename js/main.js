@@ -49,13 +49,3 @@ function toTop() {
   document.body.scrollTop = 0; // For Safari
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
-
-/* Hides the overflow then the side nav is open in mobile */
-function noOverflow() {
-  document.body.style.overflow="hidden";
-}
-
-function overFlow() {
-  document.body.style.overflow="visible";
-  document.body.style.backgroundColor = "transparent";
-}

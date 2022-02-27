@@ -95,7 +95,7 @@ transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
 
 /* Profile Picture */
 header .myProfile img {
-    margin: 15px auto;
+    margin: auto;
     display: block;
     width: 140px;
     border: 8px solid #2c2f3f;
@@ -169,17 +169,17 @@ color: #0f8000 !important;
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
   .side-nav{width: 0px;}
-  .hero-container{margin-left: 50px;}
   form{margin: 0px 20px;}
 }
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
   .side-nav{width: 250px;}
   #about{margin-left: 300px; margin-right: 50px;}
-  .hero-container{margin-left: 300px;}
+  .hero-content{margin-left: 300px; margin-right: 50px;}
   #portfolio{margin-left: 300px; margin-right: 50px;}
   #services{margin-left: 300px; margin-right: 50px;}
   #contact{margin-left: 300px; margin-right: 50px;}
+  .copy-right{margin-left: 300px; margin-right: 50px;}
 }
 
 @media screen and (max-width: 766px){
@@ -202,7 +202,7 @@ color: #0f8000 !important;
   font-weight: 500px;
 }
 
-.hero-container h1 {
+.hero-content h1 {
   font-size: 60px;
 }
 
@@ -235,4 +235,11 @@ color: #0f8000 !important;
 
 #contact .btn {
   width: 150px;
+}
+
+/* Footer */
+#footer {
+  color: white;
+  background-color: black;
+  font-size: 20px;
 }
