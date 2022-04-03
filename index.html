@@ -16,17 +16,13 @@
     <!-- Icons CSS -->
     <script defer src="js/all.js"></script>
 
-    <!-- Fontawesome CSS -->
-    <!-- <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.1/css/all.css" crossorigin="anonymous"> -->
-
-    <!-- Fontawesome KIT -->
-    <!-- <script src="https://kit.fontawesome.com/e1d41a4b10.js" crossorigin="anonymous"></script> -->
-
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- JQuery ScrollSpy -->
+    <script type="text/javascript" src="js/jquery.scrollspy.js"></script>
 
     <!-- Custom JS -->
     <script type="text/javascript" src="js/main.js"></script>   
@@ -55,13 +51,24 @@
                     <!-- <a href="#" target="_blank" rel="noopener"><i class ="fab fa-discord"></i><span class="sr-only">Discord</span></a> -->
                     <a href="Lott_Resume_Current.pdf" target="_blank" rel="noopener"><i class="fas fa-file-pdf fa-xs"></i><span class="sr-only">Download Resume</span></a>
                 </div>
-                <div class="profile-links">
+                <!-- <div class="profile-links">
                     <a href="#hero" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline active"><i class="fa-thin fa-home"></i></div><div class="nav-link custom-inline active">Home</div></a>
                     <a href="#about" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-address-card"></i></div><div class="nav-link custom-inline">About</div></a>
                     <a href="#portfolio" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-briefcase"></i></div><div class="nav-link custom-inline">Portfolio</div></a>
                     <a href="#services" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-hand-holding"></i></div><div class="nav-link custom-inline">Services</div></a>
                     <a href="#contact" onclick="closeNavMobile();overFlow()"><div class="link-icon custom-inline"><i class="fa-thin fa-paper-plane"></i></div><div class="nav-link custom-inline">Contact</div></a>
-                </div> 
+                </div>  -->
+                <div class="header">
+                    <nav class="scroll-spy">
+                      <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#portfolio">Portfolio</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                      </ul>
+                    </nav>
+                </div>
             </div>
         </div>
    </header>
@@ -354,6 +361,15 @@
     </section>
     <!-- ***** End Footer ***** -->
     
+    <!-- ScrollSpy -->
+    <script>
+        $('.scroll-spy').scrollSpy({
+        scrollDuration: 800,
+        scrollEasing: 'easeInBack',
+        ignoreAnchors: [ '.not' ],
+      });
+      </script>
+      <!-- End ScrollSpy -->
     <!-- Bootstrap JS and Pooper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

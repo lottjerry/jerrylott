@@ -263,3 +263,15 @@ a:hover .link-icon{
 .custom-inline {
   display: inline-block;
 }
+
+ul {
+  list-style: none;
+}
+
+.header nav ul li a:visited {
+  color: inherit;
+}
+
+.header nav ul li a.active {
+  color: green;
+}
