@@ -131,45 +131,43 @@ header .myProfile .profile-icons a:hover {
   color: aqua;
   transform: scale(1.5);
 }
+
 .profile-icons {
   text-align: center;
   width: 100%;
 }
 
-.profile-links {
-  padding-top: 30px !important;
-}
-
 /* Profile Links */
-.profile-links a {
-  font-size: 20px !important;
-  padding-top: 10px !important;
 
+ul {
+  list-style: none;
+  padding: 20px 0 0 0;
 }
 
-.nav-link {
-  color: rgb(161, 14, 14) !important;
+.header nav ul li a {
+  color: white;
 }
 
-.nav-link.active {
-color: darkgreen !important;
+.header nav ul li a.active {
+  color: green;
 }
 
-
-a .link-icon {
-  color: white !important;
+.header nav ul li a:hover {
+  color: green;
 }
 
-a .link-icon.active {
-  color: aqua !important;
+.li-fa {
+  color: white;
+  display: inline-block;
+  margin-right: 10px;
 }
 
-a:hover .nav-link{
-  color: darkgreen !important;
+a:hover .li-fa {
+  color: aqua;
 }
 
-a:hover .link-icon{
-  color: aqua !important;
+a.active .li-fa {
+  color: aqua;
 }
 
 /* The navigation menu links */
@@ -260,18 +258,3 @@ a:hover .link-icon{
   font-size: 20px;
 }
 
-.custom-inline {
-  display: inline-block;
-}
-
-ul {
-  list-style: none;
-}
-
-.header nav ul li a:visited {
-  color: inherit;
-}
-
-.header nav ul li a.active {
-  color: green;
-}
