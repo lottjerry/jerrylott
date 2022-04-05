@@ -182,18 +182,13 @@ a.active .li-fa {
 
 /* Smaller Screens Side Nav Settings */
 @media screen and (max-width: 1199px){
-  .side-nav{width: 0px;}
-  form{margin: 0px 20px;}
+  .side-nav {width: 0px;}
+  .small-margin {margin: 0px 20px;}
 }
 /* Bigger Screens Side Nav Settings */
 @media screen and (min-width: 1200px){
-  .side-nav{width: 250px;}
-  #about{margin-left: 300px; margin-right: 50px;}
-  .hero-content{margin-left: 300px; margin-right: 50px;}
-  #portfolio{margin-left: 300px; margin-right: 50px;}
-  #services{margin-left: 300px; margin-right: 50px;}
-  #contact{margin-left: 300px; margin-right: 50px;}
-  .copy-right{margin-left: 300px; margin-right: 50px;}
+  .side-nav {width: 250px;}
+  .large-margin {margin-left: 300px; margin-right: 50px;}
 }
 
 @media screen and (max-width: 766px){
@@ -221,6 +216,7 @@ a.active .li-fa {
 }
 
 /* About */
+
 #about ul {
   list-style:none;
   text-align: left;
