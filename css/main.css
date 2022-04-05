@@ -2,6 +2,19 @@ body {
   position: relative;
 }
 
+p {
+  font-size: 18px;
+}
+
+.sec-color {
+  color: rgb(3, 86, 114);
+}
+
+section:nth-child(even) {
+  background: rgba(3, 86, 114, 0.048);
+}
+
+
 /* Custom Scrollbar */
 /* Entire Scrollbar */
 ::-webkit-scrollbar {
@@ -36,7 +49,7 @@ body {
   position: fixed;
   right: 15px;
   top: 15px;
-  background-color: black;
+  background-color: rgba(3, 86, 114, 0.473);
   border: none; /* Remove borders */
   color: white; /* White text */
   font-size: 16px; /* Set a font size */
@@ -48,7 +61,7 @@ body {
 }
 
 .side-nav-toggle:hover {
-  background-color: rgb(56, 187, 52);
+  background-color: rgb(3, 86, 114);
 }
 
 /* Back To Top Button */
@@ -59,34 +72,34 @@ body {
   position: fixed;
   bottom: 20px;
   right: 15px;
-  background-color: black; /* Blue background */
-  border: none; /* Remove borders */
-  color: white; /* White text */
-  font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
-  width: 40px !important; /* Makes both buttons the same width */
-  height: 40px !important; /* Circle = same (Height & Width) + 50% border-radius */
+  background-color: rgba(3, 86, 114, 0.473); 
+  border: none; 
+  color: white; 
+  font-size: 16px; 
+  cursor: pointer; 
+  width: 40px !important;
+  height: 40px !important;
   border-radius: 50%;
-  align-items: center;  /* aligns both fontawesome icons */
+  align-items: center;
 }
 
 .back-to-top:hover {
-  background-color: rgb(56, 187, 52);
+  background-color: rgb(3, 86, 114);
 }
 
 
 /* Side Nav */
 .side-nav {
-height: 100%; /* 100% Full-height */
-width: 0; /* 0 width - change this with JavaScript */
-position: fixed; /* Stay in place */
-z-index: 1; /* Stay on top */
-top: 0; /* Stay at the top */
+height: 100%;
+width: 0;
+position: fixed;
+z-index: 1;
+top: 0;
 left: 0;
-background-color: #111; /* Black*/
+background-color: black;
 overflow: auto;
-padding-top: 30px; /* Place content 60px from the top */
-transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
+padding-top: 30px;
+transition: 0.5s;
 }
 
 .side-nav a:hover {
@@ -98,7 +111,7 @@ header .myProfile img {
     margin: auto;
     display: block;
     width: 140px;
-    border: 8px solid #2c2f3f;
+    border: 8px solid rgb(3, 86, 114);
 }
 
 /* Profile Name */
@@ -128,7 +141,7 @@ header .myProfile .profile-icons a {
 }
 
 header .myProfile .profile-icons a:hover {
-  color: aqua;
+  color: rgb(3, 86, 114);
   transform: scale(1.5);
 }
 
@@ -144,30 +157,26 @@ ul {
   padding: 20px 0 0 0;
 }
 
-.header nav ul li a {
-  color: white;
-}
 
 .header nav ul li a.active {
-  color: green;
+  color: white;
 }
 
 .header nav ul li a:hover {
-  color: green;
+  color: white;
 }
 
 .li-fa {
-  color: white;
   display: inline-block;
   margin-right: 15px;
 }
 
 a:hover .li-fa {
-  color: aqua;
+  color: rgb(3, 86, 114);
 }
 
 a.active .li-fa {
-  color: aqua;
+  color: rgb(3, 86, 114);
 }
 
 /* The navigation menu links */
@@ -197,7 +206,7 @@ a.active .li-fa {
 
 /* Hero */
 #hero {
-  background:linear-gradient(rgba(37, 34, 34, 0), rgba(37, 34, 34, 0.7)), url(../images/background2.jpg);
+  background:linear-gradient(rgba(37, 34, 34, 0.493), rgb(37, 34, 34)), url(../images/background2.jpg);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
@@ -211,17 +220,31 @@ a.active .li-fa {
   font-weight: 500px;
 }
 
-.hero-content h1 {
+#myElement {
+  text-decoration: underline;
+  text-decoration-color:  rgb(3, 86, 114);
+  text-decoration-thickness: 4px;
+  text-underline-offset: 10px;
+
+}
+
+#hero h1 {
   font-size: 60px;
+}
+
+#hero p {
+  font-size: 30px;
 }
 
 /* About */
 
+#about p strong {
+  color: rgb(3, 86, 114);
+}
 #about ul {
   list-style:none;
   text-align: left;
   font-size: 20px;
-
 }
 
 #about li {
@@ -245,12 +268,18 @@ a.active .li-fa {
 
 #contact .btn {
   width: 150px;
+  background: rgb(3, 86, 114);
+}
+#contact .btn:hover {
+  background-color: black;
 }
 
+
 /* Footer */
+
 #footer {
   color: white;
-  background-color: black;
+  background-color: black !important;
   font-size: 20px;
 }
 
