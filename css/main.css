@@ -238,6 +238,16 @@ a.active .li-fa {
 
 /* About */
 
+.skills-intro {
+  font-size: 20px;
+  font-weight: bold;
+  padding: 20px 0;
+}
+
+.fa-3x {
+  font-size: 5rem;
+}
+
 #about p strong {
   color: rgb(3, 86, 114);
 }
@@ -259,6 +269,57 @@ a.active .li-fa {
   height: 1000px;
 }
 
+.portfolio-nav {
+  text-align: center;
+  width: 300px;
+  height: 60px;
+  background: rgba(3, 86, 114, 0.048);
+  border-radius: 40px;
+  margin: 50px auto;
+}
+
+
+.portfolio-nav ul li {
+  display: inline;
+  margin: 0 15px;
+  font-weight: bold;
+  color: black;
+}
+
+.portfolio-nav ul li:hover {
+  color: rgb(3, 86, 114);
+  cursor: pointer;
+}
+
+/* https://www.30secondsofcode.org/css/s/hover-underline-animation */
+
+.hover-underline-animation {
+  display: inline-block;
+  position: relative;
+  color: rgb(3, 86, 114);
+}
+
+.hover-underline-animation:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: rgb(3, 86, 114);
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.hover-underline-animation:hover:after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+
+
+
 /* Services */
 
 /* Contact */
@@ -274,6 +335,13 @@ a.active .li-fa {
   background-color: black;
 }
 
+#floatingInputGrid, textarea {
+  background-color : rgba(3, 86, 114, 0.048); 
+}
+
+#floatingTextarea2, textarea {
+  background-color : rgba(3, 86, 114, 0.048);
+}
 
 /* Footer */
 
