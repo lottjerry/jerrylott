@@ -29,6 +29,9 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="css/main.css">
 
+    <!-- Image Gallery -->
+    <script src="/js/image.gallery.js"></script>
+
     <!-- JQuery -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <!-- JQuery ScrollSpy -->
@@ -193,13 +196,32 @@
             </div>
             <nav class="portfolio-nav">
                 <ul>
-                    <li class="hover-underline-animation">All</li>
-                    <li class="hover-underline-animation">Web</li>
-                    <li class="hover-underline-animation">Software</li>
-                    <li class="hover-underline-animation">Art</li>
+                    <li category="*" class="hover-underline-animation">All</li>
+                    <li category="Web" class="hover-underline-animation">Web</li>
+                    <li category="Software" class="hover-underline-animation">Software</li>
+                    <li category="Art" class="hover-underline-animation">Art</li>
                 </ul>
             </nav>
-        </div>
+            <div id="demo-1" class="port-margin">
+                <div category="Web">
+                    <img class="img-thumbnail" src="/images/sample.jpg" />
+                </div>
+                <div category="Web">
+                    <img class="img-thumbnail" src="/images/sample.jpg" />
+                </div>
+                <div category="Software">
+                    <img class="img-thumbnail" src="/images/sample.jpg" />
+                </div>
+                <div category="Art">
+                    <img class="img-thumbnail" src="/images/sample.jpg" />
+                </div>
+                <div category="Software">
+                    <img class="img-thumbnail" src="/images/sample.jpg" />
+                </div>
+                <div category="Web">
+                    <img class="img-thumbnail" src="/images/sample.jpg" />
+                </div>
+            </div>
     </section>
     <!-- ***** End Portfolio *****-->
 
@@ -390,6 +412,17 @@
         });
     </script>
 
+    <!-- Image Gallery -->
+    <script>
+        addEventListener('load', function() {
+            var gallery = new ResponsiveImageGallery({
+                el: '#demo-1',
+                bar: '.portfolio-nav',
+                grid: false,
+                height: 0
+            });
+        }); 
+    </script>
     <!-- Bootstrap JS and Pooper -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

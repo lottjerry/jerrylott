@@ -265,8 +265,12 @@ a.active .li-fa {
 }
 
 /* Portfolio */
-#portfolio {
-  height: 1000px;
+.port-margin {
+  margin-bottom: 10%;
+}
+.img-thumbnail {
+  border-color: rgb(3, 86, 114);
+  background-color: rgba(3, 86, 114, 0.473);
 }
 
 .portfolio-nav {
@@ -291,6 +295,11 @@ a.active .li-fa {
   cursor: pointer;
 }
 
+ul > li.rig-active {
+  color: rgb(3, 86, 114);
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+}
 /* https://www.30secondsofcode.org/css/s/hover-underline-animation */
 
 .hover-underline-animation {
