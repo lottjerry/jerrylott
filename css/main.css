@@ -53,7 +53,6 @@ section:nth-child(even) {
   border: none; /* Remove borders */
   color: white; /* White text */
   font-size: 16px; /* Set a font size */
-  cursor: pointer; /* Mouse pointer on hover */
   width: 40px !important; /* Makes both buttons the same width */
   height: 40px !important; /* Circle = same (Height & Width) + 50% border-radius */
   border-radius: 50%;
@@ -265,12 +264,85 @@ a.active .li-fa {
 }
 
 /* Portfolio */
+.image-btn {
+  opacity: 0;
+  cursor: point;
+  z-index: 2;
+  position: fixed;
+  top: 30px;
+  right: 1px;
+  background-color: rgba(3, 86, 114, 0.42); 
+  border: none; 
+  color: white; 
+  font-size: 16px; 
+  cursor: pointer; 
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: .5s ease;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.image-btn2 {
+  opacity: 0;
+  cursor: point;
+  z-index: 2;
+  position: fixed;
+  top: 75px;
+  right: 1px;
+  background-color: rgba(3, 86, 114, 0.42); 
+  border: none; 
+  color: white; 
+  font-size: 16px; 
+  cursor: pointer; 
+  width: 40px !important;
+  height: 40px !important;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  transition: .5s ease;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.image-btn:hover {
+  background-color: rgba(3, 86, 114)
+}
+
+.image-btn2:hover {
+  background-color: rgba(3, 86, 114)
+}
+
+.image-btns:hover .image-btn {
+  opacity: 1;
+}
+
+.image-btns:hover .image-btn2 {
+  opacity: 1;
+}
+
+.image-btns:hover .img-thumbnail {
+  opacity: 0.5;
+}
 .port-margin {
   margin-bottom: 10%;
 }
+
 .img-thumbnail {
   border-color: rgb(3, 86, 114);
   background-color: rgba(3, 86, 114, 0.473);
+  opacity: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: .5s ease;
+  backface-visibility: hidden;
 }
 
 .portfolio-nav {
