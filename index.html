@@ -38,7 +38,11 @@
     <script type="text/javascript" src="js/jquery.scrollspy.js"></script>
 
     <!-- Custom JS -->
-    <script type="text/javascript" src="js/main.js"></script>   
+    <script type="text/javascript" src="js/main.js"></script>  
+    
+    <!-- PhotoSwipe CSS -->
+    <link rel="stylesheet" href="/css/photoswipe.css">
+
 </head>
 <body onload="autoNav();">
 
@@ -56,7 +60,7 @@
             <div class ="myProfile">
                 <img src="images/profile.jpg" class="img-fluid rounded-circle" alt="Jerry's Profile Picture">
                 <h1>
-                    <a href="#">Jerry Lott</a> 
+                    <a href="#" onclick="closeNavMobile()">Jerry Lott</a> 
                 </h1>
                 <div class="profile-icons">
                     <a href="https://github.com/lottjerry" target="_blank" rel="noopener"><i class="fab fa-github fa-xs"></i><span class="sr-only">GitHub</span></a>
@@ -207,8 +211,11 @@
                     <div class="image-btns">
                         <img class="img-thumbnail" src="/images/sample.jpg" />
                         <div class="image-btns">
-                            <button class="image-btn"><i class="fa-solid fa-info"></i></button> 
-                            <button class="image-btn2"><i class="fa-solid fa-plus"></i></button>
+                            <a href="/images/sample.jpg" data-pswp-width="1875" 
+                            data-pswp-height="2500"
+                            target ="_blank" 
+                            class="image-btn"><i class="fa-solid fa-info"></i>
+                            </a> 
                         </div>
                     </div>
                 </div>
@@ -260,7 +267,6 @@
             </div>
     </section>
     <!-- ***** End Portfolio *****-->
-
     <!-- ***** Services ***** -->
     <section id="services">
         <div class="large-margin small-margin">
@@ -414,7 +420,20 @@
     </script>
     <!-- End ScrollSpy -->
 
-    <!-- TypeIt CDN -->
+    <!-- PhotoSwipe -->
+    <script type="module">
+        import PhotoSwipeLightbox from '/js/photoswipe-lightbox.esm.js';
+        const lightbox = new PhotoSwipeLightbox({
+          gallery: '#demo-1',
+          children: '.image-btn',
+          pswpModule: () => import('/js/photoswipe.esm.js')
+        });
+        lightbox.init();
+    </script>
+
+    <!-- End PhotoSwipe-->
+
+    <!-- TypeIt -->
     <script src="https://unpkg.com/typeit@8.4.0/dist/index.umd.js"></script>
 
     <script>
@@ -439,6 +458,8 @@
           .go();
         });
     </script>
+
+    <!-- End TypeIt -->
 
     <script>
         history.scrollRestoration = "manual";
