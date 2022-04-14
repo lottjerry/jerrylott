@@ -42,6 +42,7 @@
     
     <!-- PhotoSwipe CSS -->
     <link rel="stylesheet" href="/css/photoswipe.css">
+    <link rel="stylesheet" href="/css/photoswipe-dynamic-caption-plugin.css">
 
 </head>
 <body onload="autoNav();">
@@ -209,12 +210,16 @@
             <div id="demo-1" class="port-margin">
                 <div category="Web">
                     <div class="image-btns">
-                        <img class="img-thumbnail" src="/images/sample.jpg" />
+                        <img class="img-thumbnail" src="/images/sample.jpg" alt="city" />
                         <div class="image-btns">
-                            <a href="/images/sample.jpg" data-pswp-width="1875" 
-                            data-pswp-height="2500"
+                            <a href="/images/sample.jpg" data-pswp-width="1805" 
+                            data-pswp-height="1205"
                             target ="_blank" 
+                            alt="city"
                             class="image-btn"><i class="fa-solid fa-info"></i>
+                            <span class="pswp-caption-content">
+                                <h1> jerrylott.com </h1>
+                            </span>
                             </a> 
                         </div>
                     </div>
@@ -423,11 +428,30 @@
     <!-- PhotoSwipe -->
     <script type="module">
         import PhotoSwipeLightbox from '/js/photoswipe-lightbox.esm.js';
+        import PhotoSwipeDynamicCaption from '/js/photoswipe-dynamic-caption-plugin.esm.js';
+
         const lightbox = new PhotoSwipeLightbox({
-          gallery: '#demo-1',
-          children: '.image-btn',
-          pswpModule: () => import('/js/photoswipe.esm.js')
+            gallery: '#demo-1',
+            children: '.image-btn',
+            pswpModule: () => import('/js/photoswipe.esm.js'),
+
+            bgOpacity: 0.9,
+
+            // Optional padding for images,
+            // note that this is an option of PhotoSwipe, not a plugin
+            paddingFn: (viewportSize) => {
+                return {
+                    top: 30, bottom: 30, left: 70, right: 500
+                }
+            },
         });
+
+
+        const captionPlugin = new PhotoSwipeDynamicCaption(lightbox, {
+            // Plugins options, for example:
+            type: 'auto',
+        });
+
         lightbox.init();
     </script>
 
