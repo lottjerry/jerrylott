@@ -267,6 +267,24 @@ a.active .li-fa {
 }
 
 /* Portfolio */
+.image-title {
+  font-weight: bold;
+  font-size: 25px;
+  width: 500px;
+}
+
+.port-items li {
+  margin: 10px 0;
+  font-family: "Open Sans", sans-serif;
+  width: 300px;
+}
+
+.line {
+  width: 450px;
+  height: 30px;
+  border-bottom: 2px solid white;
+  position: absolute;
+}
 .image-btn {
   opacity: 0;
   cursor: point;
@@ -277,7 +295,7 @@ a.active .li-fa {
   background-color: rgba(3, 86, 114, 0.42); 
   border: none; 
   color: white; 
-  font-size: 16px; 
+  font-size: 18px; 
   cursor: pointer; 
   width: 30px !important;
   height: 30px !important;
