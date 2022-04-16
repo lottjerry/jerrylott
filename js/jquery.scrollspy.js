@@ -52,11 +52,11 @@
     $(window).on('resize', update);
     
     /* Saves scroll location */
-    $(window).on('load', function(){
-      if (location.hash) {
-        scrollTo(location.hash);
-      }
-    });
+    // $(window).on('load', function(){
+    //   if (location.hash) {
+    //     scrollTo(location.hash);
+    //   }
+    // });
     
     return this.each(function(){
       var $ScrollSpy = this;
