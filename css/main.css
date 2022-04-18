@@ -153,7 +153,6 @@ header .myProfile .profile-icons a:hover {
 }
 
 /* Profile Links */
-
 ul {
   list-style: none;
   padding: 20px 0 0 0;
@@ -239,7 +238,6 @@ a.active .li-fa {
 }
 
 /* About */
-
 .skills-intro {
   font-size: 20px;
   font-weight: bold;
@@ -267,6 +265,11 @@ a.active .li-fa {
 }
 
 /* Portfolio */
+/* Temporary fix to scrollspy now working */
+@media screen and (min-width: 558px){
+  #portfolio{height: 1000px;}
+}
+
 .image-title {
   font-weight: bold;
   font-size: 25px;
@@ -450,7 +453,6 @@ ul > li.rig-active {
 }
 
 /* Footer */
-
 #footer {
   color: white;
   background-color: black !important;
