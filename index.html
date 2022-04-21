@@ -47,6 +47,7 @@
     <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+
 </head>
 <body onload="autoNav();">
 
@@ -107,8 +108,7 @@
                 <h1><i class="fa-regular fa-horizontal-rule sec-color"></i></h1>
                 <p class="pt-3">
                     Recent Computer Science Graduate with a minor in mathematics. Although i have 0 experience on the job, I have alot of experience developing real world projects. 
-                    I spend most of my time developing my personal website. I'm in the process of volunteering to work on local businesses websites in order to build up my portfolio. 
-                    Although I have a passion for Web and Software Development, I also love art and graphic design. I'm a tech Enthusiast, fast learner, 
+                    Currently most of my time is spent developing my personal website. I'm in the process of volunteering to work on local businesses websites in order to build up my portfolio. Web and Software Development is my passion but I also love art and graphic design. I'm a tech Enthusiast, fast learner, 
                     who loves to learn new things.
                 </p>
             </div>
@@ -123,7 +123,7 @@
                                 <ul class="fa-ul">
                                 <li> <span class="fa-li"><i class="fa-solid fa-calendar-day sec-color"></i></span> <strong>Birthday:</strong> <span>August 9, 1991</span></li>
                                 <li> <span class="fa-li"><i class="fa-solid fa-window-restore sec-color"></i></span> <strong>Website:</strong> <span>jerrylott.com</span></li>
-                                <li> <span class="fa-li"><i class="fa-solid fa-phone sec-color"></i></span> <strong>Phone:</strong> <span>+601.778.5060</span></li>
+                                <li> <span class="fa-li"><i class="fa-solid fa-phone sec-color"></i></span> <strong>Phone:</strong> <span>+601.422.9466</span></li>
                                 <li> <span class="fa-li"><i class="fa-solid fa-location-arrow sec-color"></i></span> <strong>City/State:</strong> <span>Laurel, MS</span></li>
                                 </ul>
                             </div>
@@ -358,7 +358,7 @@
                         <h5> <span class="fa-stack fa-xs">
                             <i class="fa-solid fa-square fa-stack-2x"></i>
                             <i class="fa-solid fa-mobile fa-stack-1x fa-inverse"></i>
-                        </span> <strong>Phone: +601.778.5060</strong></h5>
+                        </span> <strong>Phone: +601.422.9466</strong></h5>
                     </div>
                     <div class="pt-2" data-aos="fade-right" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="600" data-aos-duration="800">
                         <h5> <span class="fa-stack fa-xs">
@@ -374,17 +374,17 @@
                     </div>  
                 </div>
             </div>
-            <form id="contact-form" name="contact-form" action="mail" method="POST">
+            <form id="contact-form" name="contact-form" action="https://formsubmit.co/contact@jerrylott.com" method="POST">
                 <div class="row" data-aos="fade-left" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="500" data-aos-duration="800">
                     <div class="col-md-6 pt-3">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="Name">
+                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="Name" name="name" required>
                             <label for="floatingInputGrid">Name</label>
                         </div>
                     </div>
                     <div class="col-md-6 pt-3">
                         <div class="form-floating">
-                            <input type="email" class="form-control" id="floatingInputGrid" placeholder="Email">
+                            <input type="email" class="form-control" id="floatingInputGrid" placeholder="Email" name="email" required>
                             <label for="floatingInputGrid">Email address</label>
                         </div>
                     </div>
@@ -392,7 +392,7 @@
                 <div class="div pt-3" data-aos="fade-left" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="600" data-aos-duration="800">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="Subject">
+                            <input type="text" class="form-control" id="floatingInputGrid" placeholder="Subject" name="subject">
                             <label for="floatingInputGrid">Subject</label>
                         </div>
                     </div>
@@ -400,13 +400,15 @@
                 <div class="row pt-3" data-aos="fade-left" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="700" data-aos-duration="800">
                     <div class="col">
                         <div class="form-floating">
-                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 250px"></textarea>
+                            <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 250px" name="message"></textarea>
                             <label for="floatingTextarea2">Message</label>
                         </div>
                     </div>
                 </div>
+                <input type="hidden" name="_template" value="box">
+                <input type="hidden" name="_next" value="http://localhost:5500/thanks.html">
             </form>
-            <div class="text-center text-md-left py-4" data-aos="fade-down" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="700" data-aos-duration="800">
+            <div class="text-center text-md-left py-4" data-aos="fade-down" data-aos-easing="ease-in" data-aos-once="true" data-aos-duration="800">
                 <a class="btn btn-dark" onclick="document.getElementById('contact-form').submit();">Send</a>
             </div>
         </div>
