@@ -265,7 +265,7 @@ a.active .li-fa {
 }
 
 /* Portfolio */
-/* Temporary fix to scrollspy now working */
+/* Temporary fix to scrollspy not working */
 @media screen and (min-width: 558px){
   #portfolio{height: 1000px;}
 }
