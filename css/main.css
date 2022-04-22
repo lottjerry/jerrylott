@@ -279,7 +279,7 @@ a.active .li-fa {
 .port-items li {
   margin: 10px 0;
   font-family: "Open Sans", sans-serif;
-  width: 300px;
+  width: 320px;
 }
 
 .line {
@@ -426,8 +426,19 @@ ul > li.rig-active {
   transform-origin: bottom left;
 }
 
+.astext {
+  background:none;
+  border:none;
+  margin:0;
+  padding:0;
+  cursor: pointer;
+  color:white;
+}
 
-
+.astext:hover {
+  text-decoration: underline;
+  color: rgb(3, 86, 114);
+}
 
 /* Services */
 
@@ -458,4 +469,3 @@ ul > li.rig-active {
   background-color: black !important;
   font-size: 20px;
 }
-
