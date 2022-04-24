@@ -50,3 +50,7 @@ function toTop() {
   document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
 }
 
+ //email
+ const email = 'jerry@jerrylott.com';
+ const encodedEmail = encodeURIComponent(email);
+ const url = `https://formsubmit.co/${encodedEmail}`;
