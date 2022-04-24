@@ -2,6 +2,13 @@ body {
   position: relative;
 }
 
+/*Fixed Mobile Overflow*/
+@media (max-width: 800px) {
+  html, body {
+  overflow-x: hidden;
+  }
+}
+
 p {
   font-size: 18px;
 }
