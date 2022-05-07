@@ -214,7 +214,7 @@ a.active .li-fa {
 
 /* Hero */
 #hero {
-  background:linear-gradient(rgba(37, 34, 34, 0.493), rgb(37, 34, 34)), url(../images/main/background.png);
+  background:linear-gradient(rgba(37, 34, 34, 0.493), rgb(37, 34, 34)), url(../images/main/background.webp);
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
