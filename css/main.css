@@ -370,7 +370,7 @@ a.active .li-fa {
 }
 
 .img-thumbnail {
-  border: 5px solid rgba(3, 86, 114);
+  border-color: rgb(3, 86, 114);
   background-color: rgba(3, 86, 114, 0.473);
   opacity: 1;
   display: block;
@@ -475,11 +475,4 @@ ul > li.rig-active {
   color: white;
   background-color: black !important;
   font-size: 20px;
-}
-
-.img-fluid {
-  border-radius: 50%;
-  border: 10px solid rgb(3, 86, 114);
-  margin-left: 20px;
-  margin-right: 20px;
 }
