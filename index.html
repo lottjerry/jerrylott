@@ -46,6 +46,7 @@
     <!-- AOS CSS -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
 
 </head>
 <body onload="autoNav();">
@@ -62,7 +63,16 @@
     <header>
         <div id="side-nav" class="side-nav">
             <div class ="myProfile">
-                <img src="images/main/profile.webp" class="img-fluid rounded-circle" alt="Jerry's Profile Picture">
+                <amp-img
+                    class="img-fluid"
+                    alt="Jerry's Profile Picture"
+                    src="images/main/profile.webp"
+                    width="175"
+                    height="175"
+                    layout="responsive"
+                >
+                </amp-img>
+                <!-- <img src="images/main/profile.webp" class="img-fluid rounded-circle" alt="Jerry's Profile Picture"> -->
                 <h1>
                     <a href="#" onclick="closeNavMobile()">Jerry Lott</a> 
                 </h1>
@@ -113,7 +123,7 @@
             </div>
             <div class="row pt-3">
                 <div class="col-lg-4 text-center" data-aos="fade-right" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="250" data-aos-duration="800">
-                    <img src="images/main/about.webp" class="img-fluid" alt="Personal Image">
+                    <img src="images/main/about.webp" class="about-img" alt="Personal Image">
                 </div>
                 <div class="col-lg-8 pt-4 pt-lg-0" data-aos="fade-left" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="250" data-aos-duration="800">
                     <div class="custom-margin">
@@ -212,7 +222,15 @@
             <div id="demo-1" class="port-margin" data-aos="fade-up" data-aos-easing="ease-in" data-aos-once="true" data-aos-delay="500" data-aos-duration="1000">
                 <div category="Web">
                     <div class="image-btns">
-                        <img class="img-thumbnail" src="images/portfolio/jerrylott_image.webp" alt="Jerry Lott (Personal Website)" />
+                        <amp-img
+                            class="img-thumbnail"
+                            alt="Jerry Lott (Personal Website)"
+                            src="images/portfolio/jerrylott_image.webp"
+                            width="175"
+                            height="100"
+                            layout="responsive"
+                        >
+                        </amp-img>
                         <div class="image-btns">
                             <a href="images/portfolio/jerrylott_image.webp" data-pswp-width="1911" 
                             data-pswp-height="928"
@@ -236,7 +254,15 @@
                 </div>
                 <div category="Art">
                     <div class="image-btns">
-                        <img class="img-thumbnail" src="images/portfolio/my_favorite_couple.webp" alt="Date Night" />
+                        <amp-img
+                            class="img-thumbnail"
+                            alt="Date Night"
+                            src="images/portfolio/my_favorite_couple.webp"
+                            width="175"
+                            height="100"
+                            layout="responsive"
+                        >
+                        </amp-img>
                         <div class="image-btns">
                             <a href="images/portfolio/my_favorite_couple.webp" data-pswp-width="1920" 
                             data-pswp-height="1200"
@@ -258,7 +284,15 @@
                 </div>
                 <div category="Art">
                     <div class="image-btns">
-                        <img class="img-thumbnail" src="images/portfolio/my_first_masterpiece.webp" alt="My First Masterpiece" />
+                        <amp-img
+                            class="img-thumbnail"
+                            alt="My First Masterpiece"
+                            src="images/portfolio/my_first_masterpiece.webp"
+                            width="175"
+                            height="175"
+                            layout="responsive"
+                        >
+                        </amp-img>
                         <div class="image-btns">
                             <a href="images/portfolio/my_first_masterpiece.webp" data-pswp-width="1200" 
                             data-pswp-height="1920"
