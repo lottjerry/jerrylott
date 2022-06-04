@@ -925,6 +925,8 @@ img {
 
 .submit__button {
   border: none !important;
+  font-weight: var(--font-medium);
+  font-size: var(--font-medium);
 }
 
 /*==================== FOOTER ====================*/
