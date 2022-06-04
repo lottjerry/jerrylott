@@ -923,6 +923,10 @@ img {
   cursor: pointer;
 }
 
+.submit__button {
+  border: none;
+}
+
 /*==================== FOOTER ====================*/
 .footer {
   padding-top: 2rem;
