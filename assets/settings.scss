@@ -1,0 +1,6 @@
+$family: 'Poppins', sans-serif;
+
+@use 'vuetify/settings' with (
+	$body-font-family: $family,
+  $field-border-radius: 8px
+);
