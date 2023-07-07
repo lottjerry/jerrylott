@@ -15,7 +15,7 @@ import Navbar from '../components/Navbar.vue';
 
 <style>
 .custom-margin {
-	margin-left: 10%;
+	margin: 2% 7.5% 2% 15%;
 }
 .page-enter-active,
 .page-leave-active {
