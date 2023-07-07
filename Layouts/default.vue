@@ -9,7 +9,7 @@
 							<v-icon v-else>ph:sun</v-icon>
 						</v-btn>
 					</div>
-					<v-container>
+					<div class="d-flex justify-center">
 						<v-avatar size="avatar">
 							<img
 								src="../assets/img/home-img.jpg"
@@ -17,9 +17,31 @@
 								height="150"
 							/>
 						</v-avatar>
-					</v-container>
+					</div>
+					<div class="text-center text-h6 font-weight-bold pb-3">Jerry Lott</div>
+
 					<v-divider></v-divider>
-					<div class="text-center text-h6 font-weight-bold">Jerry Lott</div>
+					<v-list density="compact" class="d-flex justify-center">
+						<v-btn
+							variant="text"
+							size="avatar"
+							class="mr-5"
+							href="https://www.linkedin.com/in/jerrylott/"
+							target="_blank"
+							rel="noopener"
+						>
+							<v-icon>ph:linkedin-logo-duotone</v-icon>
+						</v-btn>
+						<v-btn
+							variant="text"
+							size="avatar"
+							href="https://github.com/lottjerry"
+							target="_blank"
+							rel="noopener"
+						>
+							<v-icon>ph:github-logo-duotone</v-icon>
+						</v-btn>
+					</v-list>
 					<v-divider></v-divider>
 					<v-list density="compact" nav class="mt-5">
 						<NuxtLink to="/">
@@ -42,7 +64,6 @@
 						></NuxtLink>
 					</v-list>
 				</v-navigation-drawer>
-
 				<v-main style="height: 100vh" class="ma-5"
 					><!-- Page Content -->
 					<div>
