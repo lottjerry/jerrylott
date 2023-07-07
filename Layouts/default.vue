@@ -13,8 +13,17 @@
 import Navbar from '../components/Navbar.vue';
 </script>
 
-<style lang="scss" scoped>
+<style>
 .custom-margin {
 	margin-left: 10%;
+}
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.5s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 </style>

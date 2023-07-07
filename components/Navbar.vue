@@ -2,7 +2,7 @@
 	<v-navigation-drawer width="175" theme="dark">
 		<div class="d-flex justify-end pa-1">
 			<v-btn @click="toggleTheme" variant="text" size="avatar">
-				<v-icon v-if="mode === 'myTheme'">ph:moon</v-icon>
+				<v-icon v-if="theme.global.name.value === 'myTheme'">ph:moon</v-icon>
 				<v-icon v-else>ph:sun</v-icon>
 			</v-btn>
 		</div>
@@ -62,12 +62,10 @@
 <script setup>
 import { useTheme } from 'vuetify';
 const theme = useTheme();
-let mode = ref();
 
 const toggleTheme = () => {
 	theme.global.name.value = theme.global.current.value.dark
 		? 'myTheme'
 		: 'dark';
-	mode = theme.global.name.value;
 };
 </script>
