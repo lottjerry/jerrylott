@@ -3,7 +3,7 @@
 		<header>
 			<Navbar />
 		</header>
-		<main class="custom-margin">
+		<main>
 			<slot />
 		</main>
 	</v-app>
@@ -14,9 +14,7 @@ import Navbar from '../components/Navbar.vue';
 </script>
 
 <style>
-.custom-margin {
-	margin: 2% 7.5% 2% 15%;
-}
+
 .page-enter-active,
 .page-leave-active {
   transition: all 0.5s;
