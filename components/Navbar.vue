@@ -1,10 +1,15 @@
 <template>
 	<v-navigation-drawer width="175" theme="dark">
 		<div class="d-flex justify-end pa-1">
-			<v-btn @click="toggleTheme" variant="text" size="avatar">
+			<div
+				@click="toggleTheme"
+				variant="text"
+				size="avatar"
+				class="custom-toggle text-primary"
+			>
 				<v-icon v-if="theme.global.name.value === 'myTheme'">ph:moon</v-icon>
 				<v-icon v-else>ph:sun</v-icon>
-			</v-btn>
+			</div>
 		</div>
 		<div class="d-flex justify-center">
 			<v-avatar size="avatar">
@@ -56,6 +61,11 @@
 				></v-list-item
 			></NuxtLink>
 		</v-list>
+		<template v-slot:append>
+			<p class="text-center text-subtitle-2 py-2">
+			&copy; Jerry Lott. All rights reserved.
+		</p>
+		</template>
 	</v-navigation-drawer>
 </template>
 
@@ -69,3 +79,13 @@ const toggleTheme = () => {
 		: 'dark';
 };
 </script>
+
+<style>
+.custom-toggle {
+	cursor: pointer;
+}
+
+.custom-toggle:hover {
+	color: #02e328 !important;
+}
+</style>
