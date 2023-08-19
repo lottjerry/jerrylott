@@ -79,22 +79,30 @@
 			</v-navigation-drawer>
 
 			<!-- NAVIGATION APP BAR -->
-			<v-app-bar
-				class="hidden-lg-and-up"
-				theme="dark"
-				density="compact"
-				:class="{ 'main-content-pushed': drawer }"
-			>
-				<v-app-bar-nav-icon
-					@click="drawer = !drawer"
-					density="comfortable"
-				></v-app-bar-nav-icon>
-				<v-toolbar-title>Jerry</v-toolbar-title>
+			<v-app-bar class="hidden-lg-and-up" theme="dark" density="compact">
+				<div
+					:class="{
+						'content-pushed': drawer,
+						'content-back': !drawer,
+					}"
+					class="d-flex justify-center align-center"
+				>
+					<v-app-bar-nav-icon
+						@click="drawer = !drawer"
+						density="comfortable"
+					></v-app-bar-nav-icon>
+					<v-toolbar-title class="ml-2">Jerry</v-toolbar-title>
+				</div>
 			</v-app-bar>
 		</header>
 
 		<!-- MAIN -->
-		<main>
+		<main
+			:class="{
+				'content-pushed': drawer,
+				'content-back': !drawer,
+			}"
+		>
 			<slot />
 		</main>
 	</v-app>
@@ -117,8 +125,13 @@ const toggleTheme = () => {
 <style>
 /* Styles for the drawer and main content go here */
 
-.main-content-pushed {
+.content-pushed {
 	margin-left: 175px; /* Adjust the value to match the drawer width */
+	transition: 0.15s ease-in-out;
+}
+.content-back {
+	margin-left: 0px; /* Adjust the value to match the drawer width */
+	transition: 0.15s ease-in-out;
 }
 
 .page-enter-active,
