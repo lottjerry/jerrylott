@@ -18,18 +18,20 @@
 					</div>
 				</div>
 				<div class="d-flex justify-center">
-					<v-avatar size="avatar">
-						<img
-							src="../assets/img/home-img.jpg"
-							alt="Jerry Lott"
-							height="150"
-						/>
-					</v-avatar>
+					<div class="gradient-background rounded-circle pa-1">
+						<v-avatar size="avatar">
+							<img
+								src="../assets/img/home-img.jpg"
+								alt="Jerry Lott"
+								height="150"
+							/>
+						</v-avatar>
+					</div>
 				</div>
 				<div class="text-center text-h6 font-weight-bold pb-3">Jerry Lott</div>
 
 				<v-divider></v-divider>
-				<v-list density="compact" class="d-flex justify-center">
+				<v-list density="compact" class="d-flex justify-center" >
 					<v-btn
 						variant="text"
 						size="avatar"
@@ -61,8 +63,8 @@
 							class="mb-5"
 						></v-list-item>
 					</NuxtLink>
-					<NuxtLink to="/about"
-						><v-list-item
+					<NuxtLink to="/about">
+						<v-list-item
 							prepend-icon="ph:user-thin"
 							title="About"
 							value="about"
@@ -127,24 +129,36 @@ const toggleTheme = () => {
 
 .content-pushed {
 	margin-left: 175px; /* Adjust the value to match the drawer width */
-	transition: 0.15s ease-in-out;
+	transition: 0.4s ease-in-out;
 }
 .content-back {
 	margin-left: 0px; /* Adjust the value to match the drawer width */
-	transition: 0.15s ease-in-out;
+	transition: 0.4s ease-in-out;
 }
 
 .page-enter-active,
 .page-leave-active {
-	transition: all 0.5s;
+	transition: all 0.8s;
 }
 .page-enter-from,
 .page-leave-to {
 	opacity: 0;
 	filter: blur(1rem);
+	transition: all 0.8s;
 }
 
 .dark-background {
 	background-color: black !important;
 }
+
+.gradient-background {
+	background: rgb(26, 109, 255);
+	background: linear-gradient(
+		rgba(26, 109, 255, 1) 39%,
+		rgba(109, 199, 255, 1) 56%,
+		rgba(200, 34, 255, 1) 72%,
+		rgba(230, 171, 255, 1) 99%
+	);
+}
+
 </style>

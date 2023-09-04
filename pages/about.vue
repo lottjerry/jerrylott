@@ -1,7 +1,235 @@
 <template>
-  <div class="mx-10 pt-15 pb-5">
-    <h1>About Page</h1>
-    <h2>Lorem ipsum dolor sit amet consectetur adipisicing elit. Esse possimus eveniet veritatis quis nihil, dolor labore aliquam necessitatibus deserunt distinctio porro illo, veniam excepturi ut fugiat doloremque dignissimos natus. Delectus inventore id distinctio blanditiis placeat repellendus, sequi itaque, aliquam tenetur soluta quod? Amet dolorem in itaque. Alias nulla quos blanditiis. Quibusdam quae dolorum blanditiis consectetur voluptas animi corrupti? Error sit eaque dignissimos animi ipsum, accusamus eum quas magnam. Repellat, odit dolor quos quo rem placeat quod ab sed aperiam alias incidunt culpa nulla cum sit dolores expedita earum quibusdam. Perferendis facilis modi autem quae dolorum accusamus fugit iste natus temporibus sunt. Accusamus corrupti harum debitis optio similique, quis voluptatem ab quos praesentium quas ratione alias dolor nostrum quibusdam velit consequuntur neque. Ipsam accusantium et consequatur fuga aperiam doloribus, quisquam tenetur facere voluptate a sunt officia! Modi officiis rem, voluptatibus voluptatum laudantium velit reprehenderit vero sit nostrum possimus enim deleniti explicabo! Aspernatur voluptatibus cupiditate, ipsa id sunt similique expedita beatae ipsum distinctio, reprehenderit, magni ea! Exercitationem possimus doloremque sunt deserunt repellat accusamus magni et similique eos alias, ab sint atque deleniti totam sequi veniam quibusdam earum tempore tempora natus facere explicabo voluptates itaque? Eaque quisquam in cum consectetur nemo laboriosam eius, eligendi laborum, odit error nisi veniam ipsum hic adipisci. Quo earum eos quasi velit ut numquam dolorum voluptates? Consectetur qui ab voluptatem, quisquam officiis delectus ea perferendis omnis explicabo aperiam nobis suscipit hic corporis molestiae, nemo dignissimos facere quas sunt ipsa nihil? Distinctio explicabo animi temporibus, placeat excepturi repellendus et harum nesciunt tempore pariatur deserunt totam veritatis eius fuga ducimus suscipit perferendis necessitatibus eaque enim voluptates sequi ab odio incidunt ad. Nisi porro tenetur voluptate quod velit veritatis at commodi ullam facilis cum distinctio reprehenderit voluptatum eum, molestias fuga qui quisquam autem quia ab adipisci suscipit eligendi tempora ipsa alias. Quae expedita blanditiis similique nostrum. Excepturi eveniet, illum beatae accusamus distinctio nesciunt. Illum quaerat qui sunt! Ab in voluptatibus eos animi et, molestias sunt ipsum sequi fuga odio cupiditate iste excepturi laudantium rerum. Voluptate ut vitae omnis eum soluta dolorem laborum vel debitis veniam quaerat minima dolore sed tempora facilis ipsum voluptatibus necessitatibus ratione neque odio, earum ipsam autem dolores. Ducimus minima quod eligendi eius harum corrupti accusamus aliquam voluptatem in illum magnam, cupiditate libero consectetur deleniti vitae! Totam ipsum laboriosam labore necessitatibus praesentium voluptas eius repellat! Illo et quam hic quos corporis iste obcaecati rem incidunt, voluptatibus dolorem, quasi explicabo eligendi, repudiandae dolor optio deleniti vel ea ab. Obcaecati similique natus voluptatibus? Cumque molestiae perferendis, consequatur laboriosam rem sequi doloremque ipsum delectus vero! Sequi perferendis molestias molestiae praesentium similique, animi, amet iusto iure doloremque eaque ab illum porro labore. Quae, vel nisi, repellat corporis harum modi, est nemo delectus sapiente sed tempore ipsa veniam! Minus officiis eveniet ullam dolor, eos laboriosam facilis modi dicta corporis, natus accusamus quaerat facere repudiandae delectus officia fuga nobis perspiciatis! Quas, aspernatur! Ut perferendis id, facilis inventore incidunt provident. Incidunt ipsam molestiae sint et voluptate voluptatum harum aliquid quaerat pariatur, deleniti modi consequuntur magni id excepturi officiis laboriosam quis veritatis dolores eaque eos architecto repellendus animi explicabo earum. Culpa totam ratione eos debitis dignissimos consequatur doloremque. Repellendus odit eaque earum. Dolor cupiditate sint voluptas. Ipsam vel nostrum, officiis aliquam a labore? Voluptatum quae necessitatibus praesentium totam neque voluptatibus, saepe esse non exercitationem quo numquam impedit excepturi sint similique enim cupiditate eos quia quod iste mollitia tempora quam odio aspernatur. Soluta reiciendis delectus ad. Cupiditate laudantium accusamus, dolorum, magnam facere vel reprehenderit praesentium exercitationem necessitatibus alias voluptatibus et cumque consequuntur nesciunt dolores fugit in minus a? Voluptas minima expedita doloribus tempora itaque labore eligendi quia iste provident eius, est accusantium atque. Saepe, reprehenderit pariatur reiciendis provident labore voluptatibus odit perferendis amet, qui ea, iure obcaecati accusamus impedit unde aspernatur nemo voluptate hic. Culpa praesentium dolorum maiores adipisci ullam quisquam autem aspernatur sint, consectetur obcaecati laboriosam voluptates dolor corporis necessitatibus doloremque nostrum illo nisi a optio in tempore minima sunt? Sed sint molestiae at aliquam fuga expedita officiis libero est exercitationem a perspiciatis, magni harum porro voluptates accusantium, nesciunt veniam alias reprehenderit ea, veritatis facere natus? Quo quam blanditiis sint magnam dolores necessitatibus voluptatibus fuga sit quod veniam. Accusamus quibusdam porro, assumenda nemo soluta, incidunt temporibus maxime aut tempore minus tenetur sapiente perspiciatis optio commodi voluptatum autem numquam, libero quisquam natus eos enim nostrum ut illum doloribus! Nisi accusantium consequatur, ut deserunt aliquid facere placeat eligendi minima maiores non ad illo dignissimos molestiae excepturi delectus at suscipit tempora eum sunt explicabo corporis cum nihil dolore? Eius, perferendis autem maxime explicabo nihil porro laborum voluptatum libero iure corporis ipsam dolore, omnis voluptas sapiente dolor quam minima mollitia eaque, voluptate quisquam! Commodi expedita quasi totam porro dolorem tenetur assumenda natus enim tempora mollitia! Quisquam rem vitae perferendis incidunt expedita temporibus necessitatibus amet, ipsam reiciendis, eveniet voluptate laudantium sint magnam alias suscipit labore ipsa in. Adipisci, quae. Accusamus culpa qui, repellendus eos praesentium quos, officia nostrum iste nihil necessitatibus, numquam quaerat natus totam fugit ipsam est doloribus officiis nam. Provident, cum corporis possimus saepe officiis maxime unde facere voluptates accusantium laborum, magnam minus architecto repudiandae? Assumenda numquam nam eligendi eaque possimus eum rerum natus iste, tenetur deserunt eveniet expedita temporibus maxime vel autem commodi illum dicta consequatur nisi aspernatur repellat accusamus? Eum possimus ex commodi quis nemo autem, non perspiciatis. Laborum sed nulla suscipit, non eveniet distinctio asperiores doloribus quae sit sunt aliquid veniam fugiat dolorem tempore soluta numquam alias consequuntur assumenda placeat, deleniti corporis illo. Dolorum possimus ab error perspiciatis eveniet delectus omnis officiis libero alias illum corporis eos voluptatibus quod, repellendus maiores quae dolore est a inventore esse quidem voluptatum quasi soluta ea. Eos consequuntur, facilis aut hic aperiam sed tempora? Eius nulla quae, quaerat reiciendis, exercitationem modi minima mollitia officiis vero, deleniti at possimus impedit nisi consequatur! Illum velit deleniti, itaque fugit consectetur nostrum eius consequuntur architecto explicabo veniam. Facere optio numquam asperiores impedit excepturi error quis illo. Similique aliquam, corporis soluta, odit modi ut fugit quas nostrum culpa perferendis minima magni excepturi obcaecati ea aliquid?</h2>
-  </div>
+	<div class="mx-10 pt-15 pb-5">
+		<v-container class="border">
+			<v-row class="border justify-center">
+				<v-img
+					:width="100"
+					aspect-ratio="1/1"
+					src="https://img.icons8.com/nolan/64/1A6DFF/C822FF/user-default.png"
+					alt="user-default"
+					height="64"
+					class="mb-2"
+				></v-img>
+			</v-row>
+			<v-row class="border justify-center text-h3 font-weight-bold"
+				>about me</v-row
+			>
+			<v-row class="border mt-16 justify-center text-h6">MY INTRODUCTION</v-row>
+			<v-row class="border justify-center mt-16">
+				<v-card class="d-flex pa-10 ma-2" max-width="60%">
+					<v-container class="border pa-10">
+						<v-row class="mb-5 border text-h5 font-weight-medium">{{
+							intro.title
+						}}</v-row>
+						<v-row class="pa-2 mt-8 border text-h6">
+							{{ intro.text }}
+						</v-row>
+						<v-row class="justify-center">
+							<v-btn
+								append-icon="ph:download-bold"
+								color="primary"
+								height="60"
+								rounded="lg"
+								class="font-weight-bold mt-16"
+							>
+								Download Resume
+							</v-btn></v-row
+						>
+					</v-container>
+					<v-container class="border">
+						<v-row class="ma-2">
+							<v-col
+								v-for="(stat, index) in stats"
+								:key="index"
+								class="border pa-5"
+								cols="6"
+							>
+								<v-row>
+									<v-img
+										:width="100"
+										aspect-ratio="1/1"
+										:src="stat.icon"
+										height="64"
+										class="mb-2"
+									></v-img>
+								</v-row>
+								<v-row class="text-h5 font-weight-bold justify-center">{{
+									stat.title
+								}}</v-row>
+								<v-row class="justify-center">{{ stat.subtitle }}</v-row>
+								<v-row class="justify-center">{{ stat.subtitle2 }}</v-row>
+							</v-col>
+						</v-row>
+					</v-container>
+				</v-card>
+			</v-row>
+			<v-row>
+				<v-container class="mt-16">
+					<v-row class="border justify-center text-h6 mb-16"
+						>SKILLS AND TECHNOLOGIES</v-row
+					>
+					<v-row
+						><v-col
+							v-for="(skill, index) in skills"
+							:key="index"
+							class="border"
+							:cols="skill.cols"
+						>
+							<v-row
+								><v-img
+									:src="skill.icon"
+									:width="100"
+									aspect-ratio="1/1"
+									height="48"
+									class=""
+								></v-img
+							></v-row>
+							<v-row class="justify-center">
+								<h2>{{ skill.title }}</h2></v-row
+							>
+						</v-col></v-row
+					></v-container
+				>
+			</v-row>
+		</v-container>
+	</div>
 </template>
 
+<script setup>
+import { ref } from 'vue';
+
+const intro = ref({
+	title: 'FREELANCE FULL STACK DEVELOPER',
+	text: 'I am a dedicated developer, with not only a passion for web and software development, but also art and graphic design.',
+});
+
+const stats = ref([
+	{
+		icon: 'https://img.icons8.com/arcade/64/developer.png',
+		title: '04+',
+		subtitle: 'Years',
+		subtitle2: 'of Experience',
+	},
+	{
+		icon: 'https://img.icons8.com/arcade/64/test-passed.png',
+		title: '03+',
+		subtitle: 'Completed',
+		subtitle2: 'Projects',
+	},
+	{
+		icon: 'https://img.icons8.com/arcade/64/students.png',
+		title: '06+',
+		subtitle: 'Years',
+		subtitle2: 'of College',
+	},
+	{
+		icon: 'https://img.icons8.com/arcade/64/diploma.png',
+		title: '02+',
+		subtitle: 'Completed',
+		subtitle2: 'Degrees and Minor',
+	},
+]);
+
+const skills = ref([
+	{
+		icon: 'https://img.icons8.com/color/48/html-5--v1.png',
+		title: 'HTML',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/css3.png',
+		title: 'CSS',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/javascript--v1.png',
+		title: 'JS',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/sass.png',
+		title: 'SCSS',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/tailwindcss.png',
+		title: 'Tailwind',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/nuxt-jc.png',
+		title: 'Nuxt',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/vue-js.png',
+		title: 'Vue',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/officel/48/react.png',
+		title: 'React',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/nodejs.png',
+		title: 'Node',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/officel/48/express-js.png',
+		title: 'Express',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/mysql-logo.png',
+		title: 'MySQL',
+		cols: '',
+	},
+	{
+		icon: 'https://knexjs.org/knex-logo.png',
+		title: 'Knex',
+		cols: '',
+	},
+	{
+		icon: 'https://brandeps.com/logo-download/F/Feathers-JS-logo-vector-01.svg',
+		title: 'Feathers',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/git.png',
+		title: 'Git',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/figma--v1.png',
+		title: 'Figma',
+		cols: '',
+	},
+	{
+		icon: 'https://play-lh.googleusercontent.com/QcfhlXm32JDnj3WM2-TSL78ad99x4slovX4OzCSLSPU3uRN-mGXpKyM_yeXiewhz0Lk',
+		title: 'Ibis Paint',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/color/48/firebase.png',
+		title: 'Firebase',
+		cols: '',
+	},
+	{
+		icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Netlify_logo_%282%29.svg/1200px-Netlify_logo_%282%29.svg.png',
+		title: 'Netlify',
+		cols: '',
+	},
+	{
+		icon: 'https://img.icons8.com/fluency/48/github.png',
+		title: 'GitHub',
+		cols: '',
+	},
+	{
+		icon: 'https://railway.app/brand/logo-light.png',
+		title: 'Railway',
+		cols: '',
+	},
+]);
+</script>

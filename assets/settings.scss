@@ -2,6 +2,8 @@ $family: 'Poppins', sans-serif;
 
 @use 'vuetify/settings' with (
 	$body-font-family: $family,
-  $field-border-radius: 8px
+  $field-border-radius: 8px,
+  $navigation-drawer-transition-duration: 0.4s,
+  $navigation-drawer-transition-timing-function: ease-in-out
 );
 html { overflow-y: auto }
