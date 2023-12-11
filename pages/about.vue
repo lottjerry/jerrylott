@@ -69,6 +69,7 @@
 						>SKILLS AND TECHNOLOGIES</v-row
 					>
 					<v-row
+					class="border"
 						><v-col
 							v-for="(skill, index) in skills"
 							:key="index"
@@ -80,7 +81,7 @@
 									:src="skill.icon"
 									:width="100"
 									aspect-ratio="1/1"
-									height="48"
+									height="40"
 									class=""
 								></v-img
 							></v-row>
@@ -147,6 +148,11 @@ const skills = ref([
 		cols: '',
 	},
 	{
+		icon: 'https://img.icons8.com/color/48/typescript.png',
+		title: 'TS',
+		cols: '',
+	},
+	{
 		icon: 'https://img.icons8.com/color/48/sass.png',
 		title: 'SCSS',
 		cols: '',
@@ -187,13 +193,33 @@ const skills = ref([
 		cols: '',
 	},
 	{
-		icon: 'https://knexjs.org/knex-logo.png',
-		title: 'Knex',
+		icon: 'https://img.icons8.com/color/48/mongodb.png',
+		title: 'MongoDB',
 		cols: '',
 	},
 	{
-		icon: 'https://brandeps.com/logo-download/F/Feathers-JS-logo-vector-01.svg',
+		icon: 'https://img.icons8.com/color/48/prisma-orm.png',
+		title: 'Prisma',
+		cols: '',
+	},
+	{
+		icon: 'https://miro.medium.com/v2/resize:fit:720/format:webp/1*2TDREss7Pa_F5Z6CsHeD_w.jpeg',
 		title: 'Feathers',
+		cols: '',
+	},
+	{
+		icon: 'https://miro.medium.com/v2/resize:fit:640/format:webp/1*J3G3akaMpUOLegw0p0qthA.png',
+		title: 'Rest API',
+		cols: '',
+	},
+		{
+		icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png',
+		title: 'GraphQL',
+		cols: '',
+	},
+		{
+		icon: 'https://w7.pngwing.com/pngs/238/408/png-transparent-apollo-graphql-compact-hd-logo.png',
+		title: 'Apollo',
 		cols: '',
 	},
 	{
@@ -227,9 +253,10 @@ const skills = ref([
 		cols: '',
 	},
 	{
-		icon: 'https://railway.app/brand/logo-light.png',
-		title: 'Railway',
+		icon: 'https://img.icons8.com/color/48/docker.png',
+		title: 'Docker',
 		cols: '',
 	},
+	
 ]);
 </script>
