@@ -64,29 +64,29 @@
 				</v-card>
 			</v-row>
 			<v-row>
-				<v-container class="mt-16">
-					<v-row class="border justify-center text-h6 mb-16"
+				<v-container class="mt-16 border pa-10 w-75">
+					<v-row class="border text-h6 mb-16 justify-center"
 						>SKILLS AND TECHNOLOGIES</v-row
 					>
-					<v-row
-					class="border"
-						><v-col
+					<!-- :cols="skill.cols" <-- for custom cols -->
+					<v-row class="border justify-center">
+						<v-col
 							v-for="(skill, index) in skills"
 							:key="index"
-							class="border"
-							:cols="skill.cols"
+							class="border mx-2 my-3"
+							cols="2"
 						>
 							<v-row
 								><v-img
 									:src="skill.icon"
 									:width="100"
 									aspect-ratio="1/1"
-									height="40"
+									height="48"
 									class=""
 								></v-img
 							></v-row>
 							<v-row class="justify-center">
-								<h2>{{ skill.title }}</h2></v-row
+								<h4>{{ skill.title }}</h4></v-row
 							>
 						</v-col></v-row
 					></v-container
@@ -135,37 +135,37 @@ const skills = ref([
 	{
 		icon: 'https://img.icons8.com/color/48/html-5--v1.png',
 		title: 'HTML',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/css3.png',
 		title: 'CSS',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/javascript--v1.png',
 		title: 'JS',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/typescript.png',
 		title: 'TS',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/sass.png',
 		title: 'SCSS',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/tailwindcss.png',
 		title: 'Tailwind',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/nuxt-jc.png',
 		title: 'Nuxt',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/vue-js.png',
@@ -175,17 +175,17 @@ const skills = ref([
 	{
 		icon: 'https://img.icons8.com/officel/48/react.png',
 		title: 'React',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/nodejs.png',
 		title: 'Node',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/officel/48/express-js.png',
 		title: 'Express',
-		cols: '',
+		cols: '3',
 	},
 	{
 		icon: 'https://img.icons8.com/color/48/mysql-logo.png',
@@ -212,12 +212,12 @@ const skills = ref([
 		title: 'Rest API',
 		cols: '',
 	},
-		{
+	{
 		icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/1200px-GraphQL_Logo.svg.png',
 		title: 'GraphQL',
 		cols: '',
 	},
-		{
+	{
 		icon: 'https://w7.pngwing.com/pngs/238/408/png-transparent-apollo-graphql-compact-hd-logo.png',
 		title: 'Apollo',
 		cols: '',
@@ -257,6 +257,5 @@ const skills = ref([
 		title: 'Docker',
 		cols: '',
 	},
-	
 ]);
 </script>
