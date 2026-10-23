@@ -1,6 +1,17 @@
----
----
+<!-- Added mt-[104px] to push the image and content below the fixed navbar -->
+<div class="relative flex justify-center items-center min-h-100 md:min-h-250 mt-26 bg-black overflow-hidden">
+    <!-- Background Image -->
+    <img 
+        src="src/assets/hero_desktop_dark.jpeg" 
+        alt="Hero Image" 
+        class="absolute inset-0 w-full h-full object-cover object-center z-0" 
+    />
+    
+    <!-- Dark Overlay for better text contrast/readability -->
+    <div class="absolute inset-0 bg-black/40 z-0"></div>
 
-<div class="flex justify-center items-center bg-black h-250">
-    <h1 class="text-white text-5xl">HERO</h1>
+    <!-- Hero Content -->
+    <h1 class="relative text-white text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide z-10 text-center px-4">
+        HERO
+    </h1>
 </div>
