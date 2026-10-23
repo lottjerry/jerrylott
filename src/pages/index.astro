@@ -1,11 +1,15 @@
 ---
+import Header from "@/components/Header.astro";
 import Layout from "../layouts/Layout.astro";
 import "../styles/global.css";
-import HamburgerButton from "@components/common/HamburgerButton.astro";
+import Hero from "@/sections/Hero.astro";
+import About from "@/sections/About.astro";
 ---
 
 <Layout>
-  <h1 class="font-bold text-amber-300 text-3xl">Welcome to My Astro Site</h1>
-  <!-- Before -->
-  <HamburgerButton />
+  <div class="top-0 fixed">
+    <Header />
+  </div>
+  <Hero />
+  <About />
 </Layout>
