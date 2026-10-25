@@ -1,17 +1,17 @@
-<!-- Added mt-[104px] to push the image and content below the fixed navbar -->
-<div class="relative flex justify-center items-center min-h-100 md:min-h-250 mt-26 bg-black overflow-hidden">
-    <!-- Background Image -->
-    <img 
-        src="src/assets/hero_desktop_dark.jpeg" 
-        alt="Hero Image" 
-        class="absolute inset-0 w-full h-full object-cover object-center z-0" 
-    />
-    
-    <!-- Dark Overlay for better text contrast/readability -->
-    <div class="absolute inset-0 bg-black/40 z-0"></div>
+<!-- Added pl-6 md:pl-16 for left spacing, and changed justify-center to justify-start -->
+<div class="relative flex justify-start items-center bg-black mt-26 lg:ml-20 md:px-16 min-h-100 md:min-h-250 overflow-hidden">
+  <!-- Background Image -->
+  <img
+    src="src/assets/hero_desktop_dark.jpeg"
+    alt="Hero Image"
+    class="z-0 absolute inset-0 w-full h-full object-center object-cover"
+  />
 
-    <!-- Hero Content -->
-    <h1 class="relative text-white text-3xl sm:text-4xl md:text-6xl font-bold tracking-wide z-10 text-center px-4">
-        HERO
-    </h1>
+  <!-- Dark Overlay -->
+  <div class="z-0 absolute inset-0 bg-black/40"></div>
+
+  <!-- Hero Content (Vertically centered, left-aligned) -->
+  <div class="z-10">
+    <img src="src/assets/jerrylott.svg" alt="Jerry Lott" />
+  </div>
 </div>
