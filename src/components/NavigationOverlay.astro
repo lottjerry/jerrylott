@@ -5,23 +5,50 @@
 <!-- Fullscreen overlay container (hidden by default using opacity & pointer-events) -->
 <div
   id="nav-overlay"
-  class="z-40 fixed inset-0 flex flex-col justify-center items-center bg-black transition-opacity duration-300 pointer-events-none"
+  class="z-40 fixed inset-0 flex flex-col bg-black transition-opacity duration-300 pointer-events-none justify-center items-center  pb-20"
 >
-  <nav class="flex flex-col items-center gap-8 font-sans font-semibold text-white text-3xl">
-    <a href="#" class="hover:text-red-500 transition-colors nav-link">
-      Home
-    </a>
-    <a href="#about" class="hover:text-red-500 transition-colors nav-link">
-      About
-    </a>
-    <a href="#services" class="hover:text-red-500 transition-colors nav-link">
-      Services
-    </a>
-    <a href="#contact" class="hover:text-red-500 transition-colors nav-link">
-      Contact
-    </a>
-  </nav>
-  <footer class="bottom-0 fixed p-10 w-[90%] font-span text-white">
+  <nav class="flex flex-col items-start gap-10 font-mono font-thin text-white text-3xl mx-auto w-fit lg:w-[80%]">
+  <a
+    href="#"
+    class="nav-link flex items-start  gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+  >
+    <span class="text-sm md:text-xl lg:text-2xl w-6 text-left">01</span>
+    <span class=" md:text-5xl lg:text-6xl">Home</span>
+  </a>
+
+  <a 
+    href="#about" 
+    class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+  >
+    <span class="text-sm md:text-xl lg:text-2xl w-6 text-left">02</span>
+    <span class=" md:text-5xl lg:text-6xl">About</span>
+  </a>
+
+  <a 
+    href="#work" 
+    class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+  >
+    <span class="text-sm md:text-xl lg:text-2xl w-6 text-left">03</span>
+    <span class=" md:text-5xl lg:text-6xl">Work</span>
+  </a>
+
+  <a 
+    href="#services" 
+    class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+  >
+    <span class="text-sm md:text-xl lg:text-2xl w-6 text-left">04</span>
+    <span class=" md:text-5xl lg:text-6xl">Services</span>
+  </a>
+
+  <a 
+    href="#contact" 
+    class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+  >
+    <span class="text-sm md:text-xl lg:text-2xl w-6 text-left">05</span>
+    <span class=" md:text-5xl lg:text-6xl">Contact</span>
+  </a>
+</nav>
+  <footer class="bottom-0 fixed p-5 md:p-10 w-[90%] font-span text-white">
     <div class="flex lg:flex-row flex-col justify-between items-center gap-5 p-10 border-white/20 border-t">
       <div class="flex items-center gap-3">
         <!-- Pulsing Dot Container -->
@@ -32,12 +59,37 @@
         <p>Available for new projects.</p>
       </div>
 
-      <div class="flex gap-5">
-        <p>Resume</p>
+      <div class="flex gap-5 text-white">
+        <a
+          href="/resume.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+        >
+          Resume
+        </a>
+
         <p>|</p>
-        <p>Github</p>
+
+        <a
+          href="https://github.com/lottjerry"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+        >
+          Github
+        </a>
+
         <p>|</p>
-        <p>LinkedIn</p>
+
+        <a
+          href="https://www.linkedin.com/in/jerrylott"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+        >
+          LinkedIn
+        </a>
       </div>
     </div>
   </footer>
