@@ -2,27 +2,47 @@
 ---
 
 <div class="bg-white">
-  <header class="p-10 w-full">
+  <header class="pt-10 px-10 w-full">
     <div class="flex gap-5 pb-5 border-b font-sans font-bold text-black">
       <p>[ 01 ]</p>
       <p>/about</p>
     </div>
   </header>
-  <div class="flex flex-col justify-center items-center lg:flex-row lg:p-20">
+  <div class="flex flex-col justify-center items-center lg:flex-row lg:px-20 py-5 lg:gap-8">
     <div class="flex flex-col justify-center items-center gap-5">
-      <img src="src/assets/about.png" alt="About Image" class="w-48 h-64 md:w-64 md:h-80 lg:w-169.25 lg:h-169.25" />
-      <div class="flex flex-col justify-center items-center opacity-60 font-mono leading-none md:flex-row md:leading-1.5 md:gap-5 lg:border">
-        <p>FULL-STACK DEVELOPER</p>
-        <p>UI/UX DESIGNER</p>
-        <p>SECURITY RESEARCHER</p>
+      <picture>
+        <!-- Desktop view (screens 1024px and up) -->
+        <source
+          media="(min-width: 1024px)"
+          srcset="src/assets/about_desktop_img.png"
+        />
+
+        <!-- Tablet view (screens 768px and up) -->
+        <source
+          media="(min-width: 768px)"
+          srcset="src/assets/about_tablet_img.png"
+        />
+
+        <!-- Mobile view / Default fallback -->
+        <img
+          src="src/assets/about_mobile_img.png"
+          alt="Responsive Hero Banner"
+          class="w-full h-auto object-cover rounded-xl"
+        />
+      </picture>
+
+      <div class="flex flex-col justify-center items-center opacity-60 font-mono gap-2 md:flex-row md:gap-5">
+        <p class="lg:whitespace-nowrap">FULL-STACK DEVELOPER</p>
+        <p class="lg:whitespace-nowrap">UI/UX DESIGNER</p>
+        <p class="lg:whitespace-nowrap">SECURITY RESEARCHER</p>
       </div>
     </div>
-    <div class="flex flex-col justify-center items-center p-10 gap-10 md:w-[90%]">
-      <h1 class="text-span font-black text-3xl">
+    <div class="flex flex-col justify-center items-center p-10 gap-10 md:w-[90%] lg:w-1/2 lg:gap-24 lg:items-start">
+      <h1 class="text-span font-black text-3xl lg:w-4/5">
         Built like an engineer, designed like an artist, stress-tested like an
         attacker.
       </h1>
-      <p class="text-sm md:text-lg">
+      <p class="text-sm md:text-lg lg:w-4/5">
         It may not be obvious, but Jerry's journey started with Full-Stack
         development. Interested in the design side of a website, he quickly
         branched out into Graphic and UI/UX design, eventually integrating a
@@ -30,27 +50,25 @@
         to manage the full project lifecycle, from visual concept to secure
         deployment, eliminating technical gaps and ensuring data safety.
       </p>
-      <div class="grid grid-cols-2 gap-4 md:flex">
+      <div class="grid grid-cols-2 gap-4 md:flex lg:justify-between lg:w-full">
         <div class="flex flex-col">
-          <h2 class="font-sans font-black text-2xl w-35">04+</h2>
-          <p class="text-sm font-mono">YEARS EXPERIENCE</p>
+          <h2 class="font-sans font-black text-2xl lg:text-4xl w-35">04+</h2>
+          <p class="text-sm font-mono lg:text-base">YEARS EXPERIENCE</p>
         </div>
-         <div class="flex flex-col">
-          <h2 class="font-sans font-black text-2xl w-35">04+</h2>
-          <p class="text-sm font-mono">YEARS EXPERIENCE</p>
+        <div class="flex flex-col">
+          <h2 class="font-sans font-black text-2xl lg:text-4xl w-35">04+</h2>
+          <p class="text-sm lg:text-base font-mono">YEARS EXPERIENCE</p>
         </div>
-         <div class="flex flex-col">
-          <h2 class="font-sans font-black text-2xl w-35">04+</h2>
-          <p class="text-sm font-mono">YEARS EXPERIENCE</p>
+        <div class="flex flex-col">
+          <h2 class="font-sans font-black text-2xl lg:text-4xl w-35">04+</h2>
+          <p class="text-sm lg:text-base font-mono">YEARS EXPERIENCE</p>
         </div>
-         <div class="flex flex-col">
-          <h2 class="font-sans font-black text-2xl w-35">04+</h2>
-          <p class="text-sm font-mono">YEARS EXPERIENCE</p>
+        <div class="flex flex-col">
+          <h2 class="font-sans font-black text-2xl lg:text-4xl w-35">04+</h2>
+          <p class="text-sm lg:text-base font-mono">YEARS EXPERIENCE</p>
         </div>
       </div>
-      <button class="font-black cursor-pointer">
-        [ RESUME ]
-      </button>
+      <button class="font-black cursor-pointer hover:opacity-50 transition-all duration-500">[ RESUME ]</button>
     </div>
   </div>
 </div>
