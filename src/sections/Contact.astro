@@ -1,13 +1,15 @@
-<div class="flex flex-col bg-black text-white font-sans mb-10">
+<div class="flex flex-col justify-between min-h-[90vh] bg-black text-white font-sans mb-10">
   <header class="p-10 w-full">
     <div class="flex gap-5 pb-5 border-b font-bold">
       <p>[ 04 ]</p>
       <p>/contact</p>
     </div>
   </header>
-  <div class="flex flex-col gap-5 md:gap-16 lg:flex-row">
+
+  <div class="flex flex-col gap-10 md:gap-16 lg:flex-row lg:justify-around  justify-between my-auto py-10">
+    <!-- Left Column: Title & Availability -->
     <div class="flex flex-col px-10 gap-10 md:px-14 md:gap-14">
-      <h1 class="text-5xl font-sans font-black md:text-8xl">
+      <h1 class="text-5xl font-sans font-black md:text-8xl lg:text-9xl w-10">
         LET'S BUILD TOGETHER.
       </h1>
       <div class="flex flex-col gap-2 md:text-xl">
@@ -25,30 +27,33 @@
         </div>
       </div>
     </div>
-    <div class="flex flex-col px-10 gap-5 md:flex-row md:justify-between border">
-      <div class="flex flex-col gap-3 justify-center items-center">
-        <p class="text-lg font-black md:text-2xl">[ CONTACT DIRECT ]</p>
+
+    <!-- Right Column: Contact Details & Socials mobile/tablet -->
+    <div class="flex flex-col px-8 gap-8 md:flex-row md:justify-between lg:hidden">
+      <div class="flex flex-col gap-3 md:items-start lg:items-start md:gap-8">
+        <p class="text-lg font-black md:text-3xl">[ CONTACT DIRECT ]</p>
         <a
-          class="text-sm md:text-lg relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+          class="text-xl md:text-2xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
           href="mailto:contact@jerrylott.com"
         >
           CONTACT@JERRYLOTT.COM
         </a>
         <a
-          class="text-sm md:text-lg relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+          class="text-sm md:text-xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
           href="tel:+16017785060"
         >
           +1 601 778 5060
         </a>
       </div>
-      <div class="flex flex-col gap-3 justify-center items-center">
-        <p class="text-lg font-black md:text-2xl">[ INDEXED SOCIAL ]</p>
-        <div class="flex gap-10">
+
+      <div class="flex flex-col gap-3 md:items-start lg:items-start md:gap-8">
+        <p class="text-lg font-black md:text-3xl">[ INDEXED SOCIAL ]</p>
+        <div class="flex gap-10 md:flex-col md:gap-8">
           <a
             href="https://github.com/lottjerry"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm md:text-lg relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+            class="text-sm md:text-xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
           >
             Github
           </a>
@@ -57,7 +62,48 @@
             href="https://www.linkedin.com/in/jerrylott"
             target="_blank"
             rel="noopener noreferrer"
-            class="text-sm md:text-lg relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+            class="text-sm md:text-xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+          >
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- Right Column: Contact Details & Socials desktop -->
+    <div class="px-8 gap-8 hidden lg:flex lg:flex-col">
+      <div class="flex flex-col gap-3 md:items-start lg:items-start md:gap-8">
+        <p class="text-lg font-black md:text-3xl">[ CONTACT DIRECT ]</p>
+        <a
+          class="text-sm md:text-3xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+          href="mailto:contact@jerrylott.com"
+        >
+          CONTACT@JERRYLOTT.COM
+        </a>
+        <a
+          class="text-sm md:text-2xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+          href="tel:+16017785060"
+        >
+          +1 601 778 5060
+        </a>
+      </div>
+
+      <div class="flex flex-col gap-3 md:items-start lg:items-start md:gap-8">
+        <p class="text-lg font-black md:text-3xl">[ INDEXED SOCIAL ]</p>
+        <div class="flex gap-10 md:flex-col md:gap-8">
+          <a
+            href="https://github.com/lottjerry"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm md:text-2xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+          >
+            Github
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/jerrylott"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-sm md:text-2xl relative pb-0.5 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
           >
             LinkedIn
           </a>
@@ -66,14 +112,3 @@
     </div>
   </div>
 </div>
-
-<style>
-  /* Force column layout on large screens (1024px and up), bypassing Tailwind */
-  @media (min-width: 1024px) {
-    .footer-contact-box {
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-    }
-  }
-</style>
