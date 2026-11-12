@@ -1,0 +1,20 @@
+---
+interface Props {
+  rows?: number;
+  cols?: number;
+  gap?: string;
+}
+
+const { rows = 10, cols = 20, gap = "gap-3" } = Astro.props;
+
+const totalDots = rows * cols;
+---
+
+<div
+  class:list={["grid w-fit", gap]}
+  style={`grid-template-columns: repeat(${cols}, minmax(0, 1fr));`}
+>
+  {Array.from({ length: totalDots }).map(() => (
+    <div class:list={["w-px h-px rounded-full bg-black"]} />
+  ))}
+</div>

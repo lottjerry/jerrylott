@@ -1,17 +1,47 @@
-<div class="min-h-[90vh] bg-white text-black">
-  <header class="p-10 w-full">
+---
+import DotGrid from "@/components/DotGrid.astro";
+---
+
+<div class="min-h-[90vh] bg-white text-black flex flex-col gap-5">
+  <!-- Header -->
+  <header class="p-5 w-full">
     <div class="flex gap-5 pb-5 border-b font-bold">
       <p>[ 03 ]</p>
       <p>/services</p>
     </div>
   </header>
-  <div>
-    <h1 class="font-sans text-3xl font-bold">
+  <!-- Title -->
+  <div class="flex flex-col items-center px-5 gap-3">
+    <h1 class="font-sans text-2xl font-bold">
       <span>Beautiful Design.</span>
       <span> Robust Code.</span>
       <span> Smooth Deployment.</span>
       <span> Zero Vulnerabilities.</span>
     </h1>
-    <div></div>
+    <div class="">
+      <DotGrid rows={4} cols={85} gap="gap-1" />
+    </div>
+  </div>
+  <!-- Body -->
+  <div class="border w-full h-70"></div>
+  <!-- Footer -->
+  <div class="flex flex-col gap-5 items-center px-5 font-bold">
+    <DotGrid rows={4} cols={85} gap="gap-1" />
+    <h3>
+      Crafting memorable brands and intuitive layouts that make your business
+      instantly credible.
+    </h3>
+    <h3 class="hidden">
+      Building fast, flexible web and software tailored to your vision with
+      clean, reliable code.
+    </h3>
+    <h3 class="hidden">
+      Launching your web and software to live production smoothly, securely, and
+      with zero hassle.
+    </h3>
+    <h3 class="hidden">
+      Securing your web and software with rigorous testing and best practices to
+      eliminate vulnerabilities.
+    </h3>
   </div>
 </div>
