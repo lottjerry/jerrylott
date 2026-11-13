@@ -5,5 +5,5 @@
   --font-mono: "Geist Mono Variable", monospace;
   
   /* Shifts the lg breakpoint so iPad Pro 13 portrait (1032px) safely stays in 2x2 grid */
-  --breakpoint-lg: 1040px;
+  --breakpoint-lg: 65rem;
 }

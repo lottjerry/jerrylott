@@ -1,0 +1,53 @@
+---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import DotGrid from '@/components/DotGrid.astro';
+
+interface Props {
+  icon: ImageMetadata;
+  iconAlt: string;
+  title: string;
+  label?: string;
+  description: string;
+  showBottomGrid?: boolean;
+}
+
+const {
+  icon,
+  iconAlt,
+  title,
+  label,
+  description,
+  showBottomGrid = false,
+} = Astro.props;
+---
+
+<div class="font-mono flex flex-col justify-between h-full gap-2.5 lg:gap-4 py-3 lg:py-5">
+  <div class="flex flex-col gap-2 lg:gap-3.5">
+    <Image class="w-7 h-7 lg:w-9 lg:h-9" src={icon} alt={iconAlt} />
+    <div class="flex flex-col gap-0.5">
+      <h2 class="font-bold text-xs">{title}</h2>
+      {label && (
+        <h3 class="hidden md:block font-sans text-lg lg:text-xl tracking-tight">
+          {label}
+        </h3>
+      )}
+    </div>
+    <p class="text-[11px] lg:text-xs leading-snug lg:leading-relaxed">
+      {description}
+    </p>
+  </div>
+
+  {showBottomGrid && (
+    <div class="hidden md:block pt-1.5 lg:pt-4 overflow-hidden w-full">
+      <!-- Tablet DotGrid -->
+      <div class="lg:hidden">
+        <DotGrid rows={3} cols={60} gap="gap-1" />
+      </div>
+      <!-- Large Screen Taller & Wider DotGrid -->
+      <div class="hidden lg:block">
+        <DotGrid rows={5} cols={90} gap="gap-1" />
+      </div>
+    </div>
+  )}
+</div>
