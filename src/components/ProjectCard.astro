@@ -1,0 +1,167 @@
+---
+export interface Project {
+  id: string;
+  Title: string;
+  Completed: string;
+  Type: string;
+  Role: string;
+  Client: string;
+  "Tech-Stack": string;
+  Description: string;
+  Link?: string;
+}
+
+interface Props {
+  project: Project;
+  imageSrc?: string;
+}
+
+const { project, imageSrc = "/src/assets/about_mobile_img.png" } = Astro.props;
+
+const workTabs = [
+  { id: "description", label: "DESCRIPTION" },
+  { id: "overview", label: "OVERVIEW" },
+  { id: "tech", label: "TECH STACK" },
+];
+
+const techItems = project["Tech-Stack"]
+  .split(",")
+  .map((item) => item.trim())
+  .filter(Boolean);
+---
+
+<article
+  data-project-card={project.id}
+  class="w-full shrink-0 snap-center flex flex-col justify-center items-center gap-5 md:gap-8 lg:grid lg:grid-cols-[1.35fr_0.65fr] lg:items-center lg:gap-x-16 lg:gap-y-10"
+>
+  <!-- Project Image: Top on Mobile -> Bottom on Tablet (md:) -> Right Column on Desktop (lg:) -->
+  <img
+    src={imageSrc}
+    alt={`${project.Title} preview`}
+    class="w-36 md:w-72 lg:w-full lg:max-w-120 lg:justify-self-end md:aspect-4/5bject-cover rounded-2xl md:rounded-none border border-white/20 md:border-0 md:order-4 lglg:order-0g:col-start-2 lg:row-start-1 lg:row-span-3"
+  />
+
+  <!-- Project Title: Centered on Mobile/Tablet -> Left-Aligned on Desktop (lg:) -->
+  <h1 class="text-2xl md:text-4xl lg:text-6xl font-sans md:font-mono font-bold md:font-normal uppercase tracking-tight md:tracking-[0.2em] text-center lg:text-left md:order-1 lg:order-0 lg:col-start-1 lg:row-start-1 lg:self-end">
+    {project.Title}
+  </h1>
+
+  <!-- Info Container: Tabbed Box on Mobile -> Unboxed 2-Column Editorial Rows on Tablet & Desktop -->
+  <div class="w-full border border-white md:border-0 md:order-2 lg:order-0 lg:col-start-1 lg:row-start-2">
+    <!-- Mobile-Only Tablist -->
+    <div
+      role="tablist"
+      class="flex md:hidden justify-between px-3 py-2 border-b border-white/20 font-mono text-[10px] sm:text-[11px]"
+    >
+      {workTabs.map((tab, index) => (
+        <button
+          type="button"
+          role="tab"
+          data-work-target={tab.id}
+          aria-selected={index === 0 ? "true" : "false"}
+          class:list={[
+            "cursor-pointer transition-all",
+            index === 0
+              ? "font-bold opacity-100"
+              : "opacity-50 hover:opacity-100",
+          ]}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Panels: Stacked Overlap on Mobile -> Vertical 2-Column Rows on Tablet & Desktop -->
+    <div class="grid grid-cols-1 grid-rows-1 md:flex md:flex-col md:gap-8 lg:gap-10">
+      <!-- Row 1: DESCRIPTION -->
+      <div
+        role="tabpanel"
+        data-work-panel="description"
+        aria-hidden="false"
+        class="col-start-1 row-start-1 px-4 py-3 md:p-0 flex flex-col md:grid md:grid-cols-[150px_1fr] lg:grid-cols-[220px_1fr] md:items-start justify-center items-center h-33 sm:h-38.75 md:h-auto transition-opacity duration-200 opacity-100 visible md:opacity-100! md:visible! md:pointer-events-auto!"
+      >
+        <h3 class="hidden md:block md:text-base font-mono text-xs tracking-wider uppercase opacity-80 lg:text-xl">
+          DESCRIPTION
+        </h3>
+        <p class="text-[11px] sm:text-xs font-mono text-center md:text-left leading-snug md:leading-relaxed max-w-xs md:max-w-md lg:max-w-2xl lg:text-base">
+          {project.Description}
+        </p>
+      </div>
+
+      <!-- Row 2: OVERVIEW -->
+      <div
+        role="tabpanel"
+        data-work-panel="overview"
+        aria-hidden="true"
+        class="col-start-1 row-start-1 px-4 py-2.5 md:p-0 flex flex-col md:grid md:grid-cols-[150px_1fr] lg:grid-cols-[220px_1fr] md:items-start justify-center items-center h-33 sm:h-38.75 md:h-auto transition-opacity duration-200 opacity-0 invisible pointer-events-none md:opacity-100! md:visible! md:pointer-events-auto!"
+      >
+        <h3 class="hidden md:block font-mono text-xs tracking-wider uppercase opacity-80 lg:text-xl md:text-base">
+          OVERVIEW
+        </h3>
+        <div class="text-[10px] sm:text-xs font-mono w-full md:border-t md:border-white/40 lg:text-base">
+          <div class="flex justify-between md:grid md:grid-cols-[130px_1fr] lg:grid-cols-[160px_1fr] border-b border-white/30 md:border-white/40 py-1 md:py-2">
+            <h4 class="opacity-60 md:opacity-90">Completed</h4>
+            <h4 class="w-[62%] md:w-auto text-right md:text-left truncate">{project.Completed}</h4>
+          </div>
+          <div class="flex justify-between md:grid md:grid-cols-[130px_1fr] lg:grid-cols-[160px_1fr] border-b border-white/30 md:border-white/40 py-1 md:py-2">
+            <h4 class="opacity-60 md:opacity-90">Type</h4>
+            <h4 class="w-[62%] md:w-auto text-right md:text-left truncate">{project.Type}</h4>
+          </div>
+          <div class="flex justify-between md:grid md:grid-cols-[130px_1fr] lg:grid-cols-[160px_1fr] border-b border-white/30 md:border-white/40 py-1 md:py-2">
+            <h4 class="opacity-60 md:opacity-90">Role</h4>
+            <h4 class="w-[62%] md:w-auto text-right md:text-left truncate">{project.Role}</h4>
+          </div>
+          <div class="flex justify-between md:grid md:grid-cols-[130px_1fr] lg:grid-cols-[160px_1fr] border-b border-white/30 md:border-white/40 py-1 md:py-2">
+            <h4 class="opacity-60 md:opacity-90">Client</h4>
+            <h4 class="w-[62%] md:w-auto text-right md:text-left truncate">{project.Client}</h4>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: TECH STACK -->
+      <div
+        role="tabpanel"
+        data-work-panel="tech"
+        aria-hidden="true"
+        class="col-start-1 row-start-1 px-3 py-2.5 md:p-0 flex flex-col md:grid md:grid-cols-[150px_1fr] lg:grid-cols-[220px_1fr] md:items-center justify-center items-center h-33 sm:h-38.75 md:h-auto transition-opacity duration-200 opacity-0 invisible pointer-events-none md:opacity-100! md:visible! md:pointer-events-auto!"
+      >
+        <h3 class="hidden md:block font-mono text-xs tracking-wider uppercase opacity-80 lg:text-xl md:text-base">
+          TECH STACK
+        </h3>
+        <div class="flex flex-wrap justify-center md:justify-start items-center gap-1 md:gap-2 max-w-full">
+          {techItems.map((tech) => (
+            <span class="font-mono text-[10px] md:text-[11px] leading-none border border-white/35 md:border-white/50 px-2 md:px-3 py-1 md:py-1.5 md:rounded-full lg:text-base lg:px-4 lg:py-2">
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Links: Below Box on Mobile -> Centered Above Image on Tablet -> Centered Under Left Column on Desktop -->
+  <div
+    class:list={[
+      "flex w-full font-mono text-xs pt-1 md:pt-2 md:justify-center md:gap-8 md:font-bold md:order-3 lg:order-0 lg:col-start-1 lg:row-start-3 lg:self-start",
+      project.Link ? "justify-between" : "justify-end",
+    ]}
+  >
+    {project.Link && (
+      <a
+        href={project.Link}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hover:opacity-70 transition-opacity lg:text-xl"
+      >
+        [ Live Preview ]
+      </a>
+    )}
+    <button
+      type="button"
+      data-gallery-trigger={project.id}
+      class="cursor-pointer hover:opacity-70 transition-opacity lg:text-xl"
+    >
+      [ View Gallery ]
+    </button>
+  </div>
+</article>

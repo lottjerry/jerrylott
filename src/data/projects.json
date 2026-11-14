@@ -1,0 +1,89 @@
+[
+  {
+    "id": "01",
+    "Title": "The Laundry Station",
+    "Completed": "September 2022",
+    "Type": "Brochure / Logo Design",
+    "Role": "Front-End Developer & Designer",
+    "Client": "The Laundry Station",
+    "Tech-Stack": "React, HTML, CSS, JavaScript, SCSS, Ibis Paint X",
+    "Description": "Brochure web app and logo design for a locally owned Laudromat based in Ellisville, Mississippi.",
+    "Link": "https://thelaundrystation.netlify.app/"
+  },
+  {
+    "id": "02",
+    "Title": "Steele Smokin LLC",
+    "Completed": "December 2025",
+    "Type": "Logo Design",
+    "Role": "Designer",
+    "Client": "Steele Smokin LLC",
+    "Tech-Stack": "Figma",
+    "Description": "Logo design for a mobile BBQ and catering business."
+  },
+  {
+    "id": "03",
+    "Title": "My Job Essentials",
+    "Completed": "December 2024",
+    "Type": "Product Prototype",
+    "Role": "Full-Stack Developer & Designer",
+    "Client": "Personal Project / Custom D3",
+    "Tech-Stack": "Nuxt3, Vue3, TailwindCSS, Pinia, Vuetify, Firebase, VeeValidate, TypeScript, HTML, JavaScript",
+    "Description": "Custom web app to help coworkers access work schedules digitally.",
+    "Link": "https://www.myjobessentials.com/"
+  },
+  {
+    "id": "04",
+    "Title": "Custom D3",
+    "Completed": "June 2025",
+    "Type": "Pre Launch Landing Page",
+    "Role": "Full-Stack Developer & Designer",
+    "Client": "Custom D3",
+    "Tech-Stack": "Nuxt3, Vue3, TailwindCSS, Pinia, Firebase, VeeValidate, HTML, JavaScript, Yup, VueFire, Lottie, GSAP",
+    "Description": "Pre launch landing page for a independent digital agency.",
+    "Link": "https://www.customdthree.com/"
+  },
+  {
+    "id": "05",
+    "Title": "Jerry Lott v1",
+    "Completed": "July 2022",
+    "Type": "Portfolio Website",
+    "Role": "Front-End Developer & Designer",
+    "Client": "Personal",
+    "Tech-Stack": "HTML, CSS, Javascript",
+    "Description": "Personal portfolio engineered from scratch using vanilla HTML, CSS, and JavaScript.",
+    "Link": "https://v1.jerrylott.com/"
+  },
+  {
+    "id": "06",
+    "Title": "Curly Headed Heifa",
+    "Completed": "August 2026",
+    "Type": "Brand Identity / Logo Design",
+    "Role": "Designer",
+    "Client": "Curly Headed Heifa",
+    "Tech-Stack": "Illustrator",
+    "Description": "Brand identity and logo design for a local boutique.",
+    "Link": ""
+  },
+  {
+    "id": "07",
+    "Title": "Jerry Lott v2",
+    "Completed": "August 2026",
+    "Type": "Portfolio Website",
+    "Role": "Front-End Developer & Designer",
+    "Client": "Personal",
+    "Tech-Stack": "HTML, CSS, Javascript, Astro, TailwindCSS",
+    "Description": "Personal portfolio engineered from scratch using Astro and TailwindCSS.",
+    "Link": "https://jerrylott.com/"
+  },
+  {
+    "id": "08",
+    "Title": "3 Little Stitches",
+    "Completed": "August 2026",
+    "Type": "Brand Identity / Logo Design",
+    "Role": "Designer",
+    "Client": "3 Little Stitches",
+    "Tech-Stack": "Figma",
+    "Description": "Brand identity and logo design for a local embroidery business.",
+    "Link": ""
+  }
+]
