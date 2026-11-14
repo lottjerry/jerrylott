@@ -8,7 +8,9 @@ export interface Project {
   Client: string;
   "Tech-Stack": string;
   Description: string;
+  "Main-Image"?: string;
   Link?: string;
+  Images?: string[];
 }
 
 interface Props {
@@ -16,7 +18,9 @@ interface Props {
   imageSrc?: string;
 }
 
-const { project, imageSrc = "/src/assets/about_mobile_img.png" } = Astro.props;
+const { project, imageSrc } = Astro.props;
+const resolvedImage =
+  imageSrc ?? project["Main-Image"] ?? "/src/assets/about_mobile_img.png";
 
 const workTabs = [
   { id: "description", label: "DESCRIPTION" },
@@ -36,9 +40,9 @@ const techItems = project["Tech-Stack"]
 >
   <!-- Project Image: Top on Mobile -> Bottom on Tablet (md:) -> Right Column on Desktop (lg:) -->
   <img
-    src={imageSrc}
+    src={resolvedImage}
     alt={`${project.Title} preview`}
-    class="w-36 md:w-72 lg:w-full lg:max-w-120 lg:justify-self-end md:aspect-4/5bject-cover rounded-2xl md:rounded-none border border-white/20 md:border-0 md:order-4 lglg:order-0g:col-start-2 lg:row-start-1 lg:row-span-3"
+    class="w-36 md:w-72 lg:w-full lg:max-w-120 lg:justify-self-end md:aspect-4/5 object-cover rounded-2xl md:rounded-none border border-white/20 md:border-0 md:order-4 lg:order-0 lg:col-start-2 lg:row-start-1 lg:row-span-3"
   />
 
   <!-- Project Title: Centered on Mobile/Tablet -> Left-Aligned on Desktop (lg:) -->

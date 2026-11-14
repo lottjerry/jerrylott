@@ -1,6 +1,52 @@
 ---
+import type { ImageMetadata } from "astro";
 import projects from "@/data/projects.json";
 import ProjectCard from "@/components/ProjectCard.astro";
+
+// Load all images across every project subfolder in src/assets/
+const allAssetImages = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/**/*.{png,jpg,jpeg,webp,avif,gif}",
+  { eager: true }
+);
+
+function resolveAssetUrl(rawPath?: string): string {
+  if (!rawPath) return "";
+  return allAssetImages[rawPath]?.default.src ?? rawPath;
+}
+
+const galleryData = Object.fromEntries(
+  projects.map((p) => {
+    const mainPath = p["Main-Image"];
+    const resolvedMain = resolveAssetUrl(mainPath);
+
+    // Derive folder automatically from Main-Image (e.g. "/src/assets/TheLaundryStation/")
+    const folderPrefix =
+      mainPath && mainPath.includes("/")
+        ? mainPath.slice(0, mainPath.lastIndexOf("/") + 1)
+        : null;
+
+    const folderImages = folderPrefix
+      ? Object.entries(allAssetImages)
+          .filter(([path]) => path.startsWith(folderPrefix))
+          .sort(([a], [b]) => a.localeCompare(b, undefined, { numeric: true }))
+          .map(([, mod]) => mod.default.src)
+      : [];
+
+    // Put Main-Image first, followed by all other images in that project's folder
+    const images = resolvedMain
+      ? [resolvedMain, ...folderImages.filter((src) => src !== resolvedMain)]
+      : folderImages;
+
+    return [
+      p.id,
+      {
+        id: p.id,
+        title: p.Title,
+        images,
+      },
+    ];
+  })
+);
 ---
 
 <div
@@ -20,7 +66,7 @@ import ProjectCard from "@/components/ProjectCard.astro";
     <!-- 01 - 08 Horizontal Gallery Navigation -->
     <nav
       aria-label="Project selector"
-      class="flex w-full md:max-w-md lg:justify-between lg:max-w-lg lg:text-2xl justify-between font-mono text-sm border-b border-white/20 pb-2"
+      class="flex w-full md:max-w-md lg:self-start justify-between font-mono text-sm border-b border-white/20 pb-2"
     >
       {projects.map((project, index) => (
         <button
@@ -42,12 +88,138 @@ import ProjectCard from "@/components/ProjectCard.astro";
     <!-- Horizontal Project Gallery Track -->
     <div
       data-project-gallery
-      class="w-full flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar"
+      class="w-full flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar cursor-grab active:cursor-grabbing select-none"
     >
       {projects.map((project) => (
-        <ProjectCard project={project} />
+        <ProjectCard
+          project={project}
+          imageSrc={resolveAssetUrl(project["Main-Image"])}
+        />
       ))}
     </div>
+  </div>
+
+  <!-- Project Image Gallery Modal -->
+  <div
+    id="gallery-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    aria-labelledby="modal-project-title"
+    class="fixed inset-0 z-50 bg-black/95 backdrop-blur-sm text-white flex flex-col justify-between py-5 px-4 md:py-8 md:px-10 opacity-0 invisible -translate-y-3 pointer-events-none transition-all duration-300 ease-out"
+  >
+    <!-- Modal Header (Stacked on Mobile so Title Never Truncates) -->
+    <div class="w-full flex flex-col gap-2 md:flex-row md:items-center md:justify-between pb-3 md:pb-4 border-b border-white font-mono text-xs">
+      <!-- Top Row on Mobile: ID + Controls -->
+      <div class="flex items-center justify-between md:justify-start md:gap-4">
+        <span id="modal-project-id" class="font-bold shrink-0">[ 01 ]</span>
+        <span class="hidden md:inline opacity-40">/</span>
+
+        <!-- Mobile-Only Action Buttons -->
+        <div class="flex md:hidden items-center gap-3 shrink-0">
+          <button
+            type="button"
+            data-modal-fullscreen
+            class="cursor-pointer font-bold hover:opacity-70 transition-opacity"
+          >
+            [ FULLSCREEN ↗ ]
+          </button>
+          <button
+            type="button"
+            data-modal-close
+            class="cursor-pointer font-bold hover:opacity-70 transition-opacity"
+          >
+            [ CLOSE × ]
+          </button>
+        </div>
+      </div>
+
+      <!-- Full-Width Title on Mobile, Inline on Desktop -->
+      <h2
+        id="modal-project-title"
+        class="uppercase tracking-widest font-bold text-sm md:text-xs md:mr-auto md:pl-4 wrap-break-word"
+      >
+        PROJECT GALLERY
+      </h2>
+
+      <!-- Desktop/Tablet Action Buttons -->
+      <div class="hidden md:flex items-center gap-6 shrink-0 pl-3">
+        <button
+          type="button"
+          data-modal-fullscreen
+          class="cursor-pointer font-bold hover:opacity-70 transition-opacity"
+        >
+          [ FULLSCREEN ↗ ]
+        </button>
+        <button
+          type="button"
+          data-modal-close
+          class="cursor-pointer font-bold hover:opacity-70 transition-opacity"
+        >
+          [ CLOSE × ]
+        </button>
+      </div>
+    </div>
+
+    <!-- Horizontal Image Track -->
+    <div class="relative w-full flex-1 flex items-center justify-center my-2 md:my-4 overflow-hidden">
+      <div
+        id="modal-image-track"
+        class="w-full h-full flex gap-6 md:gap-12 overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar items-center cursor-grab active:cursor-grabbing select-none"
+      >
+        <!-- Slides injected dynamically when [ View Gallery ] is clicked -->
+      </div>
+    </div>
+
+    <!-- Modal Footer Controls -->
+    <div class="w-full flex items-center justify-between pt-3 md:pt-4 border-t border-white/20 font-mono text-xs">
+      <button
+        type="button"
+        id="modal-prev-btn"
+        class="cursor-pointer hover:opacity-70 transition-opacity disabled:opacity-25 disabled:pointer-events-none"
+      >
+        [ ← PREV ]
+      </button>
+
+      <div class="flex items-center gap-4">
+        <span id="modal-counter" class="font-bold tracking-widest">
+          [ 01 / 01 ]
+        </span>
+        <div id="modal-dots" class="hidden sm:flex items-center gap-2"></div>
+      </div>
+
+      <button
+        type="button"
+        id="modal-next-btn"
+        class="cursor-pointer hover:opacity-70 transition-opacity disabled:opacity-25 disabled:pointer-events-none"
+      >
+        [ NEXT → ]
+      </button>
+    </div>
+  </div>
+
+  <!-- Edge-to-Edge Fullscreen Image Lightbox -->
+  <div
+    id="image-fullscreen-overlay"
+    role="dialog"
+    aria-modal="true"
+    aria-hidden="true"
+    class="fixed inset-0 z-60 bg-black text-white flex flex-col justify-center items-center opacity-0 invisible pointer-events-none transition-opacity duration-200"
+  >
+    <button
+      type="button"
+      id="exit-fullscreen-btn"
+      class="fixed top-5 right-5 md:top-8 md:right-10 z-10 bg-black/80 backdrop-blur-xs border border-white/30 px-3 py-1.5 font-mono text-xs font-bold cursor-pointer hover:border-white transition-colors"
+    >
+      [ EXIT FULLSCREEN × ]
+    </button>
+
+    <img
+      id="fullscreen-target-img"
+      src=""
+      alt="Fullscreen preview"
+      class="w-screen h-dvh object-contain p-2 md:p-6 select-none"
+    />
   </div>
 </div>
 
@@ -61,18 +233,24 @@ import ProjectCard from "@/components/ProjectCard.astro";
   }
 </style>
 
+<script define:vars={{ galleryData }}>
+  window.__PROJECT_GALLERIES__ = galleryData;
+</script>
+
 <script>
+  interface GalleryItem {
+    id: string;
+    title: string;
+    images: string[];
+  }
+
   const workContainer = document.getElementById("work-section");
 
   if (workContainer) {
-    const galleryTrack = workContainer.querySelector<HTMLElement>(
-      "[data-project-gallery]",
-    );
-    const navButtons =
-      workContainer.querySelectorAll<HTMLButtonElement>("[data-project-nav]");
-    const projectCards = workContainer.querySelectorAll<HTMLElement>(
-      "[data-project-card]",
-    );
+    // 1. Outer Horizontal Project Gallery (01 - 08)
+    const galleryTrack = workContainer.querySelector<HTMLElement>("[data-project-gallery]");
+    const navButtons = workContainer.querySelectorAll<HTMLButtonElement>("[data-project-nav]");
+    const projectCards = workContainer.querySelectorAll<HTMLElement>("[data-project-card]");
 
     function setActiveProject(projectId: string | undefined) {
       if (!projectId) return;
@@ -92,7 +270,7 @@ import ProjectCard from "@/components/ProjectCard.astro";
       btn.addEventListener("click", () => {
         const targetId = btn.dataset.projectNav;
         const targetCard = workContainer.querySelector<HTMLElement>(
-          `[data-project-card="${targetId}"]`,
+          `[data-project-card="${targetId}"]`
         );
 
         if (galleryTrack && targetCard) {
@@ -105,13 +283,58 @@ import ProjectCard from "@/components/ProjectCard.astro";
       });
     });
 
+    function attachMouseDragScroll(track: HTMLElement) {
+      let isMouseDown = false;
+      let startX = 0;
+      let startScrollLeft = 0;
+      let hasDragged = false;
+
+      track.querySelectorAll("img").forEach((img) => {
+        img.draggable = false;
+      });
+
+      track.addEventListener("mousedown", (e) => {
+        if ((e.target as HTMLElement).closest("button, a")) return;
+        isMouseDown = true;
+        hasDragged = false;
+        startX = e.pageX - track.offsetLeft;
+        startScrollLeft = track.scrollLeft;
+        track.classList.remove("snap-x", "scroll-smooth");
+      });
+
+      window.addEventListener("mousemove", (e) => {
+        if (!isMouseDown) return;
+        const x = e.pageX - track.offsetLeft;
+        const walk = (x - startX) * 1.25;
+        if (Math.abs(walk) > 5) hasDragged = true;
+        track.scrollLeft = startScrollLeft - walk;
+      });
+
+      window.addEventListener("mouseup", () => {
+        if (!isMouseDown) return;
+        isMouseDown = false;
+        track.classList.add("scroll-smooth", "snap-x");
+      });
+
+      track.addEventListener(
+        "click",
+        (e) => {
+          if (hasDragged) {
+            e.preventDefault();
+            e.stopPropagation();
+            hasDragged = false;
+          }
+        },
+        true
+      );
+    }
+
     if (galleryTrack) {
       const galleryObserver = new IntersectionObserver(
         (entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              const targetId = (entry.target as HTMLElement).dataset
-                .projectCard;
+              const targetId = (entry.target as HTMLElement).dataset.projectCard;
               setActiveProject(targetId);
             }
           });
@@ -119,15 +342,16 @@ import ProjectCard from "@/components/ProjectCard.astro";
         {
           root: galleryTrack,
           threshold: 0.6,
-        },
+        }
       );
 
       projectCards.forEach((card) => galleryObserver.observe(card));
+      attachMouseDragScroll(galleryTrack);
     }
 
+    // 2. Inner Click-Only Tabs per ProjectCard (Mobile)
     projectCards.forEach((card) => {
-      const buttons =
-        card.querySelectorAll<HTMLButtonElement>("[data-work-target]");
+      const buttons = card.querySelectorAll<HTMLButtonElement>("[data-work-target]");
       const panels = card.querySelectorAll<HTMLElement>("[data-work-panel]");
 
       buttons.forEach((button) => {
@@ -154,6 +378,225 @@ import ProjectCard from "@/components/ProjectCard.astro";
           });
         });
       });
+    });
+
+    // 3. Project Gallery Modal & Edge-to-Edge Fullscreen Viewer
+    const modal = document.getElementById("gallery-modal");
+    const modalTitle = document.getElementById("modal-project-title");
+    const modalProjectId = document.getElementById("modal-project-id");
+    const modalTrack = document.getElementById("modal-image-track");
+    const modalCounter = document.getElementById("modal-counter");
+    const modalDots = document.getElementById("modal-dots");
+    const closeBtns = workContainer.querySelectorAll<HTMLButtonElement>("[data-modal-close]");
+    const fullscreenBtns = workContainer.querySelectorAll<HTMLButtonElement>("[data-modal-fullscreen]");
+    const prevBtn = document.getElementById("modal-prev-btn") as HTMLButtonElement | null;
+    const nextBtn = document.getElementById("modal-next-btn") as HTMLButtonElement | null;
+    const galleryTriggers = workContainer.querySelectorAll<HTMLButtonElement>("[data-gallery-trigger]");
+
+    const fsOverlay = document.getElementById("image-fullscreen-overlay");
+    const fsImg = document.getElementById("fullscreen-target-img") as HTMLImageElement | null;
+    const exitFsBtn = document.getElementById("exit-fullscreen-btn");
+
+    const galleries = (window as unknown as { __PROJECT_GALLERIES__: Record<string, GalleryItem> })
+      .__PROJECT_GALLERIES__ || {};
+
+    let currentImages: string[] = [];
+    let currentTitle = "";
+    let currentSlideIndex = 0;
+    let totalSlides = 0;
+    let slideObserver: IntersectionObserver | null = null;
+
+    function formatPad(num: number) {
+      return String(num).padStart(2, "0");
+    }
+
+    function updateModalUI(index: number) {
+      currentSlideIndex = index;
+      if (modalCounter) {
+        modalCounter.textContent = `[ ${formatPad(index + 1)} / ${formatPad(totalSlides)} ]`;
+      }
+      if (prevBtn) prevBtn.disabled = index <= 0;
+      if (nextBtn) nextBtn.disabled = index >= totalSlides - 1;
+
+      if (modalDots) {
+        modalDots.querySelectorAll("button").forEach((dot, i) => {
+          dot.classList.toggle("bg-white", i === index);
+          dot.classList.toggle("bg-white/25", i !== index);
+        });
+      }
+    }
+
+    function goToModalSlide(index: number) {
+      if (!modalTrack || index < 0 || index >= totalSlides) return;
+      const slides = modalTrack.querySelectorAll<HTMLElement>("[data-modal-slide]");
+      const target = slides[index];
+      if (target) {
+        modalTrack.scrollTo({
+          left: target.offsetLeft - modalTrack.offsetLeft,
+          behavior: "smooth",
+        });
+        updateModalUI(index);
+      }
+    }
+
+    function openImageFullscreen() {
+      const activeSrc = currentImages[currentSlideIndex];
+      if (!activeSrc || !fsOverlay || !fsImg) return;
+
+      fsImg.src = activeSrc;
+      fsImg.alt = `${currentTitle} fullscreen screen ${currentSlideIndex + 1}`;
+
+      fsOverlay.setAttribute("aria-hidden", "false");
+      fsOverlay.classList.remove("opacity-0", "invisible", "pointer-events-none");
+      fsOverlay.classList.add("opacity-100", "visible", "pointer-events-auto");
+
+      if (fsOverlay.requestFullscreen && !document.fullscreenElement) {
+        fsOverlay.requestFullscreen().catch(() => {});
+      }
+    }
+
+    function closeImageFullscreen() {
+      if (!fsOverlay) return;
+      fsOverlay.setAttribute("aria-hidden", "true");
+      fsOverlay.classList.add("opacity-0", "invisible", "pointer-events-none");
+      fsOverlay.classList.remove("opacity-100", "visible", "pointer-events-auto");
+
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      }
+    }
+
+    function openGalleryModal(projectId: string) {
+      const data = galleries[projectId];
+      if (!data || !modal || !modalTrack) return;
+
+      currentImages = data.images;
+      currentTitle = data.title;
+
+      if (modalProjectId) modalProjectId.textContent = `[ ${data.id} ]`;
+      if (modalTitle) modalTitle.textContent = data.title;
+
+      totalSlides = data.images.length;
+      currentSlideIndex = 0;
+
+      modalTrack.innerHTML = data.images
+        .map(
+          (src, idx) => `
+          <div
+            data-modal-slide="${idx}"
+            class="w-full h-full shrink-0 snap-center flex items-center justify-center p-1 md:p-3 lg:p-4"
+          >
+            <img
+              src="${src}"
+              alt="${data.title} screen ${idx + 1}"
+              draggable="false"
+              class="max-w-[92vw] md:max-w-[88vw] lg:max-w-[85vw] max-h-[65dvh] md:max-h-[78dvh] lg:max-h-[82dvh] w-auto h-auto object-contain border border-white/20"
+            />
+          </div>
+        `
+        )
+        .join("");
+
+      if (modalDots) {
+        modalDots.innerHTML = data.images
+          .map(
+            (_, idx) => `
+            <button
+              type="button"
+              aria-label="Go to image ${idx + 1}"
+              data-modal-dot="${idx}"
+              class="w-4 h-0.5 cursor-pointer transition-colors ${idx === 0 ? "bg-white" : "bg-white/25"}"
+            ></button>
+          `
+          )
+          .join("");
+
+        modalDots.querySelectorAll<HTMLButtonElement>("[data-modal-dot]").forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const idx = Number(dot.dataset.modalDot);
+            goToModalSlide(idx);
+          });
+        });
+      }
+
+      modalTrack.scrollLeft = 0;
+      updateModalUI(0);
+
+      if (slideObserver) slideObserver.disconnect();
+      slideObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const idx = Number((entry.target as HTMLElement).dataset.modalSlide);
+              updateModalUI(idx);
+            }
+          });
+        },
+        { root: modalTrack, threshold: 0.6 }
+      );
+
+      modalTrack.querySelectorAll("[data-modal-slide]").forEach((slide) => {
+        slideObserver?.observe(slide);
+      });
+
+      modal.setAttribute("aria-hidden", "false");
+      modal.classList.remove("opacity-0", "invisible", "-translate-y-3", "pointer-events-none");
+      modal.classList.add("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeGalleryModal() {
+      if (!modal) return;
+      closeImageFullscreen();
+      modal.setAttribute("aria-hidden", "true");
+      modal.classList.add("opacity-0", "invisible", "-translate-y-3", "pointer-events-none");
+      modal.classList.remove("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
+      document.body.style.overflow = "";
+    }
+
+    if (modalTrack) {
+      attachMouseDragScroll(modalTrack);
+    }
+
+    galleryTriggers.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const id = btn.dataset.galleryTrigger;
+        if (id) openGalleryModal(id);
+      });
+    });
+
+    fullscreenBtns.forEach((btn) => btn.addEventListener("click", openImageFullscreen));
+    closeBtns.forEach((btn) => btn.addEventListener("click", closeGalleryModal));
+
+    exitFsBtn?.addEventListener("click", closeImageFullscreen);
+    fsOverlay?.addEventListener("click", (e) => {
+      if (e.target === fsOverlay || e.target === fsImg) {
+        closeImageFullscreen();
+      }
+    });
+
+    prevBtn?.addEventListener("click", () => goToModalSlide(currentSlideIndex - 1));
+    nextBtn?.addEventListener("click", () => goToModalSlide(currentSlideIndex + 1));
+
+    modal?.addEventListener("click", (e) => {
+      if (e.target === modal || e.target === modalTrack) {
+        closeGalleryModal();
+      }
+    });
+
+    window.addEventListener("keydown", (e) => {
+      if (fsOverlay && fsOverlay.getAttribute("aria-hidden") === "false") {
+        if (e.key === "Escape") {
+          e.preventDefault();
+          closeImageFullscreen();
+        }
+        return;
+      }
+
+      if (!modal || modal.getAttribute("aria-hidden") === "true") return;
+      if (e.key === "Escape") closeGalleryModal();
+      if (e.key === "ArrowLeft") goToModalSlide(currentSlideIndex - 1);
+      if (e.key === "ArrowRight") goToModalSlide(currentSlideIndex + 1);
     });
   }
 </script>

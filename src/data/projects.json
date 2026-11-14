@@ -8,6 +8,7 @@
     "Client": "The Laundry Station",
     "Tech-Stack": "React, HTML, CSS, JavaScript, SCSS, Ibis Paint X",
     "Description": "Brochure web app and logo design for a locally owned Laudromat based in Ellisville, Mississippi.",
+    "Main-Image": "/src/assets/TheLaundryStation/bannernoir.jpg",
     "Link": "https://thelaundrystation.netlify.app/"
   },
   {
@@ -18,7 +19,8 @@
     "Role": "Designer",
     "Client": "Steele Smokin LLC",
     "Tech-Stack": "Figma",
-    "Description": "Logo design for a mobile BBQ and catering business."
+    "Description": "Logo design for a mobile BBQ and catering business.",
+    "Main-Image": "/src/assets/SteeleSmokin/steele-smokin-noir.png"
   },
   {
     "id": "03",
@@ -29,6 +31,7 @@
     "Client": "Personal Project / Custom D3",
     "Tech-Stack": "Nuxt3, Vue3, TailwindCSS, Pinia, Vuetify, Firebase, VeeValidate, TypeScript, HTML, JavaScript",
     "Description": "Custom web app to help coworkers access work schedules digitally.",
+    "Main-Image": "/src/assets/MyJobEssentials/mhenoir.png",
     "Link": "https://www.myjobessentials.com/"
   },
   {
@@ -40,6 +43,7 @@
     "Client": "Custom D3",
     "Tech-Stack": "Nuxt3, Vue3, TailwindCSS, Pinia, Firebase, VeeValidate, HTML, JavaScript, Yup, VueFire, Lottie, GSAP",
     "Description": "Pre launch landing page for a independent digital agency.",
+    "Main-Image": "/src/assets/CustomD3/cd3-noir.jpeg",
     "Link": "https://www.customdthree.com/"
   },
   {
@@ -51,6 +55,7 @@
     "Client": "Personal",
     "Tech-Stack": "HTML, CSS, Javascript",
     "Description": "Personal portfolio engineered from scratch using vanilla HTML, CSS, and JavaScript.",
+    "Main-Image": "/src/assets/JerryLottv1/home-img-noir.jpg",
     "Link": "https://v1.jerrylott.com/"
   },
   {
@@ -62,7 +67,7 @@
     "Client": "Curly Headed Heifa",
     "Tech-Stack": "Illustrator",
     "Description": "Brand identity and logo design for a local boutique.",
-    "Link": ""
+    "Main-Image": "/src/assets/CurlyHeadedHeifa/noir.jpg"
   },
   {
     "id": "07",
@@ -73,6 +78,7 @@
     "Client": "Personal",
     "Tech-Stack": "HTML, CSS, Javascript, Astro, TailwindCSS",
     "Description": "Personal portfolio engineered from scratch using Astro and TailwindCSS.",
+    "Main-Image": "/src/assets/JerryLottv2/heronoir.jpeg",
     "Link": "https://jerrylott.com/"
   },
   {
@@ -84,6 +90,6 @@
     "Client": "3 Little Stitches",
     "Tech-Stack": "Figma",
     "Description": "Brand identity and logo design for a local embroidery business.",
-    "Link": ""
+    "Main-Image": "/src/assets/3LittleStitches/main.webp"
   }
 ]
