@@ -4,8 +4,8 @@ import HamburgerButton from "./HamburgerButton.astro";
 import NavigationOverlay from "./NavigationOverlay.astro";
 ---
 
-<!-- Added z-50 and relative so header stays on top of the overlay -->
-<nav class="z-50 relative flex justify-between items-center p-5 md:p-10 w-dvw text-white">
+<!-- Fixed positioning anchors the pill navbar evenly with top-2, left-2, and right-2 -->
+<nav class="z-50 fixed top-2 left-2 right-2 flex justify-between items-center h-16 px-5 md:px-10 text-white bg-black/80 backdrop-blur-md rounded-4xl">
   <!-- Wrapped JL in an anchor tag linked to the top -->
   <a href="#" class="hover:opacity-70 font-sans font-bold text-2xl transition-opacity">
     JL
