@@ -102,6 +102,7 @@ const galleryData = Object.fromEntries(
   <!-- Project Image Gallery Modal -->
   <div
     id="gallery-modal"
+    data-lenis-prevent
     role="dialog"
     aria-modal="true"
     aria-hidden="true"
@@ -201,6 +202,7 @@ const galleryData = Object.fromEntries(
   <!-- Edge-to-Edge Fullscreen Image Lightbox -->
   <div
     id="image-fullscreen-overlay"
+    data-lenis-prevent
     role="dialog"
     aria-modal="true"
     aria-hidden="true"
@@ -244,7 +246,7 @@ const galleryData = Object.fromEntries(
     images: string[];
   }
 
-  const workContainer = document.getElementById("work-section");
+  const workContainer = document.getElementById("work");
 
   if (workContainer) {
     // 1. Outer Horizontal Project Gallery (01 - 08)
@@ -314,6 +316,9 @@ const galleryData = Object.fromEntries(
         if (!isMouseDown) return;
         isMouseDown = false;
         track.classList.add("scroll-smooth", "snap-x");
+        requestAnimationFrame(() => {
+          hasDragged = false;
+        });
       });
 
       track.addEventListener(
@@ -397,8 +402,9 @@ const galleryData = Object.fromEntries(
     const fsImg = document.getElementById("fullscreen-target-img") as HTMLImageElement | null;
     const exitFsBtn = document.getElementById("exit-fullscreen-btn");
 
-    const galleries = (window as unknown as { __PROJECT_GALLERIES__: Record<string, GalleryItem> })
-      .__PROJECT_GALLERIES__ || {};
+    const galleries =
+      (window as unknown as { __PROJECT_GALLERIES__?: Record<string, GalleryItem> })
+        .__PROJECT_GALLERIES__ || {};
 
     let currentImages: string[] = [];
     let currentTitle = "";
@@ -543,6 +549,7 @@ const galleryData = Object.fromEntries(
       modal.classList.remove("opacity-0", "invisible", "-translate-y-3", "pointer-events-none");
       modal.classList.add("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
       document.body.style.overflow = "hidden";
+      window.smoothScrollLenis?.stop();
     }
 
     function closeGalleryModal() {
@@ -552,6 +559,7 @@ const galleryData = Object.fromEntries(
       modal.classList.add("opacity-0", "invisible", "-translate-y-3", "pointer-events-none");
       modal.classList.remove("opacity-100", "visible", "translate-y-0", "pointer-events-auto");
       document.body.style.overflow = "";
+      window.smoothScrollLenis?.start();
     }
 
     if (modalTrack) {
