@@ -10,7 +10,7 @@
   <nav class="flex flex-col items-start gap-10 font-mono font-thin text-white text-3xl mx-auto w-fit md:w-[60%]">
     <a
       href="#"
-      class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+      class="nav-link flex items-start gap-6 opacity-100 hover:opacity-100 transition-opacity duration-300"
     >
       <span class="text-sm md:text-2xl w-6 text-left">01</span>
       <span class="md:text-6xl">Home</span>
@@ -98,6 +98,43 @@
 
 <script is:inline>
   const NAVBAR_OFFSET = -96;
+  let activeNavHref = "#";
+
+  function setActiveNavLink(href) {
+    activeNavHref = href;
+    const links = document.querySelectorAll("#nav-overlay .nav-link");
+    links.forEach((link) => {
+      const isCurrent = link.getAttribute("href") === href;
+      link.classList.toggle("opacity-100", isCurrent);
+      link.classList.toggle("opacity-30", !isCurrent);
+      if (isCurrent) {
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  function syncActiveSectionFromScroll() {
+    // Near the top of the page -> Home ("#") is active
+    if (window.scrollY < window.innerHeight * 0.4) {
+      setActiveNavLink("#");
+      return;
+    }
+
+    // Check which section covers the center of the viewport
+    const midY = window.innerHeight * 0.5;
+    const sectionIds = ["about", "work", "services", "contact"];
+    for (const id of sectionIds) {
+      const el = document.getElementById(id);
+      if (!el) continue;
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= midY && rect.bottom >= midY) {
+        setActiveNavLink(`#${id}`);
+        return;
+      }
+    }
+  }
 
   function syncHamburgerWithOverlay() {
     const overlay = document.getElementById("nav-overlay");
@@ -113,6 +150,7 @@
     const overlay = document.getElementById("nav-overlay");
     if (!overlay) return;
 
+    syncActiveSectionFromScroll();
     overlay.classList.remove("opacity-0", "pointer-events-none");
     overlay.classList.add("opacity-100", "pointer-events-auto");
     document.body.style.overflow = "hidden";
@@ -142,6 +180,44 @@
       observer.observe(overlay, { attributes: true, attributeFilter: ["class"] });
     }
 
+    // Observe sections as the user scrolls
+    const sectionIds = ["about", "work", "services", "contact"];
+    const sectionObserver = new IntersectionObserver(
+      (entries) => {
+        if (window.scrollY < window.innerHeight * 0.4) {
+          setActiveNavLink("#");
+          return;
+        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveNavLink(`#${entry.target.id}`);
+          }
+        });
+      },
+      {
+        rootMargin: "-40% 0px -40% 0px",
+        threshold: 0,
+      }
+    );
+
+    sectionIds.forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) sectionObserver.observe(section);
+    });
+
+    // Ensure Home re-activates when scrolling all the way back up
+    window.addEventListener(
+      "scroll",
+      () => {
+        if (window.scrollY < window.innerHeight * 0.4 && activeNavHref !== "#") {
+          setActiveNavLink("#");
+        }
+      },
+      { passive: true }
+    );
+
+    syncActiveSectionFromScroll();
+
     if (!window.__navListenersBound) {
       window.__navListenersBound = true;
 
@@ -167,6 +243,7 @@
 
           e.preventDefault();
           history.replaceState(null, "", href);
+          setActiveNavLink(href);
 
           const target = href === "#" ? 0 : href;
           const offset = href === "#" ? 0 : NAVBAR_OFFSET;
