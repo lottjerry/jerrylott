@@ -48,6 +48,7 @@
       <span class="md:text-6xl">Contact</span>
     </a>
   </nav>
+
   <footer class="bottom-0 fixed p-5 md:p-10 w-[90%] font-span text-white">
     <div class="flex lg:flex-row flex-col justify-between items-center gap-5 p-10 border-white/20 border-t">
       <div class="flex items-center gap-3">
@@ -95,43 +96,92 @@
   </footer>
 </div>
 
-<!-- Script to handle opening/closing based on the hamburger click -->
 <script is:inline>
-  document.addEventListener("menu-toggle", (e) => {
+  const NAVBAR_OFFSET = -96;
+
+  function syncHamburgerWithOverlay() {
     const overlay = document.getElementById("nav-overlay");
-    const hamburgerBtn = document.getElementById("menu-toggle");
+    const btn = document.getElementById("menu-toggle");
+    if (!overlay || !btn) return;
+
+    const isOpen = overlay.classList.contains("opacity-100");
+    btn.classList.toggle("is-active", isOpen);
+    btn.setAttribute("aria-expanded", String(isOpen));
+  }
+
+  function openMenu() {
+    const overlay = document.getElementById("nav-overlay");
     if (!overlay) return;
 
-    const { isActive } = e.detail;
+    overlay.classList.remove("opacity-0", "pointer-events-none");
+    overlay.classList.add("opacity-100", "pointer-events-auto");
+    document.body.style.overflow = "hidden";
+    window.lenis?.stop();
+    syncHamburgerWithOverlay();
+  }
 
-    if (isActive) {
-      // Open Overlay
-      overlay.classList.remove("opacity-0", "pointer-events-none");
-      overlay.classList.add("opacity-100", "pointer-events-auto");
-      document.body.style.overflow = "hidden"; // Prevent background scrolling
-    } else {
-      // Close Overlay
-      overlay.classList.remove("opacity-100", "pointer-events-auto");
-      overlay.classList.add("opacity-0", "pointer-events-none");
-      document.body.style.overflow = ""; // Restore scrolling
+  window.closeNavMenu = function () {
+    const overlay = document.getElementById("nav-overlay");
+    if (!overlay) return;
+
+    overlay.classList.remove("opacity-100", "pointer-events-auto");
+    overlay.classList.add("opacity-0", "pointer-events-none");
+    document.body.style.overflow = "";
+    window.lenis?.start();
+    syncHamburgerWithOverlay();
+  };
+
+  function initNavigationOverlay() {
+    const overlay = document.getElementById("nav-overlay");
+    if (!overlay) return;
+
+    // Watch #nav-overlay classes so the hamburger icon ALWAYS stays in sync
+    if (!overlay.dataset.observed) {
+      overlay.dataset.observed = "true";
+      const observer = new MutationObserver(syncHamburgerWithOverlay);
+      observer.observe(overlay, { attributes: true, attributeFilter: ["class"] });
     }
-  });
 
-  // Optional: Close overlay automatically when a link inside it is clicked
-  document.querySelectorAll("#nav-overlay a").forEach((link) => {
-    link.addEventListener("click", () => {
-      const overlay = document.getElementById("nav-overlay");
-      const hamburgerBtn = document.getElementById("menu-toggle");
+    if (!window.__navListenersBound) {
+      window.__navListenersBound = true;
 
-      if (overlay) {
-        overlay.classList.remove("opacity-100", "pointer-events-auto");
-        overlay.classList.add("opacity-0", "pointer-events-none");
-        document.body.style.overflow = "";
-      }
-      if (hamburgerBtn) {
-        hamburgerBtn.classList.remove("is-active");
-        hamburgerBtn.setAttribute("aria-expanded", "false");
-      }
-    });
-  });
+      document.addEventListener("menu-toggle", (e) => {
+        if (e.detail?.isActive) {
+          openMenu();
+        } else {
+          window.closeNavMenu();
+        }
+      });
+
+      // Capture phase runs BEFORE any Lenis/anchor-scroll scripts
+      document.addEventListener(
+        "click",
+        (e) => {
+          const link = e.target.closest("#nav-overlay a");
+          if (!link) return;
+
+          const href = link.getAttribute("href");
+          window.closeNavMenu();
+
+          if (!href || !href.startsWith("#")) return;
+
+          e.preventDefault();
+          const target = href === "#" ? 0 : href;
+          const offset = href === "#" ? 0 : NAVBAR_OFFSET;
+
+          if (window.lenis) {
+            window.lenis.scrollTo(target, { offset });
+          } else if (href === "#") {
+            window.scrollTo({ top: 0 });
+          } else {
+            document.querySelector(href)?.scrollIntoView();
+          }
+        },
+        true
+      );
+    }
+  }
+
+  initNavigationOverlay();
+  document.addEventListener("astro:page-load", initNavigationOverlay);
 </script>
