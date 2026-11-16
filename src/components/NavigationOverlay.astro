@@ -116,7 +116,7 @@
     overlay.classList.remove("opacity-0", "pointer-events-none");
     overlay.classList.add("opacity-100", "pointer-events-auto");
     document.body.style.overflow = "hidden";
-    window.lenis?.stop();
+    window.smoothScrollLenis?.stop();
     syncHamburgerWithOverlay();
   }
 
@@ -127,7 +127,7 @@
     overlay.classList.remove("opacity-100", "pointer-events-auto");
     overlay.classList.add("opacity-0", "pointer-events-none");
     document.body.style.overflow = "";
-    window.lenis?.start();
+    window.smoothScrollLenis?.start();
     syncHamburgerWithOverlay();
   };
 
@@ -153,11 +153,11 @@
         }
       });
 
-      // Capture phase runs BEFORE any Lenis/anchor-scroll scripts
+      // Handle both #nav-overlay links AND #header-logo in one place
       document.addEventListener(
         "click",
         (e) => {
-          const link = e.target.closest("#nav-overlay a");
+          const link = e.target.closest("#nav-overlay a, #header-logo");
           if (!link) return;
 
           const href = link.getAttribute("href");
@@ -166,15 +166,18 @@
           if (!href || !href.startsWith("#")) return;
 
           e.preventDefault();
+          history.replaceState(null, "", href);
+
           const target = href === "#" ? 0 : href;
           const offset = href === "#" ? 0 : NAVBAR_OFFSET;
 
-          if (window.lenis) {
-            window.lenis.scrollTo(target, { offset });
+          if (window.smoothScrollLenis) {
+            window.smoothScrollLenis.start();
+            window.smoothScrollLenis.scrollTo(target, { offset, force: true });
           } else if (href === "#") {
-            window.scrollTo({ top: 0 });
+            window.scrollTo({ top: 0, behavior: "smooth" });
           } else {
-            document.querySelector(href)?.scrollIntoView();
+            document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
           }
         },
         true

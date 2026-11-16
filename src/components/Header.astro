@@ -4,9 +4,7 @@ import HamburgerButton from "@/components/HamburgerButton.astro";
 import NavigationOverlay from "@/components/NavigationOverlay.astro";
 ---
 
-<!-- Fixed positioning anchors the pill navbar evenly with top-2, left-2, and right-2 -->
 <nav class="z-50 fixed top-2 left-2 right-2 flex justify-between items-center h-16 px-5 md:px-10 text-white bg-black/80 backdrop-blur-md rounded-4xl">
-  <!-- Wrapped JL in an anchor tag linked to the top -->
   <a
     id="header-logo"
     href="#"
@@ -14,14 +12,13 @@ import NavigationOverlay from "@/components/NavigationOverlay.astro";
   >
     JL
   </a>
-  
+
   <HamburgerButton scale={0.7} />
 </nav>
 
-<!-- Render the overlay component right here -->
 <NavigationOverlay />
 
-<script is:inline>
+<script>
   function initHeaderLogo() {
     const logo = document.getElementById("header-logo");
     if (!logo || logo.dataset.bound) return;
@@ -30,17 +27,28 @@ import NavigationOverlay from "@/components/NavigationOverlay.astro";
     logo.addEventListener("click", (e) => {
       e.preventDefault();
 
-      // Close NavigationOverlay and reset hamburger if currently open
-      if (typeof window.closeNavMenu === "function") {
-        window.closeNavMenu();
+      // 1. Close overlay if open
+      const closeMenu = (window as unknown as { closeNavMenu?: () => void }).closeNavMenu;
+      if (typeof closeMenu === "function") {
+        closeMenu();
       }
 
-      // Smoothly scroll to the top using Lenis (with reduced-motion fallback)
-      if (window.lenis) {
-        window.lenis.scrollTo(0);
-      } else {
-        window.scrollTo({ top: 0 });
-      }
+      // 2. Update URL to "#"
+      window.location.hash = "";
+      history.replaceState(null, "", "#");
+
+      // 3. Force scroll to top across Lenis and native window
+      setTimeout(() => {
+        document.documentElement.style.overflow = "";
+        document.body.style.overflow = "";
+
+        if (window.smoothScrollLenis) {
+          window.smoothScrollLenis.start();
+          window.smoothScrollLenis.scrollTo(0, { immediate: false, force: true });
+        }
+
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }, 10);
     });
   }
 
