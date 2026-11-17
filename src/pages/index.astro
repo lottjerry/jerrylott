@@ -15,27 +15,27 @@ import Work from "@/sections/Work.astro";
 
   <main id="portfolio-sections" class="relative bg-black overflow-x-clip">
     <!-- 1. Hero (Black): Pins so About slides up in front of it -->
-    <div id="hero-wrapper" class="relative z-10 bg-black overflow-hidden">
+    <div id="hero-wrapper" class="relative z-1g-black overflow-hidden">
       <Hero />
     </div>
 
     <!-- 2. About (White): Slides over Hero, then scrolls normally into Work -->
-    <div id="about-wrapper" class="relative z-20 bg-white overflow-hidden">
+    <div id="about-wrapper" class="relative z-2g-white overflow-hidden">
       <About />
     </div>
 
     <!-- 3. Work (Black): Scrolls normally, then pins at bottom so Services slides up in front of it -->
-    <div id="work-wrapper" class="relative z-30 bg-black overflow-hidden">
+    <div id="work-wrapper" class="relative z-3 bg-black overflow-hidden">
       <Work />
     </div>
 
     <!-- 4. Services (White): Slides straight up in front of Work -->
-    <div id="services-wrapper" class="relative z-40 bg-white overflow-hidden">
+    <div id="services-wrapper" class="relative z-4 bg-white overflow-hidden">
       <Services />
     </div>
 
     <!-- 5. Contact + Footer (Black): Grounded stage reveal -->
-    <div id="contact-wrapper" class="relative z-40 bg-black overflow-hidden">
+    <div id="contact-wrapper" class="relative z-5 bg-black overflow-hidden">
       <div id="contact-inner" class="will-change-transform">
         <Contact />
         <Footer />
@@ -100,7 +100,7 @@ import Work from "@/sections/Work.astro";
 
     // 4. SERVICES -> CONTACT + FOOTER: Subtle stage-reveal parallax settle
     if (contactWrapper && contactInner) {
-      gsap.set(contactInner, { yPercent: -10 });
+      gsap.set(contactInner, { yPercent: -6 });
 
       const contactTween = gsap.to(contactInner, {
         yPercent: 0,
@@ -108,7 +108,7 @@ import Work from "@/sections/Work.astro";
         scrollTrigger: {
           trigger: contactWrapper,
           start: "top bottom",
-          end: "top 30%",
+          end: "bottom bottom",
           scrub: true,
           invalidateOnRefresh: true,
         },
