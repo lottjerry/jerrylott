@@ -1,4 +1,5 @@
 ---
+// src/layouts/Layout.astro
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import 'lenis/dist/lenis.css';
@@ -6,7 +7,7 @@ import Preloader from '@/components/Preloader.astro';
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" style="background-color: #000000;">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
@@ -14,8 +15,16 @@ import Preloader from '@/components/Preloader.astro';
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>Astro Basics</title>
+
+    <!-- Runs synchronously before first paint to prevent browser scroll restoration -->
+    <script is:inline>
+      if ('scrollRestoration' in history) {
+        history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    </script>
   </head>
-  <body class="bg-black">
+  <body class="bg-black" style="background-color: #000000; overflow: hidden;">
     <Preloader />
     <slot />
 
@@ -29,6 +38,20 @@ import Preloader from '@/components/Preloader.astro';
       declare global {
         interface Window {
           smoothScrollLenis?: Lenis;
+          __scrollResetBound?: boolean;
+        }
+      }
+
+      function forceScrollTop() {
+        if ('scrollRestoration' in history) {
+          history.scrollRestoration = 'manual';
+        }
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+
+        if (window.smoothScrollLenis) {
+          window.smoothScrollLenis.scrollTo(0, { immediate: true, force: true });
         }
       }
 
@@ -47,6 +70,8 @@ import Preloader from '@/components/Preloader.astro';
           window.smoothScrollLenis = undefined;
         }
 
+        forceScrollTop();
+
         // 2. Respect reduced motion (ScrollTrigger still works normally without Lenis)
         const prefersReducedMotion = window.matchMedia(
           '(prefers-reduced-motion: reduce)'
@@ -64,6 +89,9 @@ import Preloader from '@/components/Preloader.astro';
 
         window.smoothScrollLenis = lenis;
 
+        // Snap Lenis immediately to 0 so it never inherits a mid-page scroll position
+        lenis.scrollTo(0, { immediate: true, force: true });
+
         // Keep Lenis paused if the preloader curtain is still visible on initial load
         const curtain = document.getElementById('preloader-curtain');
         if (curtain && curtain.style.display !== 'none') {
@@ -74,6 +102,23 @@ import Preloader from '@/components/Preloader.astro';
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add(updateLenis);
         gsap.ticker.lagSmoothing(0);
+      }
+
+      if (!window.__scrollResetBound) {
+        window.__scrollResetBound = true;
+
+        // Reset right before reload so browsers don't snapshot a mid-page offset
+        window.addEventListener('beforeunload', () => {
+          window.scrollTo(0, 0);
+        });
+
+        // Handle Safari / mobile bfcache restores
+        window.addEventListener('pageshow', (e) => {
+          if (e.persisted) {
+            forceScrollTop();
+            ScrollTrigger.refresh();
+          }
+        });
       }
 
       initScroll();

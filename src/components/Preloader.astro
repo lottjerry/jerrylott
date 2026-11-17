@@ -2,18 +2,38 @@
 // src/components/Preloader.astro
 ---
 
-<!-- 1. Fullscreen black loading curtain (rolls up on finish) -->
+<!-- 1. Critical inline styles guarantee solid black full-screen cover BEFORE external CSS/JS loads -->
 <div
   id="preloader-curtain"
   aria-hidden="false"
-  class="fixed inset-0 z-[60] bg-black pointer-events-auto"
-  style="clip-path: inset(0% 0% 0% 0%);"
+  style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000000;
+    z-index: 9998;
+    pointer-events: auto;
+    clip-path: inset(0% 0% 0% 0%);
+  "
 ></div>
 
-<!-- 2. Persistent bottom-right SVG circle (compact across mobile, tablet, and desktop) -->
+<!-- 2. Persistent bottom-right SVG circle (starts above curtain at z-index: 9999, drops to z-30 after load) -->
 <div
   id="scroll-progress-widget"
-  class="fixed bottom-4 right-4 md:bottom-4 md:right-4 lg:bottom-4 lg:right-4 z-[61] flex items-center justify-center pointer-events-none select-none mix-blend-difference"
+  class="fixed bottom-4 right-4 md:bottom-6 md:right-6 lg:bottom-8 lg:right-8 flex items-center justify-center pointer-events-none select-none mix-blend-difference"
+  style="
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  "
 >
   <svg
     class="w-12 h-12 md:w-14 md:h-14 lg:w-16 lg:h-16 -rotate-90"
@@ -47,6 +67,7 @@
   <span
     id="progress-percent"
     class="absolute font-mono text-[10px] md:text-xs tracking-tight text-white"
+    style="position: absolute; color: #ffffff;"
   >
     0%
   </span>
@@ -58,8 +79,20 @@
 
   gsap.registerPlugin(ScrollTrigger);
 
+  declare global {
+    interface Window {
+      preloaderRevealed?: boolean;
+    }
+  }
+
   const CIRCUMFERENCE = 2 * Math.PI * 44; // ~276.46
   let scrollTrackerTrigger: ScrollTrigger | null = null;
+
+  function signalHeroReveal() {
+    if (window.preloaderRevealed) return;
+    window.preloaderRevealed = true;
+    window.dispatchEvent(new CustomEvent("preloader:reveal"));
+  }
 
   function updateCircleUI(
     ring: SVGCircleElement,
@@ -70,6 +103,13 @@
     percentEl.textContent = `${Math.round(clamped)}%`;
     const offset = CIRCUMFERENCE - (clamped / 100) * CIRCUMFERENCE;
     ring.style.strokeDashoffset = `${offset}`;
+  }
+
+  function dropWidgetBelowNav(widget: HTMLElement) {
+    // Clear inline positioning/z-index so Tailwind responsive classes & z-30 take over
+    widget.style.bottom = "";
+    widget.style.right = "";
+    widget.style.zIndex = "30";
   }
 
   function initScrollTracker(
@@ -99,21 +139,15 @@
 
     ring.style.strokeDasharray = `${CIRCUMFERENCE}`;
 
-    // If preloader already ran (e.g. after a View Transition), just bind scroll tracking
+    // If preloader already ran (e.g. after a View Transition), reveal hero & bind scroll tracking
     if (!curtain || curtain.dataset.played === "true") {
-      widget.classList.remove("z-[61]");
-      widget.classList.add("z-30");
+      dropWidgetBelowNav(widget);
+      signalHeroReveal();
       initScrollTracker(ring, percentEl);
       return;
     }
 
     curtain.dataset.played = "true";
-
-    // Always reset scroll to top on fresh load so 0% matches page top
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
-    window.scrollTo(0, 0);
 
     // Lock scroll while loading
     document.documentElement.style.overflow = "hidden";
@@ -127,12 +161,12 @@
     if (prefersReducedMotion) {
       curtain.style.display = "none";
       curtain.setAttribute("aria-hidden", "true");
-      widget.classList.remove("z-[61]");
-      widget.classList.add("z-30");
+      dropWidgetBelowNav(widget);
       document.documentElement.style.overflow = "";
       document.body.style.overflow = "";
       window.smoothScrollLenis?.start();
       updateCircleUI(ring, percentEl, 0);
+      signalHeroReveal();
       initScrollTracker(ring, percentEl);
       return;
     }
@@ -141,17 +175,14 @@
 
     const tl = gsap.timeline({
       onComplete: () => {
-        // Hide curtain, drop circle z-index below NavigationOverlay (z-40), and unlock scroll
         curtain.style.display = "none";
         curtain.setAttribute("aria-hidden", "true");
-        widget.classList.remove("z-[61]");
-        widget.classList.add("z-30");
+        dropWidgetBelowNav(widget);
 
         document.documentElement.style.overflow = "";
         document.body.style.overflow = "";
         window.smoothScrollLenis?.start();
 
-        // Hand off control to GSAP ScrollTrigger
         initScrollTracker(ring, percentEl);
         ScrollTrigger.refresh();
       },
@@ -164,17 +195,20 @@
       ease: "power2.inOut",
       onUpdate: () => updateCircleUI(ring, percentEl, counter.value),
     })
-      // 2. Roll up the black curtain...
+      // 2. Roll up the black curtain and notify the Hero section
       .to(
         curtain,
         {
           clipPath: "inset(0% 0% 100% 0%)",
           duration: 0.75,
           ease: "power4.inOut",
+          onStart: () => {
+            gsap.delayedCall(0.15, signalHeroReveal);
+          },
         },
         "+=0.1"
       )
-      // 3. ...while simultaneously draining the circle back to 0% for the top of the page
+      // 3. Simultaneously drain circle back to 0% for the top of the page
       .to(
         counter,
         {
