@@ -294,13 +294,13 @@ const galleryData = Object.fromEntries(
     if (galleryTrack) gsap.set(galleryTrack, { y: 40, opacity: 0 });
     if (firstCardMedia.length) gsap.set(firstCardMedia, { scale: 1.07 });
 
-    // 2. Unpinned scrub timeline (index.astro owns the single pin on #work-wrapper)
+    // 2. Unpinned scrub timeline spanning into the dwell hold so it glides rather than snaps
     workTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: workContainer,
-        start: "top 85%",
-        end: "top 10%",
-        scrub: 0.75,
+        start: "top 92%",
+        end: "top -25%",
+        scrub: 1,
         invalidateOnRefresh: true,
         onLeave: () => {
           if (galleryTrack) gsap.set(galleryTrack, { clearProps: "transform" });

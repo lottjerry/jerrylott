@@ -24,7 +24,7 @@ import Work from "@/sections/Work.astro";
       <About />
     </div>
 
-    <!-- 3. Work (Black): Single pin holds Work in place, then Services slides up over it -->
+    <!-- 3. Work (Black): Shorter dwell buffer, then Services slides up over it -->
     <div id="work-wrapper" class="relative z-3 bg-black overflow-hidden">
       <Work />
     </div>
@@ -84,10 +84,8 @@ import Work from "@/sections/Work.astro";
     });
     sectionTransitions.push(heroPin);
 
-    // 2. WORK DWELL + CURTAIN OVERLAP (Single Pin):
-    // First 100vh of scroll: Services is held back by marginTop so Work stays locked in full view
-    // while its scrub animation plays. Next 100vh: Services slides straight up in front of Work.
-    const dwellDistance = () => window.innerHeight;
+    // 2. WORK DWELL + CURTAIN OVERLAP (Smooth lock without anticipatePin snap):
+    const dwellDistance = () => window.innerHeight * 0.55;
     const overlapDistance = () => Math.min(servicesWrapper.offsetHeight, window.innerHeight);
 
     gsap.set(servicesWrapper, { marginTop: () => dwellDistance() });
@@ -99,7 +97,6 @@ import Work from "@/sections/Work.astro";
       end: () => `+=${dwellDistance() + overlapDistance()}`,
       pin: true,
       pinSpacing: false,
-      anticipatePin: 1,
       invalidateOnRefresh: true,
     });
     sectionTransitions.push(workPin);
