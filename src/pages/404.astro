@@ -73,21 +73,24 @@ const titleWords = ["PAGE", "NOT", "FOUND."];
           <div class="flex flex-wrap items-center gap-6 text-sm md:text-base font-bold">
             <a
               href="/"
-              class="relative pb-1 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-100 after:bg-white after:transition-transform after:duration-300 hover:opacity-70"
+              data-target="#"
+              class="err-nav-link relative pb-1 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-100 after:bg-white after:transition-transform after:duration-300 hover:opacity-70"
             >
               [ ← RETURN HOME ]
             </a>
 
             <a
-              href="/#work"
-              class="relative pb-1 opacity-70 hover:opacity-100 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+              href="/"
+              data-target="#work"
+              class="err-nav-link relative pb-1 opacity-70 hover:opacity-100 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
             >
               /work
             </a>
 
             <a
-              href="/#contact"
-              class="relative pb-1 opacity-70 hover:opacity-100 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
+              href="/"
+              data-target="#contact"
+              class="err-nav-link relative pb-1 opacity-70 hover:opacity-100 after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full after:origin-bottom-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300 hover:after:scale-x-100"
             >
               /contact
             </a>
@@ -119,6 +122,21 @@ const titleWords = ["PAGE", "NOT", "FOUND."];
     if (pathEl) {
       pathEl.textContent = window.location.pathname;
     }
+
+    // Store target section in sessionStorage so URL stays "/" without #hash
+    root.querySelectorAll<HTMLAnchorElement>(".err-nav-link").forEach((link) => {
+      if (link.dataset.bound === "true") return;
+      link.dataset.bound = "true";
+
+      link.addEventListener("click", () => {
+        const target = link.getAttribute("data-target");
+        if (target && target !== "#") {
+          sessionStorage.setItem("pending_section_scroll", target);
+        } else {
+          sessionStorage.removeItem("pending_section_scroll");
+        }
+      });
+    });
 
     const headerLine = document.getElementById("err-header-line");
     const headerItems = gsap.utils.toArray<HTMLElement>("#error-404 .err-header-item");

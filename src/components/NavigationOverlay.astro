@@ -110,6 +110,9 @@
 
 <script>
   import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
 
   declare global {
     interface Window {
@@ -226,6 +229,7 @@
   }
 
   function runScroll(href: string) {
+    document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
     const target = href === "#" ? 0 : href;
     const offset = href === "#" ? 0 : NAVBAR_OFFSET;
@@ -238,6 +242,30 @@
     } else {
       document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
     }
+  }
+
+  function consumePendingSectionScroll() {
+    const pending = sessionStorage.getItem("pending_section_scroll");
+    if (!pending) return;
+
+    const executeAfterPreloaderUnlock = () => {
+      const curtain = document.getElementById("preloader-curtain");
+      // Wait until Preloader has completely hidden the curtain and unlocked body/Lenis
+      if (curtain && curtain.style.display !== "none") {
+        gsap.delayedCall(0.1, executeAfterPreloaderUnlock);
+        return;
+      }
+
+      sessionStorage.removeItem("pending_section_scroll");
+      ScrollTrigger.refresh();
+      setActiveNavLink(pending);
+
+      requestAnimationFrame(() => {
+        runScroll(pending);
+      });
+    };
+
+    executeAfterPreloaderUnlock();
   }
 
   function openMenu() {
@@ -302,6 +330,7 @@
     );
 
     syncActiveSectionFromScroll();
+    consumePendingSectionScroll();
 
     if (!window.__navListenersBound) {
       window.__navListenersBound = true;
@@ -337,8 +366,11 @@
           if (!href || !href.startsWith("#")) return;
 
           e.preventDefault();
-          history.replaceState(null, "", href);
           setActiveNavLink(href);
+
+          if (window.location.hash) {
+            history.replaceState(null, "", window.location.pathname + window.location.search);
+          }
 
           if (wasOpen) {
             pendingScrollCall = gsap.delayedCall(SCROLL_DELAY, () => runScroll(href));
