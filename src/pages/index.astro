@@ -12,10 +12,75 @@ import Work from "@/sections/Work.astro";
 
 <Layout>
   <Header />
-  <Hero />
-  <About />
-  <Work />
-  <Services />
-  <Contact />
-  <Footer />
+
+  <main id="stacking-deck" class="relative bg-black">
+    <!-- Card 1: Hero (Black) -->
+    <div class="stack-card relative bg-black overflow-hidden">
+      <Hero />
+    </div>
+
+    <!-- Card 2: About (White - slides straight up in front of Hero) -->
+    <div class="stack-card relative bg-white overflow-hidden">
+      <About />
+    </div>
+
+    <!-- Card 3: Work (Black - slides straight up in front of About) -->
+    <div class="stack-card relative bg-black overflow-hidden">
+      <Work />
+    </div>
+
+    <!-- Card 4: Services (White - slides straight up in front of Work) -->
+    <div class="stack-card relative bg-white overflow-hidden">
+      <Services />
+    </div>
+
+    <!-- Final Card: Contact + Footer (Black - slides straight up in front of Services) -->
+    <div id="final-card" class="relative bg-black">
+      <Contact />
+      <Footer />
+    </div>
+  </main>
 </Layout>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  function initStackingDeck() {
+    const cards = gsap.utils.toArray<HTMLElement>("#stacking-deck .stack-card");
+    const finalCard = document.getElementById("final-card");
+    if (!cards.length) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    cards.forEach((card, index) => {
+      // Layer each incoming section strictly in front of the previous one
+      card.style.zIndex = String(index + 1);
+      const nextCard = cards[index + 1] || finalCard;
+
+      // Pin the section in place with pinSpacing: false so the next section slides straight over it
+      ScrollTrigger.create({
+        trigger: card,
+        start: () =>
+          card.offsetHeight > window.innerHeight ? "bottom bottom" : "top top",
+        end: () =>
+          nextCard ? `+=${nextCard.offsetHeight}` : `+=${window.innerHeight}`,
+        pin: true,
+        pinSpacing: false,
+        invalidateOnRefresh: true,
+      });
+    });
+
+    // Keep Contact + Footer in front of the last pinned section
+    if (finalCard) {
+      finalCard.style.zIndex = String(cards.length + 1);
+    }
+
+    ScrollTrigger.refresh();
+  }
+
+  initStackingDeck();
+  document.addEventListener("astro:page-load", initStackingDeck);
+</script>
