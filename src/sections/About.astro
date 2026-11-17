@@ -52,9 +52,13 @@ const words = headline.split(" ");
       </div>
 
       <div class="flex flex-col justify-center items-center font-mono gap-2 md:flex-row md:gap-5">
-        <p class="about-role opacity-60 lg:whitespace-nowrap">FULL-STACK DEVELOPER</p>
+        <p class="about-role opacity-60 lg:whitespace-nowrap">
+          FULL-STACK DEVELOPER
+        </p>
         <p class="about-role opacity-60 lg:whitespace-nowrap">UI/UX DESIGNER</p>
-        <p class="about-role opacity-60 lg:whitespace-nowrap">SECURITY RESEARCHER</p>
+        <p class="about-role opacity-60 lg:whitespace-nowrap">
+          SECURITY RESEARCHER
+        </p>
       </div>
     </div>
 
@@ -82,7 +86,10 @@ const words = headline.split(" ");
         ))}
       </h1>
 
-      <p id="about-bio" class="text-sm md:text-lg lg:w-4/5 will-change-transform">
+      <p
+        id="about-bio"
+        class="text-sm md:text-lg lg:w-4/5 will-change-transform"
+      >
         It may not be obvious, but Jerry's journey started with Full-Stack
         development. Interested in the design side of a website, he quickly
         branched out into Graphic and UI/UX design, eventually integrating a
@@ -137,12 +144,15 @@ const words = headline.split(" ");
         </div>
       </div>
 
-      <button
+      <a
         id="about-resume-btn"
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
         class="font-black cursor-pointer hover:opacity-50 transition-opacity duration-500 will-change-transform"
       >
         [ RESUME ]
-      </button>
+      </a>
     </div>
   </div>
 </div>
@@ -164,21 +174,35 @@ const words = headline.split(" ");
     aboutTimeline?.kill();
 
     const chars = gsap.utils.toArray<HTMLElement>("#about .about-char");
-    const headerItems = gsap.utils.toArray<HTMLElement>("#about .about-header-item");
+    const headerItems = gsap.utils.toArray<HTMLElement>(
+      "#about .about-header-item",
+    );
     const headerLine = document.getElementById("about-header-line");
     const bio = document.getElementById("about-bio");
     const mediaMask = document.getElementById("about-media-mask");
     const portrait = document.getElementById("about-portrait");
     const roles = gsap.utils.toArray<HTMLElement>("#about .about-role");
-    const statItems = gsap.utils.toArray<HTMLElement>("#about .about-stat-item");
+    const statItems = gsap.utils.toArray<HTMLElement>(
+      "#about .about-stat-item",
+    );
     const counters = gsap.utils.toArray<HTMLElement>("#about .about-counter");
     const resumeBtn = document.getElementById("about-resume-btn");
 
     // Respect reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(
-        [chars, headerItems, headerLine, bio, mediaMask, portrait, roles, statItems, resumeBtn],
-        { clearProps: "all" }
+        [
+          chars,
+          headerItems,
+          headerLine,
+          bio,
+          mediaMask,
+          portrait,
+          roles,
+          statItems,
+          resumeBtn,
+        ],
+        { clearProps: "all" },
       );
       return;
     }
@@ -227,7 +251,7 @@ const words = headline.split(" ");
           duration: 0.7,
           ease: "power3.inOut",
         },
-        "-=0.9"
+        "-=0.9",
       )
       .to(
         headerItems,
@@ -238,7 +262,7 @@ const words = headline.split(" ");
           ease: "power3.out",
           stagger: 0.08,
         },
-        "<0.15"
+        "<0.15",
       );
 
     // STEP 3: Portrait clip-path curtain wipe + subtle zoom settle
@@ -250,7 +274,7 @@ const words = headline.split(" ");
           duration: 0.95,
           ease: "power4.inOut",
         },
-        "-=0.45"
+        "-=0.45",
       )
       .to(
         portrait,
@@ -259,7 +283,7 @@ const words = headline.split(" ");
           duration: 1.15,
           ease: "power3.out",
         },
-        "<"
+        "<",
       )
       .to(
         roles,
@@ -270,7 +294,7 @@ const words = headline.split(" ");
           ease: "power3.out",
           stagger: 0.08,
         },
-        "-=0.5"
+        "-=0.5",
       );
 
     // STEP 4: Bio paragraph slides in cleanly
@@ -282,7 +306,7 @@ const words = headline.split(" ");
         duration: 0.65,
         ease: "power3.out",
       },
-      "-=0.85"
+      "-=0.85",
     );
 
     // STEP 5: Stats stagger in + slow count up (00+ -> 04+, 05+, 06+, 02+)
@@ -313,7 +337,7 @@ const words = headline.split(" ");
           });
         },
       },
-      "-=0.45"
+      "-=0.45",
     );
 
     // STEP 6: [ RESUME ] button settles in last
@@ -325,7 +349,7 @@ const words = headline.split(" ");
         duration: 0.45,
         ease: "power3.out",
       },
-      "-=0.35"
+      "-=0.35",
     );
   }
 

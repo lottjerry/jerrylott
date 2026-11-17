@@ -13,31 +13,33 @@ import Work from "@/sections/Work.astro";
 <Layout>
   <Header />
 
-  <main id="stacking-deck" class="relative bg-black">
-    <!-- Card 1: Hero (Black) -->
-    <div class="stack-card relative bg-black overflow-hidden">
+  <main id="portfolio-sections" class="relative bg-black overflow-x-clip">
+    <!-- 1. Hero: Pins in place so About slides straight up in front of it -->
+    <div id="hero-wrapper" class="relative z-10 bg-black overflow-hidden">
       <Hero />
     </div>
 
-    <!-- Card 2: About (White - slides straight up in front of Hero) -->
-    <div class="stack-card relative bg-white overflow-hidden">
+    <!-- 2. About: Slides straight up over the pinned Hero -->
+    <div id="about-wrapper" class="relative z-20 bg-white overflow-hidden">
       <About />
     </div>
 
-    <!-- Card 3: Work (Black - slides straight up in front of About) -->
-    <div class="stack-card relative bg-black overflow-hidden">
+    <!-- 3. Work: Sharp horizontal curtain expansion from white -> black -->
+    <div id="work-wrapper" class="relative z-30 bg-black overflow-hidden will-change-transform">
       <Work />
     </div>
 
-    <!-- Card 4: Services (White - slides straight up in front of Work) -->
-    <div class="stack-card relative bg-white overflow-hidden">
+    <!-- 4. Services: Elevation lift from black -> white -->
+    <div id="services-wrapper" class="relative z-30 bg-white overflow-hidden will-change-transform">
       <Services />
     </div>
 
-    <!-- Final Card: Contact + Footer (Black - slides straight up in front of Services) -->
-    <div id="final-card" class="relative bg-black">
-      <Contact />
-      <Footer />
+    <!-- 5. Contact + Footer: Grounded parallax settle -->
+    <div id="contact-wrapper" class="relative z-30 bg-black overflow-hidden">
+      <div id="contact-inner" class="will-change-transform">
+        <Contact />
+        <Footer />
+      </div>
     </div>
   </main>
 </Layout>
@@ -48,39 +50,103 @@ import Work from "@/sections/Work.astro";
 
   gsap.registerPlugin(ScrollTrigger);
 
-  function initStackingDeck() {
-    const cards = gsap.utils.toArray<HTMLElement>("#stacking-deck .stack-card");
-    const finalCard = document.getElementById("final-card");
-    if (!cards.length) return;
+  let sectionTransitions: ScrollTrigger[] = [];
 
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  function initSectionTransitions() {
+    // Clean up previous triggers on View Transitions
+    sectionTransitions.forEach((st) => st.kill());
+    sectionTransitions = [];
 
-    cards.forEach((card, index) => {
-      // Layer each incoming section strictly in front of the previous one
-      card.style.zIndex = String(index + 1);
-      const nextCard = cards[index + 1] || finalCard;
+    const heroWrapper = document.getElementById("hero-wrapper");
+    const aboutWrapper = document.getElementById("about-wrapper");
+    const workWrapper = document.getElementById("work-wrapper");
+    const servicesWrapper = document.getElementById("services-wrapper");
+    const contactWrapper = document.getElementById("contact-wrapper");
+    const contactInner = document.getElementById("contact-inner");
 
-      // Pin the section in place with pinSpacing: false so the next section slides straight over it
-      ScrollTrigger.create({
-        trigger: card,
-        start: () =>
-          card.offsetHeight > window.innerHeight ? "bottom bottom" : "top top",
-        end: () =>
-          nextCard ? `+=${nextCard.offsetHeight}` : `+=${window.innerHeight}`,
-        pin: true,
-        pinSpacing: false,
-        invalidateOnRefresh: true,
+    if (!heroWrapper || !aboutWrapper) return;
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set([heroWrapper, aboutWrapper, workWrapper, servicesWrapper, contactInner], {
+        clearProps: "all",
       });
-    });
+      return;
+    }
 
-    // Keep Contact + Footer in front of the last pinned section
-    if (finalCard) {
-      finalCard.style.zIndex = String(cards.length + 1);
+    // 1. HERO -> ABOUT: Pin Hero so About slides straight up in front of it
+    const heroPin = ScrollTrigger.create({
+      trigger: heroWrapper,
+      start: () =>
+        heroWrapper.offsetHeight > window.innerHeight ? "bottom bottom" : "top top",
+      end: () => `+=${aboutWrapper.offsetHeight}`,
+      pin: true,
+      pinSpacing: false,
+      invalidateOnRefresh: true,
+    });
+    sectionTransitions.push(heroPin);
+
+    // 2. ABOUT -> WORK: Crisp horizontal curtain expansion as Work enters
+    if (workWrapper) {
+      gsap.set(workWrapper, { clipPath: "inset(0% 6% 0% 6%)" });
+
+      const workTween = gsap.to(workWrapper, {
+        clipPath: "inset(0% 0% 0% 0%)",
+        ease: "none",
+        scrollTrigger: {
+          trigger: workWrapper,
+          start: "top 92%",
+          end: "top 35%",
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+        },
+      });
+      if (workTween.scrollTrigger) sectionTransitions.push(workTween.scrollTrigger);
+    }
+
+    // 3. WORK -> SERVICES: Smooth upward elevation lift
+    if (servicesWrapper) {
+      gsap.set(servicesWrapper, { y: 60 });
+
+      const servicesTween = gsap.to(servicesWrapper, {
+        y: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: servicesWrapper,
+          start: "top 95%",
+          end: "top 40%",
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+        },
+      });
+      if (servicesTween.scrollTrigger) sectionTransitions.push(servicesTween.scrollTrigger);
+    }
+
+    // 4. SERVICES -> CONTACT + FOOTER: Subtle stage-reveal parallax settle
+    if (contactWrapper && contactInner) {
+      gsap.set(contactInner, { yPercent: -10 });
+
+      const contactTween = gsap.to(contactInner, {
+        yPercent: 0,
+        ease: "none",
+        scrollTrigger: {
+          trigger: contactWrapper,
+          start: "top bottom",
+          end: "top 30%",
+          scrub: true,
+          invalidateOnRefresh: true,
+        },
+      });
+      if (contactTween.scrollTrigger) sectionTransitions.push(contactTween.scrollTrigger);
     }
 
     ScrollTrigger.refresh();
   }
 
-  initStackingDeck();
-  document.addEventListener("astro:page-load", initStackingDeck);
+  // Run after window load so Layout.astro's initScroll() doesn't clear these triggers
+  if (document.readyState === "complete") {
+    initSectionTransitions();
+  } else {
+    window.addEventListener("load", initSectionTransitions, { once: true });
+  }
+  document.addEventListener("astro:page-load", initSectionTransitions);
 </script>
