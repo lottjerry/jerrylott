@@ -69,34 +69,62 @@ const services = [
 >
   <!-- Header -->
   <header class="w-full">
-    <div class="flex gap-5 pb-5 border-b border-black font-bold text-xs font-mono">
-      <p>[ 03 ]</p>
-      <p>/services</p>
+    <div class="relative flex gap-5 pb-5 font-bold text-xs font-mono">
+      <p class="services-header-item">[ 03 ]</p>
+      <p class="services-header-item">/services</p>
+      <span
+        id="services-header-line"
+        class="absolute bottom-0 left-0 right-0 h-px bg-black origin-left"
+      ></span>
     </div>
   </header>
 
   <!-- Title -->
   <div class="flex flex-col items-center md:items-start md:w-[82%] md:mx-auto gap-4">
     <h1 class="font-sans text-2xl md:text-3xl font-bold leading-snug max-w-xl">
-      {services.map((service, index) => (
-        <span
-          data-tab-headline={service.id}
-          class:list={[
-            "cursor-pointer transition-opacity duration-200 hover:opacity-100",
-            index === 0 ? "opacity-100" : "opacity-40",
-          ]}
-        >
-          {service.headline}{" "}
-        </span>
-      ))}
+      {services.map((service, index) => {
+        const words = service.headline.split(" ");
+        return (
+          <>
+            <span
+              data-tab-headline={service.id}
+              class:list={[
+                "cursor-pointer transition-opacity duration-200 hover:opacity-100",
+                index === 0 ? "opacity-100" : "opacity-40",
+              ]}
+            >
+              {words.map((word, wIdx) => (
+                <>
+                  <span class="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
+                    <span class="services-title-word inline-block will-change-transform">
+                      {word}
+                    </span>
+                  </span>
+                  {wIdx < words.length - 1 && " "}
+                </>
+              ))}
+            </span>{" "}
+          </>
+        );
+      })}
     </h1>
-    <div class="overflow-hidden max-w-full">
+    <div id="services-top-dots" class="overflow-hidden max-w-full">
       <DotGrid rows={4} cols={85} gap="gap-1" />
     </div>
   </div>
 
   <!-- Body: Mobile Scroll-Snap | Tablet 2x2 Grid | Desktop 4-Across (1040px+) -->
-  <div class="relative w-[85%] md:w-[78%] lg:w-[88%] mx-auto border-y border-black/30 md:px-6">
+  <div class="relative w-[85%] md:w-[78%] lg:w-[88%] mx-auto md:px-6">
+    <!-- Top & Bottom Animated Dividers -->
+    <span
+      id="services-grid-top-line"
+      class="absolute top-0 left-0 right-0 h-px bg-black/30 origin-left"
+    ></span>
+    <span
+      id="services-grid-bottom-line"
+      class="absolute bottom-0 left-0 right-0 h-px bg-black/30 origin-left"
+    ></span>
+
     <!-- Mobile-only Tab Buttons -->
     <div
       role="tablist"
@@ -109,7 +137,7 @@ const services = [
           data-tab-target={service.id}
           aria-selected={index === 0 ? "true" : "false"}
           class:list={[
-            "cursor-pointer pb-1 transition-all",
+            "services-mobile-tab cursor-pointer pb-1 transition-all",
             index === 0
               ? "font-bold opacity-100"
               : "opacity-50 hover:opacity-100",
@@ -137,14 +165,16 @@ const services = [
               : "opacity-0 md:opacity-45 md:border-black/20",
           ]}
         >
-          <FeatureCard
-            icon={service.icon}
-            iconAlt={service.iconAlt}
-            title={service.title}
-            label={service.cardLabel}
-            description={service.description}
-            showBottomGrid={true}
-          />
+          <div class="services-card-inner will-change-transform">
+            <FeatureCard
+              icon={service.icon}
+              iconAlt={service.iconAlt}
+              title={service.title}
+              label={service.cardLabel}
+              description={service.description}
+              showBottomGrid={true}
+            />
+          </div>
         </div>
       ))}
     </div>
@@ -152,7 +182,10 @@ const services = [
 
   <!-- Footer -->
   <div class="w-full md:w-[85%] lg:w-[82%] mx-auto flex flex-col md:flex-row gap-6 lg:gap-12 items-center md:items-start justify-between pt-4 font-bold text-center md:text-left text-xs md:text-sm">
-    <div class="overflow-hidden shrink-0 lg:shrink lg:flex-1 lg:min-w-0">
+    <div
+      id="services-bottom-dots"
+      class="overflow-hidden shrink-0 lg:shrink lg:flex-1 lg:min-w-0"
+    >
       <!-- Mobile & Tablet DotGrid -->
       <div class="lg:hidden">
         <DotGrid rows={6} cols={42} gap="gap-1" />
@@ -163,7 +196,10 @@ const services = [
       </div>
     </div>
 
-    <div class="grid grid-cols-1 grid-rows-1 max-w-md shrink-0">
+    <div
+      id="services-tagline-box"
+      class="grid grid-cols-1 grid-rows-1 max-w-md shrink-0 will-change-transform"
+    >
       {services.map((service, index) => (
         <h3
           data-tab-tagline={service.id}
@@ -193,14 +229,188 @@ const services = [
 </style>
 
 <script>
-  const container = document.getElementById("services");
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-  if (container) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  let servicesTimeline: gsap.core.Timeline | null = null;
+
+  function initServicesAnimations() {
+    const container = document.getElementById("services");
+    if (!container) return;
+
+    servicesTimeline?.scrollTrigger?.kill();
+    servicesTimeline?.kill();
+
+    const headerLine = document.getElementById("services-header-line");
+    const headerItems = gsap.utils.toArray<HTMLElement>("#services .services-header-item");
+    const titleWords = gsap.utils.toArray<HTMLElement>("#services .services-title-word");
+    const topDots = document.getElementById("services-top-dots");
+    const gridTopLine = document.getElementById("services-grid-top-line");
+    const gridBottomLine = document.getElementById("services-grid-bottom-line");
+    const mobileTabs = gsap.utils.toArray<HTMLElement>("#services .services-mobile-tab");
+    const cardInners = gsap.utils.toArray<HTMLElement>("#services .services-card-inner");
+    const bottomDots = document.getElementById("services-bottom-dots");
+    const taglineBox = document.getElementById("services-tagline-box");
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set(
+        [
+          headerLine,
+          headerItems,
+          titleWords,
+          topDots,
+          gridTopLine,
+          gridBottomLine,
+          mobileTabs,
+          cardInners,
+          bottomDots,
+          taglineBox,
+        ],
+        { clearProps: "all" }
+      );
+      return;
+    }
+
+    // 1. Set initial hidden states (animating .services-card-inner keeps panel tab opacities untouched)
+    gsap.set(headerLine, { scaleX: 0 });
+    gsap.set(headerItems, { y: 10, opacity: 0 });
+    gsap.set(titleWords, { yPercent: 115, opacity: 0 });
+    gsap.set(topDots, { clipPath: "inset(0% 100% 0% 0%)" });
+    gsap.set([gridTopLine, gridBottomLine], { scaleX: 0 });
+    gsap.set(mobileTabs, { y: 10, opacity: 0 });
+    gsap.set(cardInners, { y: 32, opacity: 0 });
+    gsap.set(bottomDots, { clipPath: "inset(0% 100% 0% 0%)" });
+    gsap.set(taglineBox, { y: 18, opacity: 0 });
+
+    // 2. Choreographed ScrollTrigger entrance timeline
+    servicesTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: container,
+        start: "top 72%",
+        once: true,
+      },
+    });
+
+    // STEP 1: Staggered word-by-word masked title reveal
+    servicesTimeline.to(titleWords, {
+      yPercent: 0,
+      opacity: 1,
+      duration: 0.65,
+      ease: "power4.out",
+      stagger: 0.065,
+      clearProps: "transform,opacity",
+    });
+
+    // STEP 2: [ 03 ] /services header & bottom rule draw
+    servicesTimeline
+      .to(
+        headerLine,
+        {
+          scaleX: 1,
+          duration: 0.85,
+          ease: "power3.inOut",
+        },
+        0
+      )
+      .to(
+        headerItems,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.5,
+          ease: "power3.out",
+          stagger: 0.1,
+        },
+        0.15
+      );
+
+    // STEP 3: Top DotGrid sweeps left-to-right + grid border lines draw
+    servicesTimeline
+      .to(
+        topDots,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 0.9,
+          ease: "power3.inOut",
+          clearProps: "clipPath",
+        },
+        "-=0.45"
+      )
+      .to(
+        [gridTopLine, gridBottomLine],
+        {
+          scaleX: 1,
+          duration: 0.85,
+          ease: "power3.inOut",
+          stagger: 0.1,
+        },
+        "<0.1"
+      );
+
+    // STEP 4: Mobile tabs & 4-column FeatureCards stagger upward
+    servicesTimeline
+      .to(
+        mobileTabs,
+        {
+          y: 0,
+          opacity: (i) => (i === 0 ? 1 : 0.5),
+          duration: 0.45,
+          ease: "power3.out",
+          stagger: 0.06,
+          clearProps: "transform,opacity",
+        },
+        "-=0.55"
+      )
+      .to(
+        cardInners,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.7,
+          ease: "power3.out",
+          stagger: 0.1,
+          clearProps: "transform",
+        },
+        "<0.05"
+      );
+
+    // STEP 5: Footer DotGrid sweep + active tagline reveal
+    servicesTimeline
+      .to(
+        bottomDots,
+        {
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 0.95,
+          ease: "power3.inOut",
+          clearProps: "clipPath",
+        },
+        "-=0.45"
+      )
+      .to(
+        taglineBox,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.6,
+          ease: "power3.out",
+          clearProps: "transform",
+        },
+        "-=0.6"
+      );
+  }
+
+  function initServicesInteractions() {
+    const container = document.getElementById("services");
+    if (!container || container.dataset.bound === "true") return;
+    container.dataset.bound = "true";
+
     const track = container.querySelector<HTMLElement>("[data-snap-track]");
     const buttons =
       container.querySelectorAll<HTMLButtonElement>("[data-tab-target]");
     const headlines = container.querySelectorAll<HTMLElement>(
-      "[data-tab-headline]",
+      "[data-tab-headline]"
     );
     const panels = container.querySelectorAll<HTMLElement>("[data-tab-panel]");
     const taglines =
@@ -243,13 +453,21 @@ const services = [
         tagline.classList.toggle("opacity-0", !isSelected);
         tagline.classList.toggle("invisible", !isSelected);
         tagline.classList.toggle("pointer-events-none", !isSelected);
+
+        if (isSelected && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          gsap.fromTo(
+            tagline,
+            { y: 8 },
+            { y: 0, duration: 0.35, ease: "power2.out", clearProps: "transform" }
+          );
+        }
       });
     }
 
     function selectAndScroll(targetId: string | undefined) {
       if (!targetId) return;
       const targetPanel = container?.querySelector<HTMLElement>(
-        `[data-tab-panel="${targetId}"]`,
+        `[data-tab-panel="${targetId}"]`
       );
 
       if (track && targetPanel && !isTabletOrUp()) {
@@ -264,7 +482,7 @@ const services = [
 
     buttons.forEach((button) => {
       button.addEventListener("click", () =>
-        selectAndScroll(button.dataset.tabTarget),
+        selectAndScroll(button.dataset.tabTarget)
       );
     });
 
@@ -278,7 +496,7 @@ const services = [
 
     headlines.forEach((headline) => {
       headline.addEventListener("click", () =>
-        selectAndScroll(headline.dataset.tabHeadline),
+        selectAndScroll(headline.dataset.tabHeadline)
       );
     });
 
@@ -296,10 +514,23 @@ const services = [
         {
           root: track,
           threshold: 0.6,
-        },
+        }
       );
 
       panels.forEach((panel) => observer.observe(panel));
     }
   }
+
+  initServicesInteractions();
+
+  if (document.readyState === "complete") {
+    initServicesAnimations();
+  } else {
+    window.addEventListener("load", initServicesAnimations, { once: true });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initServicesInteractions();
+    initServicesAnimations();
+  });
 </script>

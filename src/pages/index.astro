@@ -14,28 +14,28 @@ import Work from "@/sections/Work.astro";
   <Header />
 
   <main id="portfolio-sections" class="relative bg-black overflow-x-clip">
-    <!-- 1. Hero: Pins in place so About slides straight up in front of it -->
+    <!-- 1. Hero (Black): Pins so About slides up in front of it -->
     <div id="hero-wrapper" class="relative z-10 bg-black overflow-hidden">
       <Hero />
     </div>
 
-    <!-- 2. About: Slides straight up over the pinned Hero -->
+    <!-- 2. About (White): Slides over Hero, then scrolls normally into Work -->
     <div id="about-wrapper" class="relative z-20 bg-white overflow-hidden">
       <About />
     </div>
 
-    <!-- 3. Work: Sharp horizontal curtain expansion from white -> black -->
-    <div id="work-wrapper" class="relative z-30 bg-black overflow-hidden will-change-transform">
+    <!-- 3. Work (Black): Scrolls normally, then pins at bottom so Services slides up in front of it -->
+    <div id="work-wrapper" class="relative z-30 bg-black overflow-hidden">
       <Work />
     </div>
 
-    <!-- 4. Services: Elevation lift from black -> white -->
-    <div id="services-wrapper" class="relative z-30 bg-white overflow-hidden will-change-transform">
+    <!-- 4. Services (White): Slides straight up in front of Work -->
+    <div id="services-wrapper" class="relative z-40 bg-white overflow-hidden">
       <Services />
     </div>
 
-    <!-- 5. Contact + Footer: Grounded parallax settle -->
-    <div id="contact-wrapper" class="relative z-30 bg-black overflow-hidden">
+    <!-- 5. Contact + Footer (Black): Grounded stage reveal -->
+    <div id="contact-wrapper" class="relative z-40 bg-black overflow-hidden">
       <div id="contact-inner" class="will-change-transform">
         <Contact />
         <Footer />
@@ -53,7 +53,6 @@ import Work from "@/sections/Work.astro";
   let sectionTransitions: ScrollTrigger[] = [];
 
   function initSectionTransitions() {
-    // Clean up previous triggers on View Transitions
     sectionTransitions.forEach((st) => st.kill());
     sectionTransitions = [];
 
@@ -64,7 +63,7 @@ import Work from "@/sections/Work.astro";
     const contactWrapper = document.getElementById("contact-wrapper");
     const contactInner = document.getElementById("contact-inner");
 
-    if (!heroWrapper || !aboutWrapper) return;
+    if (!heroWrapper || !aboutWrapper || !workWrapper || !servicesWrapper) return;
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set([heroWrapper, aboutWrapper, workWrapper, servicesWrapper, contactInner], {
@@ -85,41 +84,19 @@ import Work from "@/sections/Work.astro";
     });
     sectionTransitions.push(heroPin);
 
-    // 2. ABOUT -> WORK: Crisp horizontal curtain expansion as Work enters
-    if (workWrapper) {
-      gsap.set(workWrapper, { clipPath: "inset(0% 6% 0% 6%)" });
+    // 2. ABOUT -> WORK: Normal vertical scroll (no pin on About)
 
-      const workTween = gsap.to(workWrapper, {
-        clipPath: "inset(0% 0% 0% 0%)",
-        ease: "none",
-        scrollTrigger: {
-          trigger: workWrapper,
-          start: "top 92%",
-          end: "top 35%",
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
-      });
-      if (workTween.scrollTrigger) sectionTransitions.push(workTween.scrollTrigger);
-    }
-
-    // 3. WORK -> SERVICES: Smooth upward elevation lift
-    if (servicesWrapper) {
-      gsap.set(servicesWrapper, { y: 60 });
-
-      const servicesTween = gsap.to(servicesWrapper, {
-        y: 0,
-        ease: "none",
-        scrollTrigger: {
-          trigger: servicesWrapper,
-          start: "top 95%",
-          end: "top 40%",
-          scrub: 0.4,
-          invalidateOnRefresh: true,
-        },
-      });
-      if (servicesTween.scrollTrigger) sectionTransitions.push(servicesTween.scrollTrigger);
-    }
+    // 3. WORK -> SERVICES: Pin Work at its bottom edge so Services slides straight up in front of it
+    const workPin = ScrollTrigger.create({
+      trigger: workWrapper,
+      start: () =>
+        workWrapper.offsetHeight > window.innerHeight ? "bottom bottom" : "top top",
+      end: () => `+=${Math.min(servicesWrapper.offsetHeight, window.innerHeight)}`,
+      pin: true,
+      pinSpacing: false,
+      invalidateOnRefresh: true,
+    });
+    sectionTransitions.push(workPin);
 
     // 4. SERVICES -> CONTACT + FOOTER: Subtle stage-reveal parallax settle
     if (contactWrapper && contactInner) {
@@ -142,7 +119,6 @@ import Work from "@/sections/Work.astro";
     ScrollTrigger.refresh();
   }
 
-  // Run after window load so Layout.astro's initScroll() doesn't clear these triggers
   if (document.readyState === "complete") {
     initSectionTransitions();
   } else {
