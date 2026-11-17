@@ -25,9 +25,6 @@ import NavigationOverlay from "@/components/NavigationOverlay.astro";
 
 <script>
   import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-  gsap.registerPlugin(ScrollTrigger);
 
   let headerMatchMedia: gsap.MatchMedia | null = null;
 
@@ -69,11 +66,14 @@ import NavigationOverlay from "@/components/NavigationOverlay.astro";
     headerMatchMedia?.revert();
     headerMatchMedia = gsap.matchMedia();
 
-    // Only apply hide-on-scroll-down on mobile (< 768px) and when reduced motion isn't enabled
+    // 3. Apply hide-on-scroll-down / show-on-scroll-up strictly on mobile (< 768px)
     headerMatchMedia.add(
       "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
       () => {
         let isHidden = false;
+        let lastScrollY = window.scrollY;
+        let anchorScrollY = window.scrollY;
+        const THRESHOLD = 15; // px of intentional scroll before toggling
 
         const showHeader = () => {
           if (!isHidden) return;
@@ -99,39 +99,48 @@ import NavigationOverlay from "@/components/NavigationOverlay.astro";
           });
         };
 
-        const trigger = ScrollTrigger.create({
-          start: 0,
-          end: "max",
-          onUpdate: (self) => {
-            // Never hide if the full-screen navigation overlay is currently open
-            const overlay = document.getElementById("navigation-overlay");
-            const isMenuOpen =
-              overlay?.getAttribute("aria-hidden") === "false" ||
-              document.body.style.overflow === "hidden";
+        const onScroll = () => {
+          const currentY = window.scrollY;
+          const direction = currentY > lastScrollY ? 1 : currentY < lastScrollY ? -1 : 0;
+          lastScrollY = currentY;
 
-            if (isMenuOpen) {
-              showHeader();
-              return;
-            }
+          // Keep visible if the navigation overlay is open, near top of page, or at the bottom
+          const overlay = document.getElementById("navigation-overlay");
+          const isMenuOpen =
+            overlay?.getAttribute("aria-hidden") === "false" ||
+            document.body.style.overflow === "hidden";
 
-            // Keep header visible near the very top of the page (< 80px)
-            if (self.scroll() < 80) {
-              showHeader();
-              return;
-            }
+          const isAtBottom =
+            currentY + window.innerHeight >= document.documentElement.scrollHeight - 40;
 
-            // Direction: 1 = scrolling down, -1 = scrolling up
-            if (self.direction === 1) {
-              hideHeader();
-            } else if (self.direction === -1) {
-              showHeader();
-            }
-          },
-        });
+          if (isMenuOpen || currentY < 80 || isAtBottom) {
+            anchorScrollY = currentY;
+            showHeader();
+            return;
+          }
 
-        // Cleanup function automatically called by gsap.matchMedia() when resizing >= 768px
+          const delta = currentY - anchorScrollY;
+
+          // Reset anchor whenever scroll direction reverses
+          if ((delta > 0 && direction === -1) || (delta < 0 && direction === 1)) {
+            anchorScrollY = currentY;
+            return;
+          }
+
+          if (delta > THRESHOLD) {
+            hideHeader();
+            anchorScrollY = currentY;
+          } else if (delta < -THRESHOLD) {
+            showHeader();
+            anchorScrollY = currentY;
+          }
+        };
+
+        window.addEventListener("scroll", onScroll, { passive: true });
+
+        // Cleanup automatically runs when viewport resizes >= 768px
         return () => {
-          trigger.kill();
+          window.removeEventListener("scroll", onScroll);
           gsap.set(header, { clearProps: "transform,opacity" });
         };
       }
