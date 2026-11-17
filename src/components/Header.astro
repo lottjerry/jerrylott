@@ -4,54 +4,140 @@ import HamburgerButton from "@/components/HamburgerButton.astro";
 import NavigationOverlay from "@/components/NavigationOverlay.astro";
 ---
 
-<nav class="z-50 fixed top-2 left-2 right-2 flex justify-between items-center h-16 px-5 md:px-10 text-white bg-black/80 backdrop-blur-md rounded-4xl">
+<nav
+  id="site-header"
+  class="z-50 fixed top-2 left-2 right-2 flex justify-between items-center h-16 px-5 md:px-10 text-white mix-blend-difference pointer-events-none will-change-transform"
+>
   <a
     id="header-logo"
     href="#"
-    class="hover:opacity-70 font-sans font-bold text-2xl transition-opacity"
+    class="pointer-events-auto hover:opacity-70 font-sans font-bold text-2xl transition-opacity"
   >
     JL
   </a>
 
-  <HamburgerButton scale={0.7} />
+  <div class="pointer-events-auto">
+    <HamburgerButton scale={0.7} />
+  </div>
 </nav>
 
 <NavigationOverlay />
 
 <script>
-  function initHeaderLogo() {
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  let headerMatchMedia: gsap.MatchMedia | null = null;
+
+  function initHeader() {
+    const header = document.getElementById("site-header");
     const logo = document.getElementById("header-logo");
-    if (!logo || logo.dataset.bound) return;
-    logo.dataset.bound = "true";
+    if (!header || !logo) return;
 
-    logo.addEventListener("click", (e) => {
-      e.preventDefault();
+    // 1. Bind logo click-to-top once
+    if (!logo.dataset.bound) {
+      logo.dataset.bound = "true";
 
-      // 1. Close overlay if open
-      const closeMenu = (window as unknown as { closeNavMenu?: () => void }).closeNavMenu;
-      if (typeof closeMenu === "function") {
-        closeMenu();
-      }
+      logo.addEventListener("click", (e) => {
+        e.preventDefault();
 
-      // 2. Update URL to "#"
-      window.location.hash = "";
-      history.replaceState(null, "", "#");
-
-      // 3. Force scroll to top across Lenis and native window
-      setTimeout(() => {
-        document.documentElement.style.overflow = "";
-        document.body.style.overflow = "";
-
-        if (window.smoothScrollLenis) {
-          window.smoothScrollLenis.start();
-          window.smoothScrollLenis.scrollTo(0, { immediate: false, force: true });
+        const closeMenu = (window as unknown as { closeNavMenu?: () => void }).closeNavMenu;
+        if (typeof closeMenu === "function") {
+          closeMenu();
         }
 
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }, 10);
-    });
+        window.location.hash = "";
+        history.replaceState(null, "", "#");
+
+        setTimeout(() => {
+          document.documentElement.style.overflow = "";
+          document.body.style.overflow = "";
+
+          if (window.smoothScrollLenis) {
+            window.smoothScrollLenis.start();
+            window.smoothScrollLenis.scrollTo(0, { immediate: false, force: true });
+          }
+
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        }, 10);
+      });
+    }
+
+    // 2. Clean up any previous matchMedia instance before re-initializing
+    headerMatchMedia?.revert();
+    headerMatchMedia = gsap.matchMedia();
+
+    // Only apply hide-on-scroll-down on mobile (< 768px) and when reduced motion isn't enabled
+    headerMatchMedia.add(
+      "(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+      () => {
+        let isHidden = false;
+
+        const showHeader = () => {
+          if (!isHidden) return;
+          isHidden = false;
+          gsap.to(header, {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.35,
+            ease: "power3.out",
+            overwrite: "auto",
+          });
+        };
+
+        const hideHeader = () => {
+          if (isHidden) return;
+          isHidden = true;
+          gsap.to(header, {
+            yPercent: -130,
+            opacity: 0,
+            duration: 0.3,
+            ease: "power3.in",
+            overwrite: "auto",
+          });
+        };
+
+        const trigger = ScrollTrigger.create({
+          start: 0,
+          end: "max",
+          onUpdate: (self) => {
+            // Never hide if the full-screen navigation overlay is currently open
+            const overlay = document.getElementById("navigation-overlay");
+            const isMenuOpen =
+              overlay?.getAttribute("aria-hidden") === "false" ||
+              document.body.style.overflow === "hidden";
+
+            if (isMenuOpen) {
+              showHeader();
+              return;
+            }
+
+            // Keep header visible near the very top of the page (< 80px)
+            if (self.scroll() < 80) {
+              showHeader();
+              return;
+            }
+
+            // Direction: 1 = scrolling down, -1 = scrolling up
+            if (self.direction === 1) {
+              hideHeader();
+            } else if (self.direction === -1) {
+              showHeader();
+            }
+          },
+        });
+
+        // Cleanup function automatically called by gsap.matchMedia() when resizing >= 768px
+        return () => {
+          trigger.kill();
+          gsap.set(header, { clearProps: "transform,opacity" });
+        };
+      }
+    );
   }
 
-  initHeaderLogo();
-  document.addEventListener("astro:page-load", initHeaderLogo);
+  initHeader();
+  document.addEventListener("astro:page-load", initHeader);
 </script>
