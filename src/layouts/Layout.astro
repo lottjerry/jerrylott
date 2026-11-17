@@ -2,6 +2,7 @@
 import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import 'lenis/dist/lenis.css';
+import Preloader from '@/components/Preloader.astro';
 ---
 
 <!doctype html>
@@ -15,6 +16,7 @@ import 'lenis/dist/lenis.css';
     <title>Astro Basics</title>
   </head>
   <body class="bg-black">
+    <Preloader />
     <slot />
 
     <script>
@@ -62,6 +64,12 @@ import 'lenis/dist/lenis.css';
 
         window.smoothScrollLenis = lenis;
 
+        // Keep Lenis paused if the preloader curtain is still visible on initial load
+        const curtain = document.getElementById('preloader-curtain');
+        if (curtain && curtain.style.display !== 'none') {
+          lenis.stop();
+        }
+
         // 4. Sync ScrollTrigger and bind to GSAP's ticker
         lenis.on('scroll', ScrollTrigger.update);
         gsap.ticker.add(updateLenis);
@@ -73,11 +81,23 @@ import 'lenis/dist/lenis.css';
     </script>
   </body>
 </html>
-<style>
+<style is:global>
   html,
   body {
     margin: 0;
     width: 100%;
     min-height: 100%;
+
+    /* Firefox */
+    scrollbar-width: none;
+
+    /* IE & legacy Edge */
+    -ms-overflow-style: none;
+  }
+
+  /* Chrome, Safari, Opera, and Chromium Edge */
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar {
+    display: none;
   }
 </style>
