@@ -19,6 +19,10 @@ import 'lenis/dist/lenis.css';
 
     <script>
       import Lenis from 'lenis';
+      import { gsap } from 'gsap';
+      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+      gsap.registerPlugin(ScrollTrigger);
 
       declare global {
         interface Window {
@@ -26,28 +30,46 @@ import 'lenis/dist/lenis.css';
         }
       }
 
-      function initLenis() {
+      // Named callback so we can cleanly add/remove it on View Transitions
+      function updateLenis(time: number) {
+        window.smoothScrollLenis?.raf(time * 1000);
+      }
+
+      function initScroll() {
+        // 1. Clean up existing Lenis, ticker listener, and ScrollTriggers
+        gsap.ticker.remove(updateLenis);
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+
         if (window.smoothScrollLenis) {
           window.smoothScrollLenis.destroy();
           window.smoothScrollLenis = undefined;
         }
 
+        // 2. Respect reduced motion (ScrollTrigger still works normally without Lenis)
         const prefersReducedMotion = window.matchMedia(
           '(prefers-reduced-motion: reduce)'
         ).matches;
 
         if (prefersReducedMotion) return;
 
-        window.smoothScrollLenis = new Lenis({
-          autoRaf: true,
+        // 3. Initialize Lenis with autoRaf disabled so GSAP drives it
+        const lenis = new Lenis({
+          autoRaf: false,
           duration: 1.2,
           easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           smoothWheel: true,
         });
+
+        window.smoothScrollLenis = lenis;
+
+        // 4. Sync ScrollTrigger and bind to GSAP's ticker
+        lenis.on('scroll', ScrollTrigger.update);
+        gsap.ticker.add(updateLenis);
+        gsap.ticker.lagSmoothing(0);
       }
 
-      initLenis();
-      document.addEventListener('astro:after-swap', initLenis);
+      initScroll();
+      document.addEventListener('astro:after-swap', initScroll);
     </script>
   </body>
 </html>

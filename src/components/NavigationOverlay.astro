@@ -2,54 +2,66 @@
 // src/components/navigation/NavigationOverlay.astro
 ---
 
-<!-- Fullscreen overlay container (hidden by default using opacity & pointer-events) -->
+<!-- Fullscreen overlay container -->
 <div
   id="nav-overlay"
-  class="z-40 fixed inset-0 flex flex-col bg-black transition-opacity duration-300 opacity-0 pointer-events-none justify-center items-center pb-20"
+  aria-hidden="true"
+  class="z-40 fixed inset-0 flex flex-col bg-black pointer-events-none justify-center items-center pb-20"
+  style="clip-path: inset(0% 0% 100% 0%);"
 >
   <nav class="flex flex-col items-start gap-10 font-mono font-thin text-white text-3xl mx-auto w-fit md:w-[60%]">
     <a
       href="#"
-      class="nav-link flex items-start gap-6 opacity-100 hover:opacity-100 transition-opacity duration-300"
+      class="nav-link overflow-hidden flex items-start gap-6 opacity-100 hover:opacity-100 transition-opacity duration-300"
     >
-      <span class="text-sm md:text-2xl w-6 text-left">01</span>
-      <span class="md:text-6xl">Home</span>
+      <span class="nav-link-inner flex items-start gap-6">
+        <span class="text-sm md:text-2xl w-6 text-left">01</span>
+        <span class="md:text-6xl">Home</span>
+      </span>
     </a>
 
     <a
       href="#about"
-      class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+      class="nav-link overflow-hidden flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
     >
-      <span class="text-sm md:text-2xl w-6 text-left">02</span>
-      <span class="md:text-6xl">About</span>
+      <span class="nav-link-inner flex items-start gap-6">
+        <span class="text-sm md:text-2xl w-6 text-left">02</span>
+        <span class="md:text-6xl">About</span>
+      </span>
     </a>
 
     <a
       href="#work"
-      class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+      class="nav-link overflow-hidden flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
     >
-      <span class="text-sm md:text-2xl w-6 text-left">03</span>
-      <span class="md:text-6xl">Work</span>
+      <span class="nav-link-inner flex items-start gap-6">
+        <span class="text-sm md:text-2xl w-6 text-left">03</span>
+        <span class="md:text-6xl">Work</span>
+      </span>
     </a>
 
     <a
       href="#services"
-      class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+      class="nav-link overflow-hidden flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
     >
-      <span class="text-sm md:text-2xl w-6 text-left">04</span>
-      <span class="md:text-6xl">Services</span>
+      <span class="nav-link-inner flex items-start gap-6">
+        <span class="text-sm md:text-2xl w-6 text-left">04</span>
+        <span class="md:text-6xl">Services</span>
+      </span>
     </a>
 
     <a
       href="#contact"
-      class="nav-link flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
+      class="nav-link overflow-hidden flex items-start gap-6 opacity-30 hover:opacity-100 transition-opacity duration-300"
     >
-      <span class="text-sm md:text-2xl w-6 text-left">05</span>
-      <span class="md:text-6xl">Contact</span>
+      <span class="nav-link-inner flex items-start gap-6">
+        <span class="text-sm md:text-2xl w-6 text-left">05</span>
+        <span class="md:text-6xl">Contact</span>
+      </span>
     </a>
   </nav>
 
-  <footer class="bottom-0 fixed p-5 md:p-10 w-[90%] font-span text-white">
+  <footer id="nav-footer" class="bottom-0 fixed p-5 md:p-10 w-[90%] font-sans text-white">
     <div class="flex lg:flex-row flex-col justify-between items-center gap-5 p-10 border-white/20 border-t">
       <div class="flex items-center gap-3">
         <!-- Pulsing Dot Container -->
@@ -96,11 +108,24 @@
   </footer>
 </div>
 
-<script is:inline>
-  const NAVBAR_OFFSET = -96;
-  let activeNavHref = "#";
+<script>
+  import { gsap } from "gsap";
 
-  function setActiveNavLink(href) {
+  declare global {
+    interface Window {
+      closeNavMenu?: () => void;
+      __navListenersBound?: boolean;
+    }
+  }
+
+  const NAVBAR_OFFSET = -96;
+  const SCROLL_DELAY = 0.35;
+
+  let activeNavHref = "#";
+  let navTimeline: gsap.core.Timeline | null = null;
+  let pendingScrollCall: gsap.core.Tween | null = null;
+
+  function setActiveNavLink(href: string) {
     activeNavHref = href;
     const links = document.querySelectorAll("#nav-overlay .nav-link");
     links.forEach((link) => {
@@ -116,13 +141,11 @@
   }
 
   function syncActiveSectionFromScroll() {
-    // Near the top of the page -> Home ("#") is active
     if (window.scrollY < window.innerHeight * 0.4) {
       setActiveNavLink("#");
       return;
     }
 
-    // Check which section covers the center of the viewport
     const midY = window.innerHeight * 0.5;
     const sectionIds = ["about", "work", "services", "contact"];
     for (const id of sectionIds) {
@@ -141,46 +164,109 @@
     const btn = document.getElementById("menu-toggle");
     if (!overlay || !btn) return;
 
-    const isOpen = overlay.classList.contains("opacity-100");
+    const isOpen = overlay.classList.contains("is-open");
     btn.classList.toggle("is-active", isOpen);
     btn.setAttribute("aria-expanded", String(isOpen));
   }
 
+  function buildNavTimeline(overlay: HTMLElement) {
+    const linkInners = overlay.querySelectorAll(".nav-link-inner");
+    const footer = overlay.querySelector("#nav-footer");
+
+    gsap.set(overlay, { clipPath: "inset(0% 0% 100% 0%)" });
+    gsap.set(linkInners, { yPercent: 110, opacity: 0 });
+    gsap.set(footer, { y: 20, opacity: 0 });
+
+    const tl = gsap.timeline({
+      paused: true,
+      onStart: () => {
+        overlay.classList.add("is-open", "pointer-events-auto");
+        overlay.classList.remove("pointer-events-none");
+        overlay.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+        window.smoothScrollLenis?.stop();
+      },
+      onReverseComplete: () => {
+        overlay.classList.remove("is-open", "pointer-events-auto");
+        overlay.classList.add("pointer-events-none");
+        overlay.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+        window.smoothScrollLenis?.start();
+      },
+    });
+
+    tl.to(overlay, {
+      clipPath: "inset(0% 0% 0% 0%)",
+      duration: 0.6,
+      ease: "power4.inOut",
+    })
+      .to(
+        linkInners,
+        {
+          yPercent: 0,
+          opacity: 1,
+          duration: 0.45,
+          stagger: 0.06,
+          ease: "power3.out",
+        },
+        "-=0.25"
+      )
+      .to(
+        footer,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.35,
+          ease: "power2.out",
+        },
+        "-=0.25"
+      );
+
+    return tl;
+  }
+
+  function runScroll(href: string) {
+    document.body.style.overflow = "";
+    const target = href === "#" ? 0 : href;
+    const offset = href === "#" ? 0 : NAVBAR_OFFSET;
+
+    if (window.smoothScrollLenis) {
+      window.smoothScrollLenis.start();
+      window.smoothScrollLenis.scrollTo(target, { offset, force: true });
+    } else if (href === "#") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+    }
+  }
+
   function openMenu() {
     const overlay = document.getElementById("nav-overlay");
-    if (!overlay) return;
+    if (!overlay || !navTimeline) return;
 
+    pendingScrollCall?.kill();
     syncActiveSectionFromScroll();
-    overlay.classList.remove("opacity-0", "pointer-events-none");
-    overlay.classList.add("opacity-100", "pointer-events-auto");
-    document.body.style.overflow = "hidden";
-    window.smoothScrollLenis?.stop();
-    syncHamburgerWithOverlay();
+    navTimeline.timeScale(1).play();
   }
 
   window.closeNavMenu = function () {
-    const overlay = document.getElementById("nav-overlay");
-    if (!overlay) return;
-
-    overlay.classList.remove("opacity-100", "pointer-events-auto");
-    overlay.classList.add("opacity-0", "pointer-events-none");
-    document.body.style.overflow = "";
-    window.smoothScrollLenis?.start();
-    syncHamburgerWithOverlay();
+    if (!navTimeline || navTimeline.progress() === 0) return;
+    navTimeline.timeScale(1.35).reverse();
   };
 
   function initNavigationOverlay() {
     const overlay = document.getElementById("nav-overlay");
     if (!overlay) return;
 
-    // Watch #nav-overlay classes so the hamburger icon ALWAYS stays in sync
+    navTimeline?.kill();
+    navTimeline = buildNavTimeline(overlay);
+
     if (!overlay.dataset.observed) {
       overlay.dataset.observed = "true";
       const observer = new MutationObserver(syncHamburgerWithOverlay);
       observer.observe(overlay, { attributes: true, attributeFilter: ["class"] });
     }
 
-    // Observe sections as the user scrolls
     const sectionIds = ["about", "work", "services", "contact"];
     const sectionObserver = new IntersectionObserver(
       (entries) => {
@@ -205,7 +291,6 @@
       if (section) sectionObserver.observe(section);
     });
 
-    // Ensure Home re-activates when scrolling all the way back up
     window.addEventListener(
       "scroll",
       () => {
@@ -222,22 +307,32 @@
       window.__navListenersBound = true;
 
       document.addEventListener("menu-toggle", (e) => {
-        if (e.detail?.isActive) {
+        const detail = (e as CustomEvent<{ isActive?: boolean }>).detail;
+        if (detail?.isActive) {
           openMenu();
         } else {
-          window.closeNavMenu();
+          window.closeNavMenu?.();
         }
       });
 
-      // Handle both #nav-overlay links AND #header-logo in one place
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          window.closeNavMenu?.();
+        }
+      });
+
       document.addEventListener(
         "click",
         (e) => {
-          const link = e.target.closest("#nav-overlay a, #header-logo");
+          const targetEl = e.target as HTMLElement | null;
+          const link = targetEl?.closest<HTMLAnchorElement>("#nav-overlay a, #header-logo");
           if (!link) return;
 
           const href = link.getAttribute("href");
-          window.closeNavMenu();
+          const wasOpen = Boolean(navTimeline && navTimeline.progress() > 0);
+
+          pendingScrollCall?.kill();
+          window.closeNavMenu?.();
 
           if (!href || !href.startsWith("#")) return;
 
@@ -245,16 +340,10 @@
           history.replaceState(null, "", href);
           setActiveNavLink(href);
 
-          const target = href === "#" ? 0 : href;
-          const offset = href === "#" ? 0 : NAVBAR_OFFSET;
-
-          if (window.smoothScrollLenis) {
-            window.smoothScrollLenis.start();
-            window.smoothScrollLenis.scrollTo(target, { offset, force: true });
-          } else if (href === "#") {
-            window.scrollTo({ top: 0, behavior: "smooth" });
+          if (wasOpen) {
+            pendingScrollCall = gsap.delayedCall(SCROLL_DELAY, () => runScroll(href));
           } else {
-            document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+            runScroll(href);
           }
         },
         true

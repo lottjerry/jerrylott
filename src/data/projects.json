@@ -76,7 +76,7 @@
     "Type": "Portfolio Website",
     "Role": "Front-End Developer & Designer",
     "Client": "Personal",
-    "Tech-Stack": "HTML, CSS, Javascript, Astro, TailwindCSS, Lenis",
+    "Tech-Stack": "HTML, CSS, Javascript, Astro, TailwindCSS, Lenis, GSAP",
     "Description": "Personal portfolio engineered from scratch using Astro and TailwindCSS.",
     "Main-Image": "/src/assets/JerryLottv2/heronoir.jpeg",
     "Link": "https://jerrylott.com/"
