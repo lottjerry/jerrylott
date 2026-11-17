@@ -55,9 +55,13 @@ const galleryData = Object.fromEntries(
 >
   <!-- Header -->
   <header class="w-full">
-    <div class="flex gap-5 pb-4 md:pb-5 border-b border-white font-mono font-bold text-xs">
-      <p>[ 02 ]</p>
-      <p>/work</p>
+    <div class="relative flex gap-5 pb-4 md:pb-5 font-mono font-bold text-xs">
+      <p class="work-header-item">[ 02 ]</p>
+      <p class="work-header-item">/work</p>
+      <span
+        id="work-header-line"
+        class="absolute bottom-0 left-0 right-0 h-px bg-white origin-left"
+      ></span>
     </div>
   </header>
 
@@ -65,8 +69,9 @@ const galleryData = Object.fromEntries(
   <div class="w-full max-w-md md:max-w-2xl lg:max-w-none lg:w-[88%] mx-auto flex flex-col justify-center items-center gap-5 md:gap-8 my-auto py-4">
     <!-- 01 - 08 Horizontal Gallery Navigation -->
     <nav
+      id="work-project-nav"
       aria-label="Project selector"
-      class="flex w-full md:max-w-md lg:self-start justify-between font-mono text-sm border-b border-white/20 pb-2"
+      class="relative flex w-full md:max-w-md lg:self-start justify-between font-mono text-sm pb-2"
     >
       {projects.map((project, index) => (
         <button
@@ -74,7 +79,7 @@ const galleryData = Object.fromEntries(
           data-project-nav={project.id}
           aria-current={index === 0 ? "true" : "false"}
           class:list={[
-            "cursor-pointer px-1 transition-all duration-200",
+            "work-nav-btn cursor-pointer px-1 transition-all duration-200",
             index === 0
               ? "font-bold opacity-100 underline underline-offset-8"
               : "opacity-40 hover:opacity-100",
@@ -83,6 +88,10 @@ const galleryData = Object.fromEntries(
           {project.id}
         </button>
       ))}
+      <span
+        id="work-nav-line"
+        class="absolute bottom-0 left-0 right-0 h-px bg-white/20 origin-left"
+      ></span>
     </nav>
 
     <!-- Horizontal Project Gallery Track -->
@@ -240,16 +249,142 @@ const galleryData = Object.fromEntries(
 </script>
 
 <script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Quick speed adjuster: 1 = normal, 0.75 = 25% slower, 0.6 = 40% slower
+  const WORK_SPEED = 0.75;
+
   interface GalleryItem {
     id: string;
     title: string;
     images: string[];
   }
 
-  const workContainer = document.getElementById("work");
+  let workTimeline: gsap.core.Timeline | null = null;
 
-  if (workContainer) {
-    // 1. Outer Horizontal Project Gallery (01 - 08)
+  function initWorkAnimations() {
+    const workContainer = document.getElementById("work");
+    if (!workContainer) return;
+
+    workTimeline?.scrollTrigger?.kill();
+    workTimeline?.kill();
+
+    const headerLine = document.getElementById("work-header-line");
+    const headerItems = gsap.utils.toArray<HTMLElement>("#work .work-header-item");
+    const navLine = document.getElementById("work-nav-line");
+    const navBtns = gsap.utils.toArray<HTMLElement>("#work .work-nav-btn");
+    const galleryTrack = workContainer.querySelector<HTMLElement>("[data-project-gallery]");
+    const cards = gsap.utils.toArray<HTMLElement>("#work [data-project-card]");
+    const firstCard = cards[0];
+    const firstCardMedia = firstCard
+      ? gsap.utils.toArray<HTMLElement>("img", firstCard)
+      : [];
+
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      gsap.set([headerLine, headerItems, navLine, navBtns, galleryTrack, firstCardMedia], {
+        clearProps: "all",
+      });
+      return;
+    }
+
+    // 1. Set initial hidden states
+    gsap.set(headerLine, { scaleX: 0 });
+    gsap.set(headerItems, { y: 12, opacity: 0 });
+    gsap.set(navLine, { scaleX: 0 });
+    gsap.set(navBtns, { y: 14, opacity: 0 });
+    if (galleryTrack) gsap.set(galleryTrack, { y: 44, opacity: 0 });
+    if (firstCardMedia.length) gsap.set(firstCardMedia, { scale: 1.08 });
+
+    // 2. Choreographed entrance timeline (slowed down + controlled by WORK_SPEED)
+    workTimeline = gsap.timeline({
+      scrollTrigger: {
+        trigger: workContainer,
+        start: "top 72%",
+        once: true,
+      },
+    }).timeScale(WORK_SPEED);
+
+    // STEP 1: [ 02 ] /work header & bottom rule draw
+    workTimeline
+      .to(headerLine, {
+        scaleX: 1,
+        duration: 1.05,
+        ease: "power3.inOut",
+      })
+      .to(
+        headerItems,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          ease: "power3.out",
+          stagger: 0.12,
+        },
+        "<0.2"
+      );
+
+    // STEP 2: 01 - 08 index bar sweeps across in sequence
+    workTimeline
+      .to(
+        navLine,
+        {
+          scaleX: 1,
+          duration: 0.95,
+          ease: "power3.inOut",
+        },
+        "-=0.5"
+      )
+      .to(
+        navBtns,
+        {
+          y: 0,
+          opacity: (i) => (i === 0 ? 1 : 0.4),
+          duration: 0.55,
+          ease: "power3.out",
+          stagger: 0.07,
+          clearProps: "transform,opacity",
+        },
+        "<0.15"
+      );
+
+    // STEP 3: Active project showcase rises in & image settles
+    if (galleryTrack) {
+      workTimeline.to(
+        galleryTrack,
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.1,
+          ease: "power3.out",
+          clearProps: "transform",
+        },
+        "-=0.45"
+      );
+    }
+
+    if (firstCardMedia.length) {
+      workTimeline.to(
+        firstCardMedia,
+        {
+          scale: 1,
+          duration: 1.45,
+          ease: "power3.out",
+          clearProps: "transform",
+        },
+        "<"
+      );
+    }
+  }
+
+  function initWorkInteractions() {
+    const workContainer = document.getElementById("work");
+    if (!workContainer || workContainer.dataset.bound === "true") return;
+    workContainer.dataset.bound = "true";
+
+    // 1. Outer Horizontal Project Gallery (01 - 08)[cite: 1]
     const galleryTrack = workContainer.querySelector<HTMLElement>("[data-project-gallery]");
     const navButtons = workContainer.querySelectorAll<HTMLButtonElement>("[data-project-nav]");
     const projectCards = workContainer.querySelectorAll<HTMLElement>("[data-project-card]");
@@ -354,7 +489,7 @@ const galleryData = Object.fromEntries(
       attachMouseDragScroll(galleryTrack);
     }
 
-    // 2. Inner Click-Only Tabs per ProjectCard (Mobile)
+    // 2. Inner Click-Only Tabs per ProjectCard (Mobile)[cite: 1]
     projectCards.forEach((card) => {
       const buttons = card.querySelectorAll<HTMLButtonElement>("[data-work-target]");
       const panels = card.querySelectorAll<HTMLElement>("[data-work-panel]");
@@ -380,12 +515,20 @@ const galleryData = Object.fromEntries(
             panel.classList.toggle("opacity-0", !isSelected);
             panel.classList.toggle("invisible", !isSelected);
             panel.classList.toggle("pointer-events-none", !isSelected);
+
+            if (isSelected && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+              gsap.fromTo(
+                panel,
+                { y: 8 },
+                { y: 0, duration: 0.35, ease: "power2.out", clearProps: "transform" }
+              );
+            }
           });
         });
       });
     });
 
-    // 3. Project Gallery Modal & Edge-to-Edge Fullscreen Viewer
+    // 3. Project Gallery Modal & Edge-to-Edge Fullscreen Viewer[cite: 1]
     const modal = document.getElementById("gallery-modal");
     const modalTitle = document.getElementById("modal-project-title");
     const modalProjectId = document.getElementById("modal-project-id");
@@ -607,4 +750,17 @@ const galleryData = Object.fromEntries(
       if (e.key === "ArrowRight") goToModalSlide(currentSlideIndex + 1);
     });
   }
+
+  initWorkInteractions();
+
+  if (document.readyState === "complete") {
+    initWorkAnimations();
+  } else {
+    window.addEventListener("load", initWorkAnimations, { once: true });
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    initWorkInteractions();
+    initWorkAnimations();
+  });
 </script>
