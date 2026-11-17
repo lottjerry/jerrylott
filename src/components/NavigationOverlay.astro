@@ -228,19 +228,45 @@
     return tl;
   }
 
+  /**
+   * Resolves a scroll destination where all scrubbed/pinned animations
+   * for the target section have already finished (progress === 1).
+   */
+  function getCompletedSectionScrollY(href: string): number | null {
+    if (href === "#") return 0;
+
+    const sectionEl = document.querySelector<HTMLElement>(href);
+    if (!sectionEl) return null;
+
+    ScrollTrigger.refresh();
+
+    // Find the scrub timeline trigger attached directly to #about, #work, #services, or #contact
+    const sectionTrigger = ScrollTrigger.getAll().find(
+      (st) => st.trigger === sectionEl && Boolean(st.animation)
+    );
+
+    if (sectionTrigger) {
+      // Stop right at the completion point of the scrub animation while still in full view
+      return Math.max(0, Math.round(sectionTrigger.end - 2));
+    }
+
+    // Fallback for sections without a scrub timeline (e.g., #contact)
+    const rectTop = sectionEl.getBoundingClientRect().top + window.scrollY;
+    return Math.max(0, Math.round(rectTop + NAVBAR_OFFSET));
+  }
+
   function runScroll(href: string) {
     document.documentElement.style.overflow = "";
     document.body.style.overflow = "";
-    const target = href === "#" ? 0 : href;
-    const offset = href === "#" ? 0 : NAVBAR_OFFSET;
+
+    const destinationY = getCompletedSectionScrollY(href);
+    if (destinationY === null) return;
 
     if (window.smoothScrollLenis) {
       window.smoothScrollLenis.start();
-      window.smoothScrollLenis.scrollTo(target, { offset, force: true });
-    } else if (href === "#") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.smoothScrollLenis.scrollTo(destinationY, { force: true });
     } else {
-      document.querySelector(href)?.scrollIntoView({ behavior: "smooth" });
+      window.scrollTo({ top: destinationY, behavior: "smooth" });
     }
   }
 
@@ -250,7 +276,6 @@
 
     const executeAfterPreloaderUnlock = () => {
       const curtain = document.getElementById("preloader-curtain");
-      // Wait until Preloader has completely hidden the curtain and unlocked body/Lenis
       if (curtain && curtain.style.display !== "none") {
         gsap.delayedCall(0.1, executeAfterPreloaderUnlock);
         return;
