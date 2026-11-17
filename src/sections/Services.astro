@@ -65,7 +65,7 @@ const services = [
 
 <div
   id="services"
-  class="min-h-[90vh] bg-white text-black flex flex-col gap-8 justify-between py-8 px-6 md:px-12"
+  class="min-h-dvh bg-white text-black flex flex-col gap-8 justify-between py-8 px-6 md:px-12"
 >
   <!-- Header -->
   <header class="w-full">
@@ -95,7 +95,7 @@ const services = [
             >
               {words.map((word, wIdx) => (
                 <>
-                  <span class="inline-block overflow-hidden align-bottom pb-[0.08em] -mb-[0.08em]">
+                  <span class="inline-block overflow-hidden align-bottom pb-[0.08em] mb-[-0.08em]">
                     <span class="services-title-word inline-block will-change-transform">
                       {word}
                     </span>
@@ -114,8 +114,10 @@ const services = [
   </div>
 
   <!-- Body: Mobile Scroll-Snap | Tablet 2x2 Grid | Desktop 4-Across (1040px+) -->
-  <div class="relative w-[85%] md:w-[78%] lg:w-[88%] mx-auto md:px-6">
-    <!-- Top & Bottom Animated Dividers -->
+  <div
+    id="services-grid-wrap"
+    class="relative w-[85%] md:w-[78%] lg:w-[88%] mx-auto md:px-6"
+  >
     <span
       id="services-grid-top-line"
       class="absolute top-0 left-0 right-0 h-px bg-black/30 origin-left"
@@ -181,16 +183,17 @@ const services = [
   </div>
 
   <!-- Footer -->
-  <div class="w-full md:w-[85%] lg:w-[82%] mx-auto flex flex-col md:flex-row gap-6 lg:gap-12 items-center md:items-start justify-between pt-4 font-bold text-center md:text-left text-xs md:text-sm">
+  <div
+    id="services-footer-wrap"
+    class="w-full md:w-[85%] lg:w-[82%] mx-auto flex flex-col md:flex-row gap-6 lg:gap-12 items-center md:items-start justify-between pt-4 font-bold text-center md:text-left text-xs md:text-sm"
+  >
     <div
       id="services-bottom-dots"
       class="overflow-hidden shrink-0 lg:shrink lg:flex-1 lg:min-w-0"
     >
-      <!-- Mobile & Tablet DotGrid -->
       <div class="lg:hidden">
         <DotGrid rows={6} cols={42} gap="gap-1" />
       </div>
-      <!-- Large Screen Wider DotGrid -->
       <div class="hidden lg:block">
         <DotGrid rows={10} cols={160} gap="gap-1" />
       </div>
@@ -234,14 +237,13 @@ const services = [
 
   gsap.registerPlugin(ScrollTrigger);
 
-  let servicesTimeline: gsap.core.Timeline | null = null;
+  let servicesMatchMedia: gsap.MatchMedia | null = null;
 
   function initServicesAnimations() {
     const container = document.getElementById("services");
     if (!container) return;
 
-    servicesTimeline?.scrollTrigger?.kill();
-    servicesTimeline?.kill();
+    servicesMatchMedia?.revert();
 
     const headerLine = document.getElementById("services-header-line");
     const headerItems = gsap.utils.toArray<HTMLElement>("#services .services-header-item");
@@ -273,132 +275,129 @@ const services = [
       return;
     }
 
-    // 1. Set initial hidden states (animating .services-card-inner keeps panel tab opacities untouched)
-    gsap.set(headerLine, { scaleX: 0 });
-    gsap.set(headerItems, { y: 10, opacity: 0 });
-    gsap.set(titleWords, { yPercent: 115, opacity: 0 });
-    gsap.set(topDots, { clipPath: "inset(0% 100% 0% 0%)" });
-    gsap.set([gridTopLine, gridBottomLine], { scaleX: 0 });
-    gsap.set(mobileTabs, { y: 10, opacity: 0 });
-    gsap.set(cardInners, { y: 32, opacity: 0 });
-    gsap.set(bottomDots, { clipPath: "inset(0% 100% 0% 0%)" });
-    gsap.set(taglineBox, { y: 18, opacity: 0 });
+    function buildServicesTimeline(isDesktop: boolean) {
+      gsap.set(headerLine, { scaleX: 0 });
+      gsap.set(headerItems, { y: 12, opacity: 0 });
+      gsap.set(titleWords, { yPercent: 115, opacity: 0 });
+      gsap.set(topDots, { clipPath: "inset(0% 100% 0% 0%)" });
+      gsap.set([gridTopLine, gridBottomLine], { scaleX: 0 });
+      gsap.set(mobileTabs, { y: 12, opacity: 0 });
+      gsap.set(cardInners, { y: 36, opacity: 0 });
+      gsap.set(bottomDots, { clipPath: "inset(0% 100% 0% 0%)" });
+      gsap.set(taglineBox, { y: 20, opacity: 0 });
 
-    // 2. Choreographed ScrollTrigger entrance timeline
-    servicesTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: "top 72%",
-        once: true,
-      },
+      const tl = gsap.timeline({
+        scrollTrigger: isDesktop
+          ? {
+              trigger: container,
+              start: "top top",
+              end: "+=120%",
+              pin: true,
+              pinSpacing: true,
+              scrub: 0.85,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            }
+          : {
+              trigger: container,
+              start: "top 85%",
+              end: "bottom 85%",
+              scrub: 0.75,
+              invalidateOnRefresh: true,
+            },
+      });
+
+      tl.to(headerLine, { scaleX: 1, duration: 0.25, ease: "none" }, 0)
+        .to(headerItems, { y: 0, opacity: 1, duration: 0.2, stagger: 0.05, ease: "none" }, 0.03)
+        .to(
+          titleWords,
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.04,
+            ease: "power2.out",
+          },
+          0.03
+        )
+        .to(
+          topDots,
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 0.35,
+            ease: "none",
+          },
+          0.2
+        )
+        .to(
+          [gridTopLine, gridBottomLine],
+          {
+            scaleX: 1,
+            duration: 0.35,
+            stagger: 0.08,
+            ease: "none",
+          },
+          0.25
+        )
+        .to(
+          mobileTabs,
+          {
+            y: 0,
+            opacity: (i) => (i === 0 ? 1 : 0.5),
+            duration: 0.25,
+            stagger: 0.04,
+            ease: "none",
+          },
+          0.35
+        )
+        .to(
+          cardInners,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.07,
+            ease: "power2.out",
+          },
+          0.35
+        )
+        .to(
+          bottomDots,
+          {
+            clipPath: "inset(0% 0% 0% 0%)",
+            duration: 0.35,
+            ease: "none",
+          },
+          0.62
+        )
+        .to(
+          taglineBox,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.3,
+            ease: "power2.out",
+          },
+          0.72
+        );
+
+      if (isDesktop) {
+        tl.to({}, { duration: 0.12 });
+      }
+    }
+
+    servicesMatchMedia = gsap.matchMedia();
+
+    servicesMatchMedia.add("(min-width: 1024px)", () => {
+      buildServicesTimeline(true);
     });
 
-    // STEP 1: Staggered word-by-word masked title reveal
-    servicesTimeline.to(titleWords, {
-      yPercent: 0,
-      opacity: 1,
-      duration: 0.65,
-      ease: "power4.out",
-      stagger: 0.065,
-      clearProps: "transform,opacity",
+    servicesMatchMedia.add("(max-width: 1023px)", () => {
+      buildServicesTimeline(false);
     });
 
-    // STEP 2: [ 03 ] /services header & bottom rule draw
-    servicesTimeline
-      .to(
-        headerLine,
-        {
-          scaleX: 1,
-          duration: 0.85,
-          ease: "power3.inOut",
-        },
-        0
-      )
-      .to(
-        headerItems,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.5,
-          ease: "power3.out",
-          stagger: 0.1,
-        },
-        0.15
-      );
-
-    // STEP 3: Top DotGrid sweeps left-to-right + grid border lines draw
-    servicesTimeline
-      .to(
-        topDots,
-        {
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 0.9,
-          ease: "power3.inOut",
-          clearProps: "clipPath",
-        },
-        "-=0.45"
-      )
-      .to(
-        [gridTopLine, gridBottomLine],
-        {
-          scaleX: 1,
-          duration: 0.85,
-          ease: "power3.inOut",
-          stagger: 0.1,
-        },
-        "<0.1"
-      );
-
-    // STEP 4: Mobile tabs & 4-column FeatureCards stagger upward
-    servicesTimeline
-      .to(
-        mobileTabs,
-        {
-          y: 0,
-          opacity: (i) => (i === 0 ? 1 : 0.5),
-          duration: 0.45,
-          ease: "power3.out",
-          stagger: 0.06,
-          clearProps: "transform,opacity",
-        },
-        "-=0.55"
-      )
-      .to(
-        cardInners,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.7,
-          ease: "power3.out",
-          stagger: 0.1,
-          clearProps: "transform",
-        },
-        "<0.05"
-      );
-
-    // STEP 5: Footer DotGrid sweep + active tagline reveal
-    servicesTimeline
-      .to(
-        bottomDots,
-        {
-          clipPath: "inset(0% 0% 0% 0%)",
-          duration: 0.95,
-          ease: "power3.inOut",
-          clearProps: "clipPath",
-        },
-        "-=0.45"
-      )
-      .to(
-        taglineBox,
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: "power3.out",
-          clearProps: "transform",
-        },
-        "-=0.6"
-      );
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
   }
 
   function initServicesInteractions() {
@@ -523,14 +522,18 @@ const services = [
 
   initServicesInteractions();
 
+  function scheduleServicesInit() {
+    requestAnimationFrame(() => requestAnimationFrame(initServicesAnimations));
+  }
+
   if (document.readyState === "complete") {
-    initServicesAnimations();
+    scheduleServicesInit();
   } else {
-    window.addEventListener("load", initServicesAnimations, { once: true });
+    window.addEventListener("load", scheduleServicesInit, { once: true });
   }
 
   document.addEventListener("astro:page-load", () => {
     initServicesInteractions();
-    initServicesAnimations();
+    scheduleServicesInit();
   });
 </script>

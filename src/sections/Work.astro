@@ -120,7 +120,6 @@ const galleryData = Object.fromEntries(
   >
     <!-- Modal Header (Stacked on Mobile so Title Never Truncates) -->
     <div class="w-full flex flex-col gap-2 md:flex-row md:items-center md:justify-between pb-3 md:pb-4 border-b border-white font-mono text-xs">
-      <!-- Top Row on Mobile: ID + Controls -->
       <div class="flex items-center justify-between md:justify-start md:gap-4">
         <span id="modal-project-id" class="font-bold shrink-0">[ 01 ]</span>
         <span class="hidden md:inline opacity-40">/</span>
@@ -254,9 +253,6 @@ const galleryData = Object.fromEntries(
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Quick speed adjuster: 1 = normal, 0.75 = 25% slower, 0.6 = 40% slower
-  const WORK_SPEED = 0.75;
-
   interface GalleryItem {
     id: string;
     title: string;
@@ -295,59 +291,49 @@ const galleryData = Object.fromEntries(
     gsap.set(headerItems, { y: 12, opacity: 0 });
     gsap.set(navLine, { scaleX: 0 });
     gsap.set(navBtns, { y: 14, opacity: 0 });
-    if (galleryTrack) gsap.set(galleryTrack, { y: 44, opacity: 0 });
-    if (firstCardMedia.length) gsap.set(firstCardMedia, { scale: 1.08 });
+    if (galleryTrack) gsap.set(galleryTrack, { y: 40, opacity: 0 });
+    if (firstCardMedia.length) gsap.set(firstCardMedia, { scale: 1.07 });
 
-    // 2. Choreographed entrance timeline (slowed down + controlled by WORK_SPEED)
+    // 2. Unpinned scrub timeline (index.astro owns the single pin on #work-wrapper)
     workTimeline = gsap.timeline({
       scrollTrigger: {
         trigger: workContainer,
-        start: "top 72%",
-        once: true,
+        start: "top 85%",
+        end: "top 10%",
+        scrub: 0.75,
+        invalidateOnRefresh: true,
+        onLeave: () => {
+          if (galleryTrack) gsap.set(galleryTrack, { clearProps: "transform" });
+        },
       },
-    }).timeScale(WORK_SPEED);
+    });
 
     // STEP 1: [ 02 ] /work header & bottom rule draw
     workTimeline
-      .to(headerLine, {
-        scaleX: 1,
-        duration: 1.05,
-        ease: "power3.inOut",
-      })
+      .to(headerLine, { scaleX: 1, duration: 0.3, ease: "none" }, 0)
       .to(
         headerItems,
         {
           y: 0,
           opacity: 1,
-          duration: 0.65,
-          ease: "power3.out",
-          stagger: 0.12,
+          duration: 0.25,
+          ease: "power2.out",
+          stagger: 0.05,
         },
-        "<0.2"
-      );
-
-    // STEP 2: 01 - 08 index bar sweeps across in sequence
-    workTimeline
-      .to(
-        navLine,
-        {
-          scaleX: 1,
-          duration: 0.95,
-          ease: "power3.inOut",
-        },
-        "-=0.5"
+        0.05
       )
+      // STEP 2: 01 - 08 index bar sweeps across in sequence
+      .to(navLine, { scaleX: 1, duration: 0.35, ease: "none" }, 0.15)
       .to(
         navBtns,
         {
           y: 0,
           opacity: (i) => (i === 0 ? 1 : 0.4),
-          duration: 0.55,
-          ease: "power3.out",
-          stagger: 0.07,
-          clearProps: "transform,opacity",
+          duration: 0.25,
+          ease: "power2.out",
+          stagger: 0.03,
         },
-        "<0.15"
+        0.2
       );
 
     // STEP 3: Active project showcase rises in & image settles
@@ -357,11 +343,10 @@ const galleryData = Object.fromEntries(
         {
           y: 0,
           opacity: 1,
-          duration: 1.1,
-          ease: "power3.out",
-          clearProps: "transform",
+          duration: 0.45,
+          ease: "power2.out",
         },
-        "-=0.45"
+        0.35
       );
     }
 
@@ -370,13 +355,15 @@ const galleryData = Object.fromEntries(
         firstCardMedia,
         {
           scale: 1,
-          duration: 1.45,
-          ease: "power3.out",
-          clearProps: "transform",
+          duration: 0.5,
+          ease: "power2.out",
         },
-        "<"
+        0.35
       );
     }
+
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
   }
 
   function initWorkInteractions() {
@@ -753,14 +740,18 @@ const galleryData = Object.fromEntries(
 
   initWorkInteractions();
 
+  function scheduleWorkInit() {
+    requestAnimationFrame(() => requestAnimationFrame(initWorkAnimations));
+  }
+
   if (document.readyState === "complete") {
-    initWorkAnimations();
+    scheduleWorkInit();
   } else {
-    window.addEventListener("load", initWorkAnimations, { once: true });
+    window.addEventListener("load", scheduleWorkInit, { once: true });
   }
 
   document.addEventListener("astro:page-load", () => {
     initWorkInteractions();
-    initWorkAnimations();
+    scheduleWorkInit();
   });
 </script>

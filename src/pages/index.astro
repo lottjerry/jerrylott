@@ -15,21 +15,21 @@ import Work from "@/sections/Work.astro";
 
   <main id="portfolio-sections" class="relative bg-black overflow-x-clip">
     <!-- 1. Hero (Black): Pins so About slides up in front of it -->
-    <div id="hero-wrapper" class="relative z-1g-black overflow-hidden">
+    <div id="hero-wrapper" class="relative z-1 bg-black overflow-hidden">
       <Hero />
     </div>
 
-    <!-- 2. About (White): Slides over Hero, then scrolls normally into Work -->
-    <div id="about-wrapper" class="relative z-2g-white overflow-hidden">
+    <!-- 2. About (White): Slides over Hero, then pins on desktop while scrub plays -->
+    <div id="about-wrapper" class="relative z-2 bg-white overflow-hidden">
       <About />
     </div>
 
-    <!-- 3. Work (Black): Scrolls normally, then pins at bottom so Services slides up in front of it -->
+    <!-- 3. Work (Black): Single pin holds Work in place, then Services slides up over it -->
     <div id="work-wrapper" class="relative z-3 bg-black overflow-hidden">
       <Work />
     </div>
 
-    <!-- 4. Services (White): Slides straight up in front of Work -->
+    <!-- 4. Services (White): Slides straight up in front of Work, then pins on desktop while scrub plays -->
     <div id="services-wrapper" class="relative z-4 bg-white overflow-hidden">
       <Services />
     </div>
@@ -84,21 +84,27 @@ import Work from "@/sections/Work.astro";
     });
     sectionTransitions.push(heroPin);
 
-    // 2. ABOUT -> WORK: Normal vertical scroll (no pin on About)
+    // 2. WORK DWELL + CURTAIN OVERLAP (Single Pin):
+    // First 100vh of scroll: Services is held back by marginTop so Work stays locked in full view
+    // while its scrub animation plays. Next 100vh: Services slides straight up in front of Work.
+    const dwellDistance = () => window.innerHeight;
+    const overlapDistance = () => Math.min(servicesWrapper.offsetHeight, window.innerHeight);
 
-    // 3. WORK -> SERVICES: Pin Work at its bottom edge so Services slides straight up in front of it
+    gsap.set(servicesWrapper, { marginTop: () => dwellDistance() });
+
     const workPin = ScrollTrigger.create({
       trigger: workWrapper,
       start: () =>
         workWrapper.offsetHeight > window.innerHeight ? "bottom bottom" : "top top",
-      end: () => `+=${Math.min(servicesWrapper.offsetHeight, window.innerHeight)}`,
+      end: () => `+=${dwellDistance() + overlapDistance()}`,
       pin: true,
       pinSpacing: false,
+      anticipatePin: 1,
       invalidateOnRefresh: true,
     });
     sectionTransitions.push(workPin);
 
-    // 4. SERVICES -> CONTACT + FOOTER: Subtle stage-reveal parallax settle
+    // 3. SERVICES -> CONTACT + FOOTER: Subtle stage-reveal parallax settle
     if (contactWrapper && contactInner) {
       gsap.set(contactInner, { yPercent: -6 });
 
@@ -116,13 +122,18 @@ import Work from "@/sections/Work.astro";
       if (contactTween.scrollTrigger) sectionTransitions.push(contactTween.scrollTrigger);
     }
 
+    ScrollTrigger.sort();
     ScrollTrigger.refresh();
   }
 
-  if (document.readyState === "complete") {
-    initSectionTransitions();
-  } else {
-    window.addEventListener("load", initSectionTransitions, { once: true });
+  function scheduleTransitionsInit() {
+    requestAnimationFrame(() => requestAnimationFrame(initSectionTransitions));
   }
-  document.addEventListener("astro:page-load", initSectionTransitions);
+
+  if (document.readyState === "complete") {
+    scheduleTransitionsInit();
+  } else {
+    window.addEventListener("load", scheduleTransitionsInit, { once: true });
+  }
+  document.addEventListener("astro:page-load", scheduleTransitionsInit);
 </script>

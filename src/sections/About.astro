@@ -5,15 +5,14 @@ const headline =
 const words = headline.split(" ");
 ---
 
-<div class="bg-white text-black" id="about">
-  <header class="pt-10 px-10 w-full">
+<div class="min-h-dvh bg-white text-black flex flex-col justify-between" id="about">
+  <header class="pt-10 px-6 md:px-10 w-full">
     <div
       id="about-header-row"
       class="relative flex gap-5 pb-5 font-sans font-bold text-black"
     >
       <p class="about-header-item">[ 01 ]</p>
       <p class="about-header-item">/about</p>
-      <!-- Animated bottom border line -->
       <span
         id="about-header-line"
         class="absolute bottom-0 left-0 right-0 h-px bg-black origin-left"
@@ -21,27 +20,22 @@ const words = headline.split(" ");
     </div>
   </header>
 
-  <div class="flex flex-col justify-center items-center lg:flex-row lg:px-20 py-5 lg:gap-8">
+  <div class="flex flex-col justify-center items-center lg:flex-row lg:px-20 py-8 lg:py-5 lg:gap-8 my-auto">
     <!-- Left Column: Portrait + Role Tags -->
-    <div class="flex flex-col justify-center items-center gap-5">
+    <div class="flex flex-col justify-center items-center gap-5 px-6 md:px-0">
       <div
         id="about-media-mask"
         class="overflow-hidden rounded-xl will-change-transform"
       >
         <picture>
-          <!-- Desktop view (screens 1024px and up) -->
           <source
             media="(min-width: 1024px)"
             srcset="src/assets/about_desktop_img.png"
           />
-
-          <!-- Tablet view (screens 768px and up) -->
           <source
             media="(min-width: 768px)"
             srcset="src/assets/about_tablet_img.png"
           />
-
-          <!-- Mobile view / Default fallback -->
           <img
             id="about-portrait"
             src="src/assets/about_mobile_img.png"
@@ -52,23 +46,18 @@ const words = headline.split(" ");
       </div>
 
       <div class="flex flex-col justify-center items-center font-mono gap-2 md:flex-row md:gap-5">
-        <p class="about-role opacity-60 lg:whitespace-nowrap">
-          FULL-STACK DEVELOPER
-        </p>
+        <p class="about-role opacity-60 lg:whitespace-nowrap">FULL-STACK DEVELOPER</p>
         <p class="about-role opacity-60 lg:whitespace-nowrap">UI/UX DESIGNER</p>
-        <p class="about-role opacity-60 lg:whitespace-nowrap">
-          SECURITY RESEARCHER
-        </p>
+        <p class="about-role opacity-60 lg:whitespace-nowrap">SECURITY RESEARCHER</p>
       </div>
     </div>
 
-    <!-- Right Column: Headline (First) -> Bio -> Stats -> Resume -->
-    <div class="flex flex-col justify-center items-center p-10 gap-10 md:w-[90%] lg:w-1/2 lg:gap-24 lg:items-start">
-      <!-- Word-wrapped letter spans prevent mid-word wrapping while animating char-by-char -->
+    <!-- Right Column: Headline -> Bio -> Stats -> Resume -->
+    <div class="flex flex-col justify-center items-center p-6 md:p-10 gap-8 md:gap-10 md:w-[90%] lg:w-1/2 lg:gap-24 lg:items-start">
       <h1
         id="about-headline"
         aria-label={headline}
-        class="text-span font-black text-3xl lg:w-4/5 leading-tight"
+        class="text-span font-black text-2xl sm:text-3xl lg:w-4/5 leading-tight"
       >
         {words.map((word, wordIdx) => (
           <>
@@ -86,10 +75,7 @@ const words = headline.split(" ");
         ))}
       </h1>
 
-      <p
-        id="about-bio"
-        class="text-sm md:text-lg lg:w-4/5 will-change-transform"
-      >
+      <p id="about-bio" class="text-sm md:text-lg lg:w-4/5 will-change-transform">
         It may not be obvious, but Jerry's journey started with Full-Stack
         development. Interested in the design side of a website, he quickly
         branched out into Graphic and UI/UX design, eventually integrating a
@@ -100,7 +86,7 @@ const words = headline.split(" ");
 
       <div
         id="about-stats"
-        class="grid grid-cols-2 md:flex md:justify-between md:w-full gap-6"
+        class="grid grid-cols-2 md:flex md:justify-between md:w-full gap-6 w-full"
       >
         <div class="about-stat-item flex flex-col">
           <h2
@@ -144,15 +130,12 @@ const words = headline.split(" ");
         </div>
       </div>
 
-      <a
+      <button
         id="about-resume-btn"
-        href="/resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
         class="font-black cursor-pointer hover:opacity-50 transition-opacity duration-500 will-change-transform"
       >
         [ RESUME ]
-      </a>
+      </button>
     </div>
   </div>
 </div>
@@ -163,201 +146,195 @@ const words = headline.split(" ");
 
   gsap.registerPlugin(ScrollTrigger);
 
-  let aboutTimeline: gsap.core.Timeline | null = null;
+  let aboutMatchMedia: gsap.MatchMedia | null = null;
 
   function initAboutAnimations() {
     const aboutSection = document.getElementById("about");
     if (!aboutSection) return;
 
-    // Kill previous timeline on Astro View Transitions
-    aboutTimeline?.scrollTrigger?.kill();
-    aboutTimeline?.kill();
+    aboutMatchMedia?.revert();
 
     const chars = gsap.utils.toArray<HTMLElement>("#about .about-char");
-    const headerItems = gsap.utils.toArray<HTMLElement>(
-      "#about .about-header-item",
-    );
+    const headerItems = gsap.utils.toArray<HTMLElement>("#about .about-header-item");
     const headerLine = document.getElementById("about-header-line");
     const bio = document.getElementById("about-bio");
     const mediaMask = document.getElementById("about-media-mask");
     const portrait = document.getElementById("about-portrait");
     const roles = gsap.utils.toArray<HTMLElement>("#about .about-role");
-    const statItems = gsap.utils.toArray<HTMLElement>(
-      "#about .about-stat-item",
-    );
+    const statItems = gsap.utils.toArray<HTMLElement>("#about .about-stat-item");
     const counters = gsap.utils.toArray<HTMLElement>("#about .about-counter");
     const resumeBtn = document.getElementById("about-resume-btn");
 
-    // Respect reduced motion
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(
-        [
-          chars,
-          headerItems,
-          headerLine,
-          bio,
-          mediaMask,
-          portrait,
-          roles,
-          statItems,
-          resumeBtn,
-        ],
-        { clearProps: "all" },
+        [chars, headerItems, headerLine, bio, mediaMask, portrait, roles, statItems, resumeBtn],
+        { clearProps: "all" }
       );
       return;
     }
 
-    // 1. Set initial hidden states
-    gsap.set(chars, { yPercent: 115, opacity: 0 });
-    gsap.set(headerItems, { y: 10, opacity: 0 });
-    gsap.set(headerLine, { scaleX: 0 });
-    gsap.set(bio, { y: 24, opacity: 0 });
-    gsap.set(mediaMask, { clipPath: "inset(100% 0% 0% 0% round 0.75rem)" });
-    gsap.set(portrait, { scale: 1.08 });
-    gsap.set(roles, { y: 12, opacity: 0 });
-    gsap.set(statItems, { y: 18, opacity: 0 });
-    gsap.set(resumeBtn, { y: 14, opacity: 0 });
+    function buildAboutTimeline(isDesktop: boolean) {
+      gsap.set(headerLine, { scaleX: 0 });
+      gsap.set(headerItems, { y: 12, opacity: 0 });
+      gsap.set(chars, { yPercent: 115, opacity: 0 });
+      gsap.set(mediaMask, { clipPath: "inset(100% 0% 0% 0% round 0.75rem)" });
+      gsap.set(portrait, { scale: 1.1 });
+      gsap.set(roles, { y: 14, opacity: 0 });
+      gsap.set(bio, { y: 28, opacity: 0 });
+      gsap.set(statItems, { y: 22, opacity: 0 });
+      gsap.set(resumeBtn, { y: 16, opacity: 0 });
 
-    // Initialize counters at 00+
-    counters.forEach((el) => {
-      const suffix = el.dataset.suffix || "";
-      el.textContent = `00${suffix}`;
-    });
+      const counterState = counters.map((el) => ({
+        el,
+        target: Number(el.dataset.target || 0),
+        suffix: el.dataset.suffix || "",
+        val: 0,
+      }));
 
-    // 2. Choreographed ScrollTrigger timeline (plays once when #about card rises into view)
-    aboutTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: aboutSection,
-        start: "top 72%",
-        once: true,
-      },
-    });
+      counterState.forEach((c) => {
+        c.el.textContent = `00${c.suffix}`;
+      });
 
-    // STEP 1 (FIRST): Letter-by-letter headline reveal
-    aboutTimeline.to(chars, {
-      yPercent: 0,
-      opacity: 1,
-      duration: 0.55,
-      ease: "power4.out",
-      stagger: 0.016,
-    });
+      // Desktop: pin in full view while scrubbing.
+      // Mobile/Tablet: never pin tall stacked layout so top/bottom never clip off-screen.
+      const tl = gsap.timeline({
+        scrollTrigger: isDesktop
+          ? {
+              trigger: aboutSection,
+              start: "top top",
+              end: "+=120%",
+              pin: true,
+              pinSpacing: true,
+              scrub: 0.85,
+              anticipatePin: 1,
+              invalidateOnRefresh: true,
+            }
+          : {
+              trigger: aboutSection,
+              start: "top 85%",
+              end: "bottom 85%",
+              scrub: 0.75,
+              invalidateOnRefresh: true,
+            },
+      });
 
-    // STEP 2: [ 01 ] /about header & bottom divider draw
-    aboutTimeline
-      .to(
-        headerLine,
-        {
-          scaleX: 1,
-          duration: 0.7,
-          ease: "power3.inOut",
-        },
-        "-=0.9",
-      )
-      .to(
-        headerItems,
+      tl.to(headerLine, { scaleX: 1, duration: 0.25, ease: "none" }, 0)
+        .to(headerItems, { y: 0, opacity: 1, duration: 0.2, stagger: 0.04, ease: "none" }, 0.03)
+        .to(
+          chars,
+          {
+            yPercent: 0,
+            opacity: 1,
+            duration: 0.4,
+            stagger: 0.007,
+            ease: "power2.out",
+          },
+          0.03
+        )
+        .to(
+          mediaMask,
+          {
+            clipPath: "inset(0% 0% 0% 0% round 0.75rem)",
+            duration: 0.45,
+            ease: "power2.inOut",
+          },
+          0.12
+        )
+        .to(
+          portrait,
+          {
+            scale: 1,
+            duration: 0.55,
+            ease: "power2.out",
+          },
+          0.12
+        )
+        .to(
+          roles,
+          {
+            y: 0,
+            opacity: 0.6,
+            duration: 0.25,
+            stagger: 0.05,
+            ease: "none",
+          },
+          0.35
+        )
+        .to(
+          bio,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.35,
+            ease: "power2.out",
+          },
+          0.35
+        )
+        .to(
+          statItems,
+          {
+            y: 0,
+            opacity: 1,
+            duration: 0.3,
+            stagger: 0.05,
+            ease: "power2.out",
+          },
+          0.55
+        );
+
+      counterState.forEach((c, idx) => {
+        tl.to(
+          c,
+          {
+            val: c.target,
+            duration: 0.35,
+            ease: "none",
+            onUpdate: () => {
+              c.el.textContent = `${String(Math.round(c.val)).padStart(2, "0")}${c.suffix}`;
+            },
+          },
+          0.55 + idx * 0.03
+        );
+      });
+
+      tl.to(
+        resumeBtn,
         {
           y: 0,
           opacity: 1,
-          duration: 0.45,
-          ease: "power3.out",
-          stagger: 0.08,
+          duration: 0.25,
+          ease: "power2.out",
         },
-        "<0.15",
+        0.78
       );
 
-    // STEP 3: Portrait clip-path curtain wipe + subtle zoom settle
-    aboutTimeline
-      .to(
-        mediaMask,
-        {
-          clipPath: "inset(0% 0% 0% 0% round 0.75rem)",
-          duration: 0.95,
-          ease: "power4.inOut",
-        },
-        "-=0.45",
-      )
-      .to(
-        portrait,
-        {
-          scale: 1,
-          duration: 1.15,
-          ease: "power3.out",
-        },
-        "<",
-      )
-      .to(
-        roles,
-        {
-          y: 0,
-          opacity: 0.6,
-          duration: 0.45,
-          ease: "power3.out",
-          stagger: 0.08,
-        },
-        "-=0.5",
-      );
+      if (isDesktop) {
+        tl.to({}, { duration: 0.12 });
+      }
+    }
 
-    // STEP 4: Bio paragraph slides in cleanly
-    aboutTimeline.to(
-      bio,
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.65,
-        ease: "power3.out",
-      },
-      "-=0.85",
-    );
+    aboutMatchMedia = gsap.matchMedia();
 
-    // STEP 5: Stats stagger in + slow count up (00+ -> 04+, 05+, 06+, 02+)
-    aboutTimeline.to(
-      statItems,
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.55,
-        ease: "power3.out",
-        stagger: 0.1,
-        onStart: () => {
-          counters.forEach((el, index) => {
-            const target = Number(el.dataset.target || 0);
-            const suffix = el.dataset.suffix || "";
-            const proxy = { val: 0 };
+    aboutMatchMedia.add("(min-width: 1024px)", () => {
+      buildAboutTimeline(true);
+    });
 
-            gsap.to(proxy, {
-              val: target,
-              duration: 2.2,
-              delay: index * 0.1,
-              ease: "power1.out",
-              onUpdate: () => {
-                const rounded = Math.round(proxy.val);
-                el.textContent = `${String(rounded).padStart(2, "0")}${suffix}`;
-              },
-            });
-          });
-        },
-      },
-      "-=0.45",
-    );
+    aboutMatchMedia.add("(max-width: 1023px)", () => {
+      buildAboutTimeline(false);
+    });
 
-    // STEP 6: [ RESUME ] button settles in last
-    aboutTimeline.to(
-      resumeBtn,
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.45,
-        ease: "power3.out",
-      },
-      "-=0.35",
-    );
+    ScrollTrigger.sort();
+    ScrollTrigger.refresh();
   }
 
-  // Run after window load / Layout's initScroll() so ScrollTrigger.getAll().kill() doesn't clear it
+  function scheduleAboutInit() {
+    requestAnimationFrame(() => requestAnimationFrame(initAboutAnimations));
+  }
+
   if (document.readyState === "complete") {
-    initAboutAnimations();
+    scheduleAboutInit();
   } else {
-    window.addEventListener("load", initAboutAnimations, { once: true });
+    window.addEventListener("load", scheduleAboutInit, { once: true });
   }
-  document.addEventListener("astro:page-load", initAboutAnimations);
+  document.addEventListener("astro:page-load", scheduleAboutInit);
 </script>
