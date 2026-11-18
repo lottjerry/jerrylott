@@ -1,9 +1,9 @@
 ---
 // src/layouts/Layout.astro
-import '@fontsource-variable/geist';
-import '@fontsource-variable/geist-mono';
-import 'lenis/dist/lenis.css';
-import Preloader from '@/components/Preloader.astro';
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "lenis/dist/lenis.css";
+import Preloader from "@/components/Preloader.astro";
 
 interface Props {
   title?: string;
@@ -13,9 +13,9 @@ interface Props {
 }
 
 const {
-  title = 'Jerry Lott — Full-Stack Developer, UI/UX Designer & Security Researcher',
-  description = 'Portfolio of Jerry Lott — building full-stack web applications, intuitive UI/UX systems, and security-hardened software.',
-  image = '/og-image.png',
+  title = "Jerry Lott — Full-Stack Developer, UI/UX Designer, & Security Researcher",
+  description = "Portfolio of Jerry Lott — building full-stack web applications, intuitive UI/UX systems, and security-hardened software.",
+  image = "/og-image.png",
   noindex = false,
 } = Astro.props;
 
@@ -24,25 +24,25 @@ const socialImageURL = new URL(image, Astro.site ?? Astro.url);
 const siteOrigin = (Astro.site ?? Astro.url).origin;
 
 const jsonLd = {
-  '@context': 'https://schema.org',
-  '@graph': [
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      '@type': 'Person',
-      name: 'Jerry Lott',
+      "@type": "Person",
+      name: "Jerry Lott",
       url: siteOrigin,
-      jobTitle: 'Full-Stack Developer, UI/UX Designer & Security Researcher',
+      jobTitle: "Full-Stack Developer, UI/UX Designer & Security Researcher",
       worksFor: {
-        '@type': 'Organization',
-        name: 'D4 Studio',
+        "@type": "Organization",
+        name: "D4 Studio",
       },
       sameAs: [
-        'https://github.com/lottjerry',
-        'https://www.linkedin.com/in/jerrylott',
+        "https://github.com/lottjerry",
+        "https://www.linkedin.com/in/jerrylott",
       ],
     },
     {
-      '@type': 'WebSite',
-      name: 'Jerry Lott — Portfolio',
+      "@type": "WebSite",
+      name: "Jerry Lott — Portfolio",
       url: siteOrigin,
     },
   ],
@@ -70,8 +70,18 @@ const jsonLd = {
     )}
 
     <!-- Favicons, Manifest & Touch Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=3" />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/favicon-32x32.png?v=3"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/apple-touch-icon.png?v=3"
+    />
     <link rel="manifest" href="/manifest.webmanifest" />
 
     <!-- Open Graph -->
@@ -84,7 +94,10 @@ const jsonLd = {
     <meta property="og:image" content={socialImageURL} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Jerry Lott — Design. Develop. Deploy. Defend." />
+    <meta
+      property="og:image:alt"
+      content="Jerry Lott — Design. Develop. Deploy. Defend."
+    />
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -92,7 +105,10 @@ const jsonLd = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImageURL} />
-    <meta name="twitter:image:alt" content="Jerry Lott — Design. Develop. Deploy. Defend." />
+    <meta
+      name="twitter:image:alt"
+      content="Jerry Lott — Design. Develop. Deploy. Defend."
+    />
 
     <!-- Structured Data -->
     {!noindex && (
@@ -101,11 +117,15 @@ const jsonLd = {
 
     <!-- Runs synchronously before first paint to prevent browser scroll restoration -->
     <script is:inline>
-      if ('scrollRestoration' in history) {
-        history.scrollRestoration = 'manual';
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
       }
       if (window.location.hash) {
-        history.replaceState(null, '', window.location.pathname + window.location.search);
+        history.replaceState(
+          null,
+          "",
+          window.location.pathname + window.location.search,
+        );
       }
       window.scrollTo(0, 0);
     </script>
@@ -115,12 +135,12 @@ const jsonLd = {
     <slot />
 
     <script>
-      import Lenis from 'lenis';
-      import { gsap } from 'gsap';
-      import { ScrollTrigger } from 'gsap/ScrollTrigger';
+      import Lenis from "lenis";
+      import { gsap } from "gsap";
+      import { ScrollTrigger } from "gsap/ScrollTrigger";
 
       gsap.registerPlugin(ScrollTrigger);
-      ScrollTrigger.clearScrollMemory('manual');
+      ScrollTrigger.clearScrollMemory("manual");
 
       declare global {
         interface Window {
@@ -130,18 +150,25 @@ const jsonLd = {
       }
 
       function forceScrollTop() {
-        if ('scrollRestoration' in history) {
-          history.scrollRestoration = 'manual';
+        if ("scrollRestoration" in history) {
+          history.scrollRestoration = "manual";
         }
         if (window.location.hash) {
-          history.replaceState(null, '', window.location.pathname + window.location.search);
+          history.replaceState(
+            null,
+            "",
+            window.location.pathname + window.location.search,
+          );
         }
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
 
         if (window.smoothScrollLenis) {
-          window.smoothScrollLenis.scrollTo(0, { immediate: true, force: true });
+          window.smoothScrollLenis.scrollTo(0, {
+            immediate: true,
+            force: true,
+          });
         }
       }
 
@@ -153,7 +180,7 @@ const jsonLd = {
       function initScroll() {
         // 1. Clean up existing Lenis, ticker listener, and ScrollTriggers
         gsap.ticker.remove(updateLenis);
-        ScrollTrigger.clearScrollMemory('manual');
+        ScrollTrigger.clearScrollMemory("manual");
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
         if (window.smoothScrollLenis) {
@@ -165,7 +192,7 @@ const jsonLd = {
 
         // 2. Respect reduced motion (ScrollTrigger still works normally without Lenis)
         const prefersReducedMotion = window.matchMedia(
-          '(prefers-reduced-motion: reduce)'
+          "(prefers-reduced-motion: reduce)",
         ).matches;
 
         if (prefersReducedMotion) return;
@@ -184,13 +211,13 @@ const jsonLd = {
         lenis.scrollTo(0, { immediate: true, force: true });
 
         // Keep Lenis paused if the preloader curtain is still visible on initial load
-        const curtain = document.getElementById('preloader-curtain');
-        if (curtain && curtain.style.display !== 'none') {
+        const curtain = document.getElementById("preloader-curtain");
+        if (curtain && curtain.style.display !== "none") {
           lenis.stop();
         }
 
         // 4. Sync ScrollTrigger and bind to GSAP's ticker
-        lenis.on('scroll', ScrollTrigger.update);
+        lenis.on("scroll", ScrollTrigger.update);
         gsap.ticker.add(updateLenis);
         gsap.ticker.lagSmoothing(0);
       }
@@ -199,15 +226,19 @@ const jsonLd = {
         window.__scrollResetBound = true;
 
         // Reset right before reload so browsers don't snapshot a mid-page offset
-        window.addEventListener('beforeunload', () => {
+        window.addEventListener("beforeunload", () => {
           if (window.location.hash) {
-            history.replaceState(null, '', window.location.pathname + window.location.search);
+            history.replaceState(
+              null,
+              "",
+              window.location.pathname + window.location.search,
+            );
           }
           window.scrollTo(0, 0);
         });
 
         // Handle Safari / mobile bfcache restores
-        window.addEventListener('pageshow', (e) => {
+        window.addEventListener("pageshow", (e) => {
           if (e.persisted) {
             forceScrollTop();
             ScrollTrigger.refresh();
@@ -216,7 +247,7 @@ const jsonLd = {
       }
 
       initScroll();
-      document.addEventListener('astro:after-swap', initScroll);
+      document.addEventListener("astro:after-swap", initScroll);
     </script>
   </body>
 </html>
