@@ -1,5 +1,7 @@
 ---
 // src/components/Hero.astro
+import heroBg from "../assets/hero.png";
+import jerrylottSvg from "../assets/jerrylott.svg";
 ---
 
 <div
@@ -9,7 +11,7 @@
   <!-- Background Image -->
   <img
     id="hero-bg"
-    src="src/assets/hero.png"
+    src={heroBg.src}
     alt="Hero Image"
     class="z-0 absolute inset-0 will-change-transform"
   />
@@ -21,7 +23,7 @@
   <div class="z-10 overflow-hidden">
     <img
       id="hero-logo-svg"
-      src="src/assets/jerrylott.svg"
+      src={jerrylottSvg.src}
       alt="Jerry Lott"
       class="will-change-transform"
     />
