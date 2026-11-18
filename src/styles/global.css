@@ -7,3 +7,13 @@
   /* Shifts the lg breakpoint so iPad Pro 13 portrait (1032px) safely stays in 2x2 grid */
   --breakpoint-lg: 65rem;
 }
+
+/* Hide global header and bottom scroll SVG while the project gallery modal is open */
+html[data-gallery-open="true"] body > header,
+html[data-gallery-open="true"] body > svg,
+html[data-gallery-open="true"] #scroll-progress,
+html[data-gallery-open="true"] [data-scroll-indicator] {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
