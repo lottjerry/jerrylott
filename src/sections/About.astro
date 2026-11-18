@@ -1,5 +1,14 @@
 ---
 // src/sections/About.astro
+import { getImage } from "astro:assets";
+import desktopSrc from "@/assets/about_desktop_img.png";
+import tabletSrc from "@/assets/about_tablet_img.png";
+import mobileSrc from "@/assets/about_mobile_img.png";
+
+const desktopImg = await getImage({ src: desktopSrc, format: "webp", quality: 85 });
+const tabletImg = await getImage({ src: tabletSrc, format: "webp", quality: 85 });
+const mobileImg = await getImage({ src: mobileSrc, format: "webp", quality: 85 });
+
 const headline =
   "Built like an engineer, designed like an artist, stress-tested like an attacker.";
 const words = headline.split(" ");
@@ -30,16 +39,22 @@ const words = headline.split(" ");
         <picture>
           <source
             media="(min-width: 1024px)"
-            srcset="src/assets/about_desktop_img.png"
+            srcset={desktopImg.src}
+            type="image/webp"
           />
           <source
             media="(min-width: 768px)"
-            srcset="src/assets/about_tablet_img.png"
+            srcset={tabletImg.src}
+            type="image/webp"
           />
           <img
             id="about-portrait"
-            src="src/assets/about_mobile_img.png"
+            src={mobileImg.src}
             alt="Jerry Lott portrait"
+            width={mobileImg.attributes.width}
+            height={mobileImg.attributes.height}
+            loading="eager"
+            decoding="async"
             class="w-full h-auto object-cover rounded-xl will-change-transform"
           />
         </picture>
@@ -130,12 +145,15 @@ const words = headline.split(" ");
         </div>
       </div>
 
-      <button
+      <a
         id="about-resume-btn"
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
         class="font-black cursor-pointer hover:opacity-50 transition-opacity duration-500 will-change-transform"
       >
         [ RESUME ]
-      </button>
+      </a>
     </div>
   </div>
 </div>
@@ -195,8 +213,6 @@ const words = headline.split(" ");
         c.el.textContent = `00${c.suffix}`;
       });
 
-      // Desktop: pin in full view while scrubbing.
-      // Mobile/Tablet: never pin tall stacked layout so top/bottom never clip off-screen.
       const tl = gsap.timeline({
         scrollTrigger: isDesktop
           ? {
@@ -206,7 +222,6 @@ const words = headline.split(" ");
               pin: true,
               pinSpacing: true,
               scrub: 0.85,
-              anticipatePin: 1,
               invalidateOnRefresh: true,
             }
           : {
