@@ -4,22 +4,108 @@ import '@fontsource-variable/geist';
 import '@fontsource-variable/geist-mono';
 import 'lenis/dist/lenis.css';
 import Preloader from '@/components/Preloader.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = 'Jerry Lott — Full-Stack Developer, UI/UX Designer & Security Researcher',
+  description = 'Portfolio of Jerry Lott — building full-stack web applications, intuitive UI/UX systems, and security-hardened software.',
+  image = '/og-image.png',
+  noindex = false,
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? Astro.url);
+const socialImageURL = new URL(image, Astro.site ?? Astro.url);
+const siteOrigin = (Astro.site ?? Astro.url).origin;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Person',
+      name: 'Jerry Lott',
+      url: siteOrigin,
+      jobTitle: 'Full-Stack Developer, UI/UX Designer & Security Researcher',
+      worksFor: {
+        '@type': 'Organization',
+        name: 'D4 Studio',
+      },
+      sameAs: [
+        'https://github.com/lottjerry',
+        'https://www.linkedin.com/in/jerrylott',
+      ],
+    },
+    {
+      '@type': 'WebSite',
+      name: 'Jerry Lott — Portfolio',
+      url: siteOrigin,
+    },
+  ],
+};
 ---
 
 <!doctype html>
 <html lang="en" style="background-color: #000000;">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="author" content="Jerry Lott" />
+    <meta name="theme-color" content="#000000" />
+    <link rel="canonical" href={canonicalURL} />
+    {noindex ? (
+      <meta name="robots" content="noindex, nofollow" />
+    ) : (
+      <meta name="robots" content="index, follow, max-image-preview:large" />
+    )}
+
+    <!-- Favicons, Manifest & Touch Icons -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:site_name" content="Jerry Lott" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={socialImageURL} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Jerry Lott — Design. Develop. Deploy. Defend." />
+
+    <!-- Twitter / X Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalURL} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageURL} />
+    <meta name="twitter:image:alt" content="Jerry Lott — Design. Develop. Deploy. Defend." />
+
+    <!-- Structured Data -->
+    {!noindex && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
 
     <!-- Runs synchronously before first paint to prevent browser scroll restoration -->
     <script is:inline>
       if ('scrollRestoration' in history) {
         history.scrollRestoration = 'manual';
+      }
+      if (window.location.hash) {
+        history.replaceState(null, '', window.location.pathname + window.location.search);
       }
       window.scrollTo(0, 0);
     </script>
@@ -34,6 +120,7 @@ import Preloader from '@/components/Preloader.astro';
       import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
       gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.clearScrollMemory('manual');
 
       declare global {
         interface Window {
@@ -45,6 +132,9 @@ import Preloader from '@/components/Preloader.astro';
       function forceScrollTop() {
         if ('scrollRestoration' in history) {
           history.scrollRestoration = 'manual';
+        }
+        if (window.location.hash) {
+          history.replaceState(null, '', window.location.pathname + window.location.search);
         }
         window.scrollTo(0, 0);
         document.documentElement.scrollTop = 0;
@@ -63,6 +153,7 @@ import Preloader from '@/components/Preloader.astro';
       function initScroll() {
         // 1. Clean up existing Lenis, ticker listener, and ScrollTriggers
         gsap.ticker.remove(updateLenis);
+        ScrollTrigger.clearScrollMemory('manual');
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
         if (window.smoothScrollLenis) {
@@ -109,6 +200,9 @@ import Preloader from '@/components/Preloader.astro';
 
         // Reset right before reload so browsers don't snapshot a mid-page offset
         window.addEventListener('beforeunload', () => {
+          if (window.location.hash) {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          }
           window.scrollTo(0, 0);
         });
 
